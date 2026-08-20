@@ -104,7 +104,7 @@
       cursor: pointer;
       transition: background .2s, color .2s;
     }
-    .chip:hover { background: var(--accent2); color: #1a1a2e; border-color: var(--accent2); }
+    .chip:hover, .chip:active { background: var(--accent2); color: #1a1a2e; border-color: var(--accent2); }
 
     /* ── Main layout ── */
     main {
@@ -151,7 +151,7 @@
       transition: box-shadow .2s, transform .2s;
       position: relative;
     }
-    .card:hover {
+    .card:hover, .card:focus-within {
       box-shadow: 0 8px 32px rgba(30,58,95,.12);
       transform: translateY(-2px);
     }
@@ -249,7 +249,7 @@
       font-weight: 500;
       color: var(--muted);
     }
-    .filter-pill.active, .filter-pill:hover {
+    .filter-pill.active, .filter-pill:hover, .filter-pill:active {
       background: var(--primary);
       color: #fff;
       border-color: var(--primary);
@@ -264,9 +264,123 @@
       border-top: 1px solid var(--border);
     }
 
+    /* ── Responsive: tablet (≤768px) ── */
+    @media (max-width: 768px) {
+      .cards {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+      }
+      main {
+        padding: 24px 16px 48px;
+      }
+    }
+
+    /* ── Responsive: mobile (≤540px) ── */
     @media (max-width: 540px) {
-      header .logo { font-size: 1.5rem; }
-      .cards { grid-template-columns: 1fr; }
+      /* Header */
+      header {
+        padding: 28px 16px 24px;
+      }
+      header .logo {
+        font-size: 1.4rem;
+      }
+      header p {
+        font-size: .88rem;
+      }
+
+      /* Search */
+      .search-wrap {
+        padding: 0 16px 20px;
+      }
+      .search-box {
+        flex-direction: column;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .search-box input {
+        padding: 14px 18px;
+        font-size: .95rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .search-box button {
+        padding: 13px 18px;
+        font-size: .9rem;
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Quick-pick chips */
+      .quick-picks {
+        margin-top: 12px;
+        gap: 6px;
+      }
+      .chip {
+        font-size: .75rem;
+        padding: 4px 12px;
+      }
+
+      /* Filter pills — horizontal scroll instead of wrap */
+      .filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+        gap: 6px;
+        margin-bottom: 18px;
+      }
+      .filters::-webkit-scrollbar { display: none; }
+      .filter-pill {
+        flex-shrink: 0;
+        font-size: .78rem;
+        padding: 5px 14px;
+        white-space: nowrap;
+      }
+
+      /* Cards */
+      .cards {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .card {
+        padding: 18px 16px 14px;
+      }
+      .card-title {
+        font-size: .98rem;
+        padding-right: 72px;
+      }
+      .card-desc {
+        font-size: .84rem;
+      }
+      .when {
+        font-size: .8rem;
+      }
+
+      /* Badge – avoid overlap on narrow cards */
+      .badge-wrap {
+        top: 14px;
+        right: 14px;
+      }
+      .badge {
+        font-size: .68rem;
+        padding: 2px 8px;
+      }
+
+      /* Section title */
+      .section-title {
+        font-size: .88rem;
+      }
+
+      /* Main */
+      main {
+        padding: 20px 12px 40px;
+      }
+
+      /* Footer */
+      footer {
+        font-size: .78rem;
+        padding: 16px 12px;
+      }
     }
   </style>
 </head>
