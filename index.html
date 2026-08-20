@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BA Model Recommender</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:   #1e3a5f;
+      --accent:    #2e86de;
+      --accent2:   #f9a825;
+      --bg:        #f4f6fa;
+      --card-bg:   #ffffff;
+      --text:      #1a1a2e;
+      --muted:     #6b7280;
+      --border:    #e2e8f0;
+      --tag-bg:    #e8f0fe;
+      --tag-text:  #1a56db;
+      --green:     #059669;
+      --radius:    12px;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, #2c5282 100%);
+      color: #fff;
+      padding: 36px 24px 32px;
+      text-align: center;
+    }
+    header .logo { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; }
+    header .logo span { color: var(--accent2); }
+    header p {
+      margin-top: 8px;
+      font-size: 1rem;
+      color: #b0c4e8;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Search bar ── */
+    .search-wrap {
+      background: var(--primary);
+      padding: 0 24px 28px;
+    }
+    .search-box {
+      display: flex;
+      max-width: 680px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 50px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.18);
+      overflow: hidden;
+    }
+    .search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 16px 22px;
+      font-size: 1rem;
+      color: var(--text);
+      background: transparent;
+    }
+    .search-box input::placeholder { color: var(--muted); }
+    .search-box button {
+      background: var(--accent);
+      border: none;
+      cursor: pointer;
+      padding: 0 28px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+    .search-box button:hover { background: #1a6fc4; }
+
+    /* ── Quick-pick chips ── */
+    .quick-picks {
+      max-width: 680px;
+      margin: 14px auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .quick-picks span { font-size: .78rem; color: #9ab4d8; margin-right: 4px; }
+    .chip {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      color: #d4e4f7;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: .8rem;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .chip:hover { background: var(--accent2); color: #1a1a2e; border-color: var(--accent2); }
+
+    /* ── Main layout ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── Section headers ── */
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 16px;
+    }
+    .result-count {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 20px;
+      padding: 1px 10px;
+      font-size: .75rem;
+      margin-left: 8px;
+      vertical-align: middle;
+      font-weight: 700;
+    }
+
+    /* ── Cards grid ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 22px 22px 18px;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow .2s, transform .2s;
+      position: relative;
+    }
+    .card:hover {
+      box-shadow: 0 8px 32px rgba(30,58,95,.12);
+      transform: translateY(-2px);
+    }
+
+    /* relevance badge */
+    .badge-wrap { position: absolute; top: 16px; right: 16px; }
+    .badge {
+      font-size: .72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .badge.top    { background: #fef3c7; color: #92400e; }
+    .badge.good   { background: #d1fae5; color: #065f46; }
+    .badge.normal { background: var(--tag-bg); color: var(--tag-text); }
+
+    .card-category {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+      padding-right: 60px;
+    }
+    .card-desc {
+      font-size: .88rem;
+      color: #4a5568;
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+    .tag {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: 20px;
+      padding: 3px 11px;
+      font-size: .72rem;
+      font-weight: 600;
+    }
+    .tag.highlight {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    /* when-to-use section inside card */
+    .when {
+      margin-top: 12px;
+      background: #f8fafc;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 12px;
+      font-size: .82rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+    .when strong { color: var(--primary); }
+
+    /* ── Empty state ── */
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .empty .icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty h3 { font-size: 1.1rem; margin-bottom: 6px; color: var(--text); }
+
+    /* ── Category filter pills ── */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .filter-pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-size: .82rem;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .filter-pill.active, .filter-pill:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+      font-size: .82rem;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 540px) {
+      header .logo { font-size: 1.5rem; }
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="logo">BA <span>Model</span> Recommender</div>
+  <p>Describe your challenge or the outcome you need — get instant recommendations for the right Business Analysis model or tool.</p>
+</header>
+
+<!-- ── SEARCH ── -->
+<div class="search-wrap">
+  <div class="search-box">
+    <input id="searchInput" type="text" placeholder="e.g. manage stakeholders, prioritise requirements, map a process…" autocomplete="off" />
+    <button onclick="runSearch()">Recommend</button>
+  </div>
+  <div class="quick-picks" id="quickPicks"></div>
+</div>
+
+<!-- ── MAIN ── -->
+<main>
+  <div class="filters" id="filters"></div>
+  <div class="section-title" id="sectionTitle">All Models <span class="result-count" id="countBadge">0</span></div>
+  <div class="cards" id="cardsContainer"></div>
+</main>
+
+<footer>Built for Business Analysts · Covers 30+ frameworks across strategy, process, stakeholders, requirements &amp; more</footer>
+
+<script>
+// ──────────────────────────────────────────────
+//  DATA: BA models with keywords & metadata
+// ──────────────────────────────────────────────
+const BA_MODELS = [
+
+  // STAKEHOLDER MANAGEMENT
+  {
+    id: 1,
+    name: "RACI Chart",
+    category: "Stakeholder Management",
+    description: "Maps every task or decision to four roles: Responsible, Accountable, Consulted, and Informed. Eliminates confusion about who owns what and keeps all stakeholders aligned.",
+    when: "Use when you need to clarify ownership of activities, resolve accountability gaps, or on-board a new project team.",
+    tags: ["stakeholders", "accountability", "roles", "team alignment", "responsibility"],
+    keywords: ["stakeholder", "manage stakeholder", "accountability", "responsible", "who owns", "roles", "team", "ownership", "consulted", "informed", "raci", "responsibility matrix", "assignment matrix", "clarity", "confusion", "who does what"]
+  },
+  {
+    id: 2,
+    name: "Stakeholder Onion Diagram",
+    category: "Stakeholder Management",
+    description: "Visualises stakeholders in concentric rings by their proximity to and influence on the solution — from the core team outward to the wider environment.",
+    when: "Use at project initiation to identify all affected parties and understand who sits inside or outside the solution boundary.",
+    tags: ["stakeholders", "influence", "proximity", "scope", "visualisation"],
+    keywords: ["stakeholder", "identify stakeholders", "who is affected", "influence", "proximity", "scope boundary", "onion", "map stakeholders", "stakeholder map", "analysis"]
+  },
+  {
+    id: 3,
+    name: "Power / Interest Grid",
+    category: "Stakeholder Management",
+    description: "Plots stakeholders on a 2×2 grid of Power vs. Interest to decide how much engagement each group needs: Manage Closely, Keep Satisfied, Keep Informed, or Monitor.",
+    when: "Use when you have many stakeholders and need to prioritise where to invest engagement effort.",
+    tags: ["stakeholders", "power", "interest", "engagement", "prioritisation"],
+    keywords: ["stakeholder", "power", "interest", "influence", "engagement strategy", "who to manage", "stakeholder priority", "manage closely", "keep informed", "matrix"]
+  },
+
+  // REQUIREMENTS
+  {
+    id: 4,
+    name: "MoSCoW Prioritisation",
+    category: "Requirements",
+    description: "Categorises requirements into Must Have, Should Have, Could Have, and Won't Have to focus delivery on what matters most within constraints.",
+    when: "Use when the backlog is large and the team must agree on scope for a sprint, release, or MVP.",
+    tags: ["requirements", "prioritisation", "scope", "backlog", "MoSCoW"],
+    keywords: ["prioritise requirements", "priority", "must have", "should have", "could have", "won't have", "scope", "backlog", "rank", "importance", "moscow", "requirements prioritisation", "feature priority", "sprint scope", "mvp"]
+  },
+  {
+    id: 5,
+    name: "Use Case Diagram",
+    category: "Requirements",
+    description: "Shows how actors (users or systems) interact with a system through named use cases, giving a clear picture of functional scope.",
+    when: "Use when you need to define and communicate what a system must do from the user's perspective.",
+    tags: ["requirements", "UML", "actors", "system scope", "functional"],
+    keywords: ["use case", "system scope", "actor", "uml", "user interaction", "functional requirements", "system boundary", "what the system does", "user story scope"]
+  },
+  {
+    id: 6,
+    name: "User Stories",
+    category: "Requirements",
+    description: "Short, plain-language statements written as: As a [role], I want [goal] so that [benefit]. Keeps requirements user-centred and easy to estimate.",
+    when: "Use in agile projects to capture requirements at a level the whole team — including non-technical members — can understand and discuss.",
+    tags: ["requirements", "agile", "user-centred", "backlog", "stories"],
+    keywords: ["user story", "agile requirements", "as a user", "backlog item", "user need", "acceptance criteria", "feature request", "agile", "scrum", "user-centred", "benefit"]
+  },
+  {
+    id: 7,
+    name: "Requirements Traceability Matrix (RTM)",
+    category: "Requirements",
+    description: "A table that links each requirement to its source, design elements, test cases, and delivery status — providing end-to-end traceability.",
+    when: "Use when you need to prove coverage, manage scope change, or support audit and compliance.",
+    tags: ["requirements", "traceability", "testing", "compliance", "coverage"],
+    keywords: ["trace requirements", "traceability", "coverage", "test mapping", "requirement source", "audit", "compliance", "rtm", "change impact", "link requirements", "test coverage"]
+  },
+
+  // PROCESS & WORKFLOW
+  {
+    id: 8,
+    name: "Business Process Model & Notation (BPMN)",
+    category: "Process & Workflow",
+    description: "An industry-standard notation for modelling business processes with tasks, gateways, events, and flow paths. Readable by both business and IT.",
+    when: "Use when you need a precise, executable, or auditable model of an end-to-end business process.",
+    tags: ["process", "workflow", "BPMN", "notation", "modelling"],
+    keywords: ["process model", "workflow", "bpmn", "swimlane", "process map", "business process", "flow", "sequence", "gateway", "automate process", "map process", "as-is", "to-be", "process diagram"]
+  },
+  {
+    id: 9,
+    name: "Swimlane Diagram",
+    category: "Process & Workflow",
+    description: "A flowchart divided into horizontal or vertical lanes, each representing a department or role, clearly showing handoffs and cross-functional responsibilities.",
+    when: "Use when a process crosses multiple teams and you need to make handoff points and responsibilities visible.",
+    tags: ["process", "handoff", "cross-functional", "flow", "departments"],
+    keywords: ["swimlane", "handoff", "cross functional", "department", "who does what", "process ownership", "cross team", "responsibility", "flow chart", "handover", "map process"]
+  },
+  {
+    id: 10,
+    name: "Value Stream Mapping (VSM)",
+    category: "Process & Workflow",
+    description: "A lean technique that maps the end-to-end flow of materials and information, highlighting value-adding steps versus waste.",
+    when: "Use when you are improving a process and need to identify bottlenecks, delays, and non-value-adding activities.",
+    tags: ["process improvement", "lean", "waste", "value", "bottleneck"],
+    keywords: ["process improvement", "lean", "waste", "value stream", "bottleneck", "efficiency", "delays", "non value", "optimise process", "flow time", "cycle time", "vsm"]
+  },
+  {
+    id: 11,
+    name: "Flowchart",
+    category: "Process & Workflow",
+    description: "A simple diagram using standard shapes (ovals, rectangles, diamonds) to map the steps and decision points in a process.",
+    when: "Use when you need a quick, accessible process view that any audience can follow without specialist knowledge.",
+    tags: ["process", "flow", "decision", "simple", "diagram"],
+    keywords: ["flowchart", "flow diagram", "process steps", "decision", "simple process", "map steps", "logic flow", "decision tree", "process overview"]
+  },
+
+  // STRATEGY & ANALYSIS
+  {
+    id: 12,
+    name: "SWOT Analysis",
+    category: "Strategy & Analysis",
+    description: "Evaluates a business, project, or initiative across four dimensions: Strengths, Weaknesses, Opportunities, and Threats.",
+    when: "Use at the start of a project or strategic review to build shared situational awareness and inform decisions.",
+    tags: ["strategy", "strengths", "weaknesses", "opportunities", "threats"],
+    keywords: ["swot", "strengths", "weaknesses", "opportunities", "threats", "strategic analysis", "situation analysis", "business analysis", "assessment", "internal external", "where are we", "current state"]
+  },
+  {
+    id: 13,
+    name: "PESTLE Analysis",
+    category: "Strategy & Analysis",
+    description: "Scans the macro-environment across Political, Economic, Social, Technological, Legal, and Environmental factors that could affect the organisation.",
+    when: "Use when assessing external risks and opportunities for a strategic initiative or market entry.",
+    tags: ["strategy", "macro", "environment", "external", "risk"],
+    keywords: ["pestle", "pestel", "macro environment", "external factors", "political", "economic", "social", "technology", "legal", "environmental", "market analysis", "external analysis", "risk assessment"]
+  },
+  {
+    id: 14,
+    name: "Porter's Five Forces",
+    category: "Strategy & Analysis",
+    description: "Analyses industry competitiveness through five forces: supplier power, buyer power, competitive rivalry, threat of substitution, and threat of new entrants.",
+    when: "Use when evaluating market attractiveness, competitive positioning, or before launching a new product or service.",
+    tags: ["strategy", "competition", "market", "industry", "forces"],
+    keywords: ["porter", "five forces", "competitive analysis", "market analysis", "rivalry", "supplier power", "buyer power", "new entrant", "substitute", "industry analysis", "competition", "market entry"]
+  },
+  {
+    id: 15,
+    name: "Business Model Canvas",
+    category: "Strategy & Analysis",
+    description: "A one-page visual template covering nine building blocks of a business model: customer segments, value propositions, channels, relationships, revenue, key resources, activities, partnerships, and costs.",
+    when: "Use when designing a new business, validating a model, or communicating the business model to stakeholders.",
+    tags: ["strategy", "business model", "value proposition", "revenue", "canvas"],
+    keywords: ["business model", "canvas", "value proposition", "revenue stream", "customer segment", "key activities", "resources", "partnership", "cost structure", "design business", "startup", "new product"]
+  },
+  {
+    id: 16,
+    name: "Balanced Scorecard",
+    category: "Strategy & Analysis",
+    description: "Links strategic objectives to KPIs across four perspectives: Financial, Customer, Internal Processes, and Learning & Growth.",
+    when: "Use when translating high-level strategy into measurable targets and aligning teams to organisational goals.",
+    tags: ["strategy", "KPIs", "performance", "measurement", "objectives"],
+    keywords: ["balanced scorecard", "kpi", "performance measure", "strategic objective", "financial", "customer perspective", "internal process", "learning growth", "strategy execution", "goals", "targets", "metrics"]
+  },
+
+  // ROOT CAUSE & PROBLEM SOLVING
+  {
+    id: 17,
+    name: "Fishbone Diagram (Ishikawa)",
+    category: "Problem Solving",
+    description: "A cause-and-effect diagram structured around categories (People, Process, Technology, Environment, etc.) to systematically uncover root causes of a problem.",
+    when: "Use during a problem investigation or incident review to move beyond symptoms and identify underlying causes.",
+    tags: ["root cause", "problem", "cause and effect", "analysis", "ishikawa"],
+    keywords: ["root cause", "fishbone", "ishikawa", "cause and effect", "why", "problem analysis", "investigate", "issue", "incident", "5 why", "causal", "what caused", "diagnose"]
+  },
+  {
+    id: 18,
+    name: "5 Whys",
+    category: "Problem Solving",
+    description: "Iteratively asks 'Why?' five times (or more) to drill down from a surface symptom to the fundamental root cause of a problem.",
+    when: "Use for straightforward problems where a single chain of causation is likely — quick, collaborative, and no special tools needed.",
+    tags: ["root cause", "problem", "iterative", "simple", "why"],
+    keywords: ["5 whys", "why why", "root cause", "drill down", "problem", "investigate", "cause", "simple analysis", "quick analysis", "iterative"]
+  },
+  {
+    id: 19,
+    name: "Pareto Analysis (80/20 Rule)",
+    category: "Problem Solving",
+    description: "Identifies the vital few causes that produce the majority of effects — typically 80% of problems come from 20% of causes.",
+    when: "Use when you have data on defects, complaints, or failures and want to focus improvement effort where it will have the most impact.",
+    tags: ["problem", "data", "80/20", "prioritisation", "defects"],
+    keywords: ["pareto", "80 20", "vital few", "frequency", "defects", "complaints", "most common", "prioritise problems", "impact", "data driven", "high impact"]
+  },
+
+  // DATA & DECISION MAKING
+  {
+    id: 20,
+    name: "Decision Matrix (Weighted Scoring)",
+    category: "Decision Making",
+    description: "Scores options against weighted criteria to produce an objective ranking, removing bias and supporting evidence-based decisions.",
+    when: "Use when choosing between multiple solutions, vendors, or approaches where several criteria matter.",
+    tags: ["decision", "scoring", "criteria", "evaluation", "options"],
+    keywords: ["decision", "choose", "option", "criteria", "evaluate", "score", "weight", "matrix", "compare options", "vendor selection", "solution selection", "best option", "which is better", "ranking"]
+  },
+  {
+    id: 21,
+    name: "Decision Tree",
+    category: "Decision Making",
+    description: "Maps out possible decisions and their probable outcomes in a tree structure, often including probabilities and payoffs for quantitative analysis.",
+    when: "Use when decisions are sequential, involve uncertainty, and you need to visualise multiple scenarios and outcomes.",
+    tags: ["decision", "probability", "outcomes", "scenarios", "tree"],
+    keywords: ["decision tree", "scenario", "outcome", "probability", "what if", "branch", "option analysis", "expected value", "risk decision", "sequential decision"]
+  },
+  {
+    id: 22,
+    name: "Cost–Benefit Analysis (CBA)",
+    category: "Decision Making",
+    description: "Quantifies and compares the total expected costs against total expected benefits of an initiative to determine financial viability.",
+    when: "Use when seeking approval for a project, comparing investment options, or justifying a business case.",
+    tags: ["decision", "financial", "cost", "benefit", "business case"],
+    keywords: ["cost benefit", "cba", "roi", "return on investment", "business case", "financial analysis", "justify", "investment", "worth it", "value for money", "budget", "costs", "savings"]
+  },
+
+  // CHANGE & GAP ANALYSIS
+  {
+    id: 23,
+    name: "Gap Analysis",
+    category: "Change Management",
+    description: "Compares the current state ('as-is') with the desired future state ('to-be') to identify what needs to change to close the gap.",
+    when: "Use at the start of transformation or improvement projects to understand the scope of change required.",
+    tags: ["change", "current state", "future state", "as-is", "to-be"],
+    keywords: ["gap analysis", "as is", "to be", "current state", "future state", "difference", "what needs to change", "improvement", "transformation", "change scope", "baseline"]
+  },
+  {
+    id: 24,
+    name: "Force Field Analysis",
+    category: "Change Management",
+    description: "Lists and scores the forces driving change and the forces resisting it, helping you plan where to strengthen drivers or reduce barriers.",
+    when: "Use when planning a change initiative and you need to understand resistance, build a change plan, or get buy-in.",
+    tags: ["change", "resistance", "driving forces", "restraining forces", "change management"],
+    keywords: ["change management", "resistance to change", "driving forces", "restraining forces", "change barriers", "force field", "lewin", "buy-in", "overcome resistance", "change plan"]
+  },
+  {
+    id: 25,
+    name: "Kotter's 8-Step Change Model",
+    category: "Change Management",
+    description: "A structured eight-step framework for leading organisational change: Create Urgency → Build Coalition → Form Vision → Communicate → Empower → Short Wins → Sustain → Anchor.",
+    when: "Use as a roadmap when leading large-scale organisational change to maintain momentum and avoid common failure points.",
+    tags: ["change", "leadership", "transformation", "organisational change", "model"],
+    keywords: ["change management", "kotter", "organisational change", "transformation", "change model", "lead change", "urgency", "coalition", "embed change", "cultural change"]
+  },
+
+  // USER EXPERIENCE & RESEARCH
+  {
+    id: 26,
+    name: "Customer Journey Map",
+    category: "User Experience",
+    description: "Visualises the end-to-end experience a customer has across every touchpoint with a product or service, including emotions, pain points, and opportunities.",
+    when: "Use when improving customer experience, designing a new service, or understanding where customers drop off or struggle.",
+    tags: ["customer", "journey", "experience", "touchpoints", "pain points"],
+    keywords: ["customer journey", "customer experience", "cx", "touchpoint", "pain point", "user journey", "emotion", "service design", "user experience", "ux", "improve experience", "customer flow"]
+  },
+  {
+    id: 27,
+    name: "Empathy Map",
+    category: "User Experience",
+    description: "Captures what a user thinks, feels, says, and does to build deep understanding of their perspective, motivations, and frustrations.",
+    when: "Use in discovery phases or design thinking sessions to ensure the solution is genuinely grounded in user needs.",
+    tags: ["user", "empathy", "think", "feel", "design thinking"],
+    keywords: ["empathy", "user needs", "customer needs", "think feel", "user research", "design thinking", "understanding users", "persona", "user perspective", "motivation", "frustration"]
+  },
+  {
+    id: 28,
+    name: "Persona",
+    category: "User Experience",
+    description: "A semi-fictional profile representing a key user segment, including goals, behaviours, demographics, and pain points, to guide design and feature decisions.",
+    when: "Use when the team lacks shared understanding of who the users are or when designing features for specific user types.",
+    tags: ["user", "persona", "segment", "profile", "design"],
+    keywords: ["persona", "user profile", "user type", "segment", "user group", "who is the user", "target user", "behaviour", "user need", "design for user"]
+  },
+
+  // DATA & INFORMATION
+  {
+    id: 29,
+    name: "Context Diagram",
+    category: "Requirements",
+    description: "Shows a system as a single box with all external entities (users, systems, organisations) that interact with it, and the data flows between them.",
+    when: "Use at project start to define system boundaries and agree on what is inside vs. outside scope.",
+    tags: ["requirements", "scope", "system boundary", "context", "data flow"],
+    keywords: ["context diagram", "system boundary", "scope", "external entities", "data flow", "system context", "what is in scope", "boundary", "interface", "integration"]
+  },
+  {
+    id: 30,
+    name: "Entity Relationship Diagram (ERD)",
+    category: "Data & Information",
+    description: "Models the data entities within a system, their attributes, and the relationships between them — foundational for database design.",
+    when: "Use when defining data structures, designing a database, or understanding data relationships in an existing system.",
+    tags: ["data", "database", "ERD", "relationships", "entities"],
+    keywords: ["erd", "entity relationship", "data model", "database", "data structure", "entities", "attributes", "relationships", "data design", "information model", "data mapping"]
+  },
+  {
+    id: 31,
+    name: "Data Flow Diagram (DFD)",
+    category: "Data & Information",
+    description: "Illustrates how data moves through a system — inputs, processing steps, stores, and outputs — at various levels of detail.",
+    when: "Use when mapping data flows between processes and systems, especially for integration or data migration projects.",
+    tags: ["data", "flow", "processes", "stores", "integration"],
+    keywords: ["data flow", "dfd", "data movement", "integration", "data migration", "input output", "process data", "information flow", "systems integration", "data diagram"]
+  },
+  {
+    id: 32,
+    name: "SIPOC",
+    category: "Process & Workflow",
+    description: "Summarises a process at a high level by identifying Suppliers, Inputs, Process steps, Outputs, and Customers.",
+    when: "Use at the beginning of a process improvement project to set scope and ensure agreement before diving into detail.",
+    tags: ["process", "scope", "suppliers", "customers", "outputs"],
+    keywords: ["sipoc", "process scope", "suppliers", "inputs", "outputs", "customers", "process overview", "high level process", "process summary", "six sigma", "improvement"]
+  }
+];
+
+// ──────────────────────────────────────────────
+//  CATEGORIES & CHIPS
+// ──────────────────────────────────────────────
+const QUICK_CHIPS = [
+  "manage stakeholders", "prioritise requirements", "map a process",
+  "root cause analysis", "make a decision", "manage change",
+  "improve customer experience", "analyse strategy", "design a database"
+];
+
+const ALL_CATEGORIES = [...new Set(BA_MODELS.map(m => m.category))].sort();
+
+// ──────────────────────────────────────────────
+//  STATE
+// ──────────────────────────────────────────────
+let currentQuery   = "";
+let activeCategory = "All";
+
+// ──────────────────────────────────────────────
+//  SCORING: how relevant is a model to the query?
+// ──────────────────────────────────────────────
+function score(model, query) {
+  if (!query) return 1;
+  const q = query.toLowerCase();
+  const tokens = q.split(/\s+/).filter(t => t.length > 2);
+  let pts = 0;
+
+  // exact keyword match
+  for (const kw of model.keywords) {
+    if (q.includes(kw)) pts += kw.split(" ").length * 4; // longer phrase = higher weight
+  }
+  // partial token match
+  for (const token of tokens) {
+    for (const kw of model.keywords) {
+      if (kw.includes(token)) pts += 1;
+    }
+    if (model.name.toLowerCase().includes(token))          pts += 3;
+    if (model.category.toLowerCase().includes(token))      pts += 2;
+    if (model.description.toLowerCase().includes(token))   pts += 1;
+    for (const tag of model.tags) {
+      if (tag.toLowerCase().includes(token)) pts += 2;
+    }
+  }
+  return pts;
+}
+
+// ──────────────────────────────────────────────
+//  RENDER
+// ──────────────────────────────────────────────
+function badgeLabel(rank, total) {
+  if (!currentQuery) return null;
+  if (rank === 0) return { cls: "top",    text: "⭐ Best Match" };
+  if (rank <= Math.min(2, total - 1)) return { cls: "good",   text: "Strong Match" };
+  return null;
+}
+
+function highlightTags(tags, query) {
+  if (!query) return tags.map(t => `<span class="tag">${t}</span>`).join("");
+  const tokens = query.toLowerCase().split(/\s+/);
+  return tags.map(t => {
+    const hi = tokens.some(tok => t.toLowerCase().includes(tok));
+    return `<span class="tag${hi ? " highlight" : ""}">${t}</span>`;
+  }).join("");
+}
+
+function renderCards(models, ranked) {
+  const container = document.getElementById("cardsContainer");
+  if (!models.length) {
+    container.innerHTML = `
+      <div class="empty" style="grid-column:1/-1">
+        <div class="icon">🔍</div>
+        <h3>No models matched your search</h3>
+        <p>Try different words — e.g. "stakeholders", "process", "decision", "risk"</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = models.map((m, idx) => {
+    const b = ranked ? badgeLabel(idx, models.length) : null;
+    const badgeHtml = b ? `<div class="badge-wrap"><span class="badge ${b.cls}">${b.text}</span></div>` : "";
+    return `
+    <div class="card" data-id="${m.id}">
+      ${badgeHtml}
+      <div class="card-category">${m.category}</div>
+      <div class="card-title">${m.name}</div>
+      <div class="card-desc">${m.description}</div>
+      <div class="when"><strong>When to use:</strong> ${m.when}</div>
+      <div class="card-tags">${highlightTags(m.tags, currentQuery)}</div>
+    </div>`;
+  }).join("");
+}
+
+// ──────────────────────────────────────────────
+//  SEARCH
+// ──────────────────────────────────────────────
+function runSearch(queryOverride) {
+  currentQuery = (queryOverride !== undefined ? queryOverride : document.getElementById("searchInput").value).trim();
+
+  if (queryOverride !== undefined) {
+    document.getElementById("searchInput").value = currentQuery;
+  }
+
+  activeCategory = "All";
+  renderFilters();
+  applyFilters();
+}
+
+function applyFilters() {
+  let models = [...BA_MODELS];
+
+  // category filter
+  if (activeCategory !== "All") {
+    models = models.filter(m => m.category === activeCategory);
+  }
+
+  // score + sort
+  if (currentQuery) {
+    models = models
+      .map(m => ({ ...m, _score: score(m, currentQuery) }))
+      .filter(m => m._score > 0)
+      .sort((a, b) => b._score - a._score);
+  }
+
+  const title   = document.getElementById("sectionTitle");
+  const badge   = document.getElementById("countBadge");
+  badge.textContent = models.length;
+
+  if (currentQuery && activeCategory === "All") {
+    title.innerHTML = `Results for "<em>${currentQuery}</em>" <span class="result-count" id="countBadge">${models.length}</span>`;
+  } else if (activeCategory !== "All") {
+    title.innerHTML = `${activeCategory} <span class="result-count" id="countBadge">${models.length}</span>`;
+  } else {
+    title.innerHTML = `All Models <span class="result-count" id="countBadge">${models.length}</span>`;
+  }
+
+  renderCards(models, !!currentQuery);
+}
+
+// ──────────────────────────────────────────────
+//  FILTERS
+// ──────────────────────────────────────────────
+function renderFilters() {
+  const wrap = document.getElementById("filters");
+  const cats = ["All", ...ALL_CATEGORIES];
+  wrap.innerHTML = cats.map(c => `
+    <button class="filter-pill${activeCategory === c ? " active" : ""}" onclick="selectCategory('${c}')">${c}</button>
+  `).join("");
+}
+
+function selectCategory(cat) {
+  activeCategory = cat;
+  renderFilters();
+  applyFilters();
+}
+
+// ──────────────────────────────────────────────
+//  QUICK CHIPS
+// ──────────────────────────────────────────────
+function renderChips() {
+  const wrap = document.getElementById("quickPicks");
+  wrap.innerHTML = `<span>Try:</span>` + QUICK_CHIPS.map(c =>
+    `<span class="chip" onclick="runSearch('${c}')">${c}</span>`
+  ).join("");
+}
+
+// ──────────────────────────────────────────────
+//  KEYBOARD SUPPORT
+// ──────────────────────────────────────────────
+document.getElementById("searchInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") runSearch();
+});
+
+// ──────────────────────────────────────────────
+//  INIT
+// ──────────────────────────────────────────────
+renderChips();
+renderFilters();
+applyFilters();
+</script>
+</body>
+</html>
