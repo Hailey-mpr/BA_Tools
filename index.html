@@ -2038,6 +2038,38 @@ function renderChips() {
 document.getElementById("searchInput").addEventListener("keydown", e => { if (e.key === "Enter") runSearch(); });
 
 // ── INIT ──
+  <script>
+    // Accuracy refinements: framework descriptions and selection guidance
+    const wordingRefinements = {
+      "RACI Chart": { description: "Maps every task or decision to four roles: Responsible, Accountable, Consulted, and Informed. Clarifies ownership; aim for one Accountable person per task or decision." },
+      "Stakeholder Onion Diagram": { description: "Visualises stakeholders in concentric rings by their relationship and proximity to the solution. Use a Power/Interest Grid to assess influence separately." },
+      "MoSCoW Prioritisation": { description: "Categorises requirements into Must Have, Should Have, Could Have, and Won't Have this time to focus delivery on what matters most." },
+      "Business Process Model & Notation (BPMN)": { when: "Use when you need a precise and auditable end-to-end process model. Some BPMN models can be made executable in compatible workflow tools." },
+      "Value Stream Mapping (VSM)": { when: "Use for Lean operational or service-delivery improvement when you need to identify bottlenecks, delays, and non-value-adding activities." },
+      "5 Whys": { description: "Repeatedly asks 'Why?'—often around five times—to move from a surface symptom toward an actionable root cause.", when: "Use for straightforward problems where a single chain of causation is likely. Pair it with other analysis for complex, multi-cause problems." },
+      "Pareto Analysis (80/20 Rule)": { description: "Identifies the vital few causes that produce the majority of effects. The 80/20 pattern is a useful rule of thumb, not a guaranteed ratio." },
+      "Decision Matrix (Weighted Scoring)": { description: "Scores options against agreed weighted criteria to produce a transparent, repeatable ranking. Criteria, weights, and scores should be reviewed for bias." },
+      "Cost–Benefit Analysis (CBA)": { description: "Quantifies and compares expected costs and benefits to assess viability, documenting assumptions, time horizon, risks, and where relevant the time value of money." },
+      "Force Field Analysis": { description: "Identifies—and optionally scores—forces driving and resisting change, helping teams strengthen drivers or reduce barriers." },
+      "Kotter's 8-Step Change Model": { description: "An adaptable eight-step framework for leading organisational change from urgency through to embedding.", when: "Use as an adaptable guide for large-scale organisational change; revisit steps as conditions and learning evolve." },
+      "Persona": { description: "An evidence-based, semi-fictional profile representing a key user segment, including goals, behaviours, and pain points." },
+      "Data Flow Diagram (DFD)": { description: "Illustrates how data moves through a system using external entities, processes, data stores, and data flows." },
+      "SIPOC": { when: "Use at the beginning of a process improvement project to set high-level scope before detailed process modelling." }
+  };
+  BA_MODELS.forEach(model => { if (wordingRefinements[model.name]) Object.assign(model, wordingRefinements[model.name]); });
+  function badgeLabel(rank, total) {
+      if (!currentQuery) return null;
+      if (rank === 0) return { cls:"top", text:"⭐ Suggested Match" };
+      if (rank <= Math.min(2, total - 1)) return { cls:"good", text:"Strong Match" };
+      return null;
+  }
+  document.title = "BA Framework & Technique Recommender";
+  const logo = document.querySelector("header .logo");
+  if (logo) logo.innerHTML = "BA <span>Framework &amp; Technique</span> Recommender";
+  const subtitle = document.querySelector("header p");
+  if (subtitle) subtitle.textContent = "Explore Business Analysis framework and technique suggestions based on your keywords. Use project context, stakeholder needs, and organisational methodology to make the final choice.";
+  applyFilters();
+</script>
 renderChips(); renderFilters(); applyFilters();
 </script>
 </body>
