@@ -3,7 +3,7 @@
   <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>BA Framework & Technique Recommender</title>
+      <title>BA Model Recommender</title>
     <style>
           *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
           :root {
@@ -122,7 +122,7 @@
   <body>
     <header>
         <div class="logo">BA <span>Model</span> Recommender</div>div>
-      <p>Explore Business Analysis framework and technique suggestions based on your keywords. Use project context, stakeholder needs, and organisational methodology to make the final choice.</p>
+      <p>Describe your challenge or the outcome you need — get instant recommendations for the right Business Analysis model or tool.</p>
     </header>
   <div class="search-wrap">
     <div class="search-box">
@@ -169,7 +169,7 @@
   <script>
     const BA_MODELS = [
       {id:1,name:"RACI Chart",category:"Stakeholder Management",
-       description:"Maps every task or decision to four roles: Responsible, Accountable, Consulted, and Informed. Clarifies ownership; aim for one Accountable person per task or decision.",
+       description:"Maps every task or decision to four roles: Responsible, Accountable, Consulted, and Informed. Eliminates confusion about who owns what.",
        when:"Use when you need to clarify ownership of activities, resolve accountability gaps, or on-board a new project team.",
        tags:["stakeholders","accountability","roles","team alignment","responsibility"],
        keywords:["stakeholder","manage stakeholder","accountability","responsible","who owns","roles","team","ownership","consulted","informed","raci","responsibility matrix","clarity","confusion","who does what"],
@@ -231,7 +231,7 @@
          {name:"Columns (People)",desc:"Each column represents one person, team, or role."}
          ]},
       {id:2,name:"Stakeholder Onion Diagram",category:"Stakeholder Management",
-       description:"Visualises stakeholders in concentric rings by their relationship and proximity to the solution. Use a Power/Interest Grid to assess influence separately.",
+       description:"Visualises stakeholders in concentric rings by their proximity to and influence on the solution.",
        when:"Use at project initiation to identify all affected parties and understand who sits inside or outside the solution boundary.",
        tags:["stakeholders","influence","proximity","scope","visualisation"],
        keywords:["stakeholder","identify stakeholders","who is affected","influence","proximity","scope boundary","onion","map stakeholders","stakeholder map","analysis"],
@@ -325,7 +325,7 @@
          {name:"Monitor",desc:"Low power + low interest. Minimal effort; watch for changes."}
          ]},
       {id:4,name:"MoSCoW Prioritisation",category:"Requirements",
-       description:"Categorises requirements into Must Have, Should Have, Could Have, and Won't Have this time to focus delivery on what matters most.",
+       description:"Categorises requirements into Must Have, Should Have, Could Have, and Won't Have to focus delivery on what matters most.",
        when:"Use when the backlog is large and the team must agree on scope for a sprint, release, or MVP.",
        tags:["requirements","prioritisation","scope","backlog","MoSCoW"],
        keywords:["prioritise requirements","priority","must have","should have","could have","won't have","scope","backlog","rank","importance","moscow","requirements prioritisation","feature priority","sprint scope","mvp"],
@@ -377,38 +377,38 @@
        diagram:`<svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
          <rect width="380" height="280" fill="#f8fafc" rx="8"/>
            <!-- system boundary -->
-             <rect x="90" y="20" width="220" height="230" rx="10" fill="none" stroke="#1e3a5f" stroke-width="2" stroke-dasharray="6,3"/>
-               <text x="200" y="14" fill="#1e3a5f" font-size="10" font-weight="700" text-anchor="middle">«system»  Online Banking</text>
-                 <!-- use cases (ellipses) -->
-                   <ellipse cx="200" cy="70" rx="55" ry="20" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
-                     <text x="200" y="74" fill="#1e3a5f" font-size="9" font-weight="600" text-anchor="middle">Login</text>
-                       <ellipse cx="200" cy="130" rx="55" ry="20" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
-                         <text x="200" y="134" fill="#1e3a5f" font-size="9" font-weight="600" text-anchor="middle">Transfer Funds</text>
-                           <ellipse cx="200" cy="190" rx="55" ry="20" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
-                             <text x="200" y="194" fill="#1e3a5f" font-size="9" font-weight="600" text-anchor="middle">View Statements</text>
-                               <!-- Actor: Customer -->
-                                 <line x1="38" y1="100" x2="38" y2="140" stroke="#1e3a5f" stroke-width="1.5"/>
-                                   <line x1="38" y1="110" x2="22" y2="128" stroke="#1e3a5f" stroke-width="1.5"/>
-                                     <line x1="38" y1="110" x2="54" y2="128" stroke="#1e3a5f" stroke-width="1.5"/>
-                                       <line x1="38" y1="140" x2="26" y2="158" stroke="#1e3a5f" stroke-width="1.5"/>
-                                         <line x1="38" y1="140" x2="50" y2="158" stroke="#1e3a5f" stroke-width="1.5"/>
-                                           <circle cx="38" cy="92" r="10" fill="none" stroke="#1e3a5f" stroke-width="1.5"/>
-                                             <text x="38" y="172" fill="#1e3a5f" font-size="9" text-anchor="middle">Customer</text>
-                                               <!-- Actor: Admin -->
-                                                 <line x1="342" y1="100" x2="342" y2="140" stroke="#f9a825" stroke-width="1.5"/>
-                                                   <line x1="342" y1="110" x2="326" y2="128" stroke="#f9a825" stroke-width="1.5"/>
-                                                     <line x1="342" y1="110" x2="358" y2="128" stroke="#f9a825" stroke-width="1.5"/>
-                                                       <line x1="342" y1="140" x2="330" y2="158" stroke="#f9a825" stroke-width="1.5"/>
-                                                         <line x1="342" y1="140" x2="354" y2="158" stroke="#f9a825" stroke-width="1.5"/>
-                                                           <circle cx="342" cy="92" r="10" fill="none" stroke="#f9a825" stroke-width="1.5"/>
-                                                             <text x="342" y="172" fill="#1e3a5f" font-size="9" text-anchor="middle">Admin</text>
-                                                               <!-- association lines -->
-                                                                 <line x1="54" y1="115" x2="145" y2="75" stroke="#6b7280" stroke-width="1"/>
-                                                                   <line x1="54" y1="125" x2="145" y2="130" stroke="#6b7280" stroke-width="1"/>
-                                                                     <line x1="54" y1="135" x2="145" y2="185" stroke="#6b7280" stroke-width="1"/>
-                                                                       <line x1="310" y1="115" x2="255" y2="75" stroke="#6b7280" stroke-width="1"/>
-                                                                         <line x1="310" y1="125" x2="255" y2="130" stroke="#6b7280" stroke-width="1"/>
-                                                                         </svg>`,
+         <rect x="90" y="20" width="220" height="230" rx="10" fill="none" stroke="#1e3a5f" stroke-width="2" stroke-dasharray="6,3"/>
+           <text x="200" y="14" fill="#1e3a5f" font-size="10" font-weight="700" text-anchor="middle">«system»  Online Banking</text>
+             <!-- use cases (ellipses) -->
+               <ellipse cx="200" cy="70" rx="55" ry="20" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
+                 <text x="200" y="74" fill="#1e3a5f" font-size="9" font-weight="600" text-anchor="middle">Login</text>
+                   <ellipse cx="200" cy="130" rx="55" ry="20" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
+                     <text x="200" y="134" fill="#1e3a5f" font-size="9" font-weight="600" text-anchor="middle">Transfer Funds</text>
+                       <ellipse cx="200" cy="190" rx="55" ry="20" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
+                         <text x="200" y="194" fill="#1e3a5f" font-size="9" font-weight="600" text-anchor="middle">View Statements</text>
+                           <!-- Actor: Customer -->
+                             <line x1="38" y1="100" x2="38" y2="140" stroke="#1e3a5f" stroke-width="1.5"/>
+      <line x1="38" y1="110" x2="22" y2="128" stroke="#1e3a5f" stroke-width="1.5"/>
+        <line x1="38" y1="110" x2="54" y2="128" stroke="#1e3a5f" stroke-width="1.5"/>
+          <line x1="38" y1="140" x2="26" y2="158" stroke="#1e3a5f" stroke-width="1.5"/>
+            <line x1="38" y1="140" x2="50" y2="158" stroke="#1e3a5f" stroke-width="1.5"/>
+              <circle cx="38" cy="92" r="10" fill="none" stroke="#1e3a5f" stroke-width="1.5"/>
+                <text x="38" y="172" fill="#1e3a5f" font-size="9" text-anchor="middle">Customer</text>
+           <!-- Actor: Admin -->
+             <line x1="342" y1="100" x2="342" y2="140" stroke="#f9a825" stroke-width="1.5"/>
+               <line x1="342" y1="110" x2="326" y2="128" stroke="#f9a825" stroke-width="1.5"/>
+                 <line x1="342" y1="110" x2="358" y2="128" stroke="#f9a825" stroke-width="1.5"/>
+                   <line x1="342" y1="140" x2="330" y2="158" stroke="#f9a825" stroke-width="1.5"/>
+                     <line x1="342" y1="140" x2="354" y2="158" stroke="#f9a825" stroke-width="1.5"/>
+                       <circle cx="342" cy="92" r="10" fill="none" stroke="#f9a825" stroke-width="1.5"/>
+                         <text x="342" y="172" fill="#1e3a5f" font-size="9" text-anchor="middle">Admin</text>
+                           <!-- association lines -->
+                             <line x1="54" y1="115" x2="145" y2="75" stroke="#6b7280" stroke-width="1"/>
+                               <line x1="54" y1="125" x2="145" y2="130" stroke="#6b7280" stroke-width="1"/>
+         <line x1="54" y1="135" x2="145" y2="185" stroke="#6b7280" stroke-width="1"/>
+           <line x1="310" y1="115" x2="255" y2="75" stroke="#6b7280" stroke-width="1"/>
+             <line x1="310" y1="125" x2="255" y2="130" stroke="#6b7280" stroke-width="1"/>
+             </svg>`,
        steps:["Draw a rectangle to represent the system boundary and label it with the system name.","Identify actors — people or external systems that interact with the system — and draw them as stick figures outside the boundary.","Identify use cases (what the system does for each actor) and draw them as ellipses inside the boundary.","Draw association lines connecting each actor to the use cases they participate in.","Add «include» or «extend» relationships between use cases where needed."],
        elements:[
          {name:"System Boundary (rectangle)",desc:"The box that contains all use cases, representing the scope of the system."},
@@ -427,23 +427,23 @@
          <rect width="380" height="260" fill="#f8fafc" rx="8"/>
            <!-- story card -->
              <rect x="30" y="20" width="320" height="130" rx="10" fill="#fff" stroke="#2e86de" stroke-width="2"/>
-               <rect x="30" y="20" width="320" height="36" rx="10" fill="#1e3a5f"/>
-                 <rect x="30" y="44" width="320" height="12" fill="#1e3a5f"/>
-                   <text x="190" y="44" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">USER STORY</text>
-                     <text x="50" y="80" fill="#2e86de" font-size="11" font-weight="700">As a</text>
-                       <text x="90" y="80" fill="#1e3a5f" font-size="11"> logged-in customer,</text>
-                         <text x="50" y="100" fill="#2e86de" font-size="11" font-weight="700">I want to</text>
-                           <text x="107" y="100" fill="#1e3a5f" font-size="11"> transfer funds between accounts,</text>
-                             <text x="50" y="120" fill="#2e86de" font-size="11" font-weight="700">So that</text>
-                               <text x="95" y="120" fill="#1e3a5f" font-size="11"> I can manage my money online.</text>
-                                 <text x="50" y="143" fill="#6b7280" font-size="8">Story Points: 5 · Priority: Must Have · Sprint: 3</text>
-                                   <!-- acceptance criteria box -->
-                                     <rect x="30" y="165" width="320" height="80" rx="10" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1.5"/>
-                                       <text x="50" y="184" fill="#0369a1" font-size="10" font-weight="700">Acceptance Criteria</text>
-                                         <text x="50" y="200" fill="#1e3a5f" font-size="9">✓  Given I am on the transfer page, when I enter valid details, then transfer succeeds.</text>
-                                           <text x="50" y="214" fill="#1e3a5f" font-size="9">✓  Given insufficient funds, when I submit, then I see a clear error message.</text>
-                                             <text x="50" y="228" fill="#1e3a5f" font-size="9">✓  Transfer confirmation email is sent within 1 minute.</text>
-                                             </svg>`,
+         <rect x="30" y="20" width="320" height="36" rx="10" fill="#1e3a5f"/>
+           <rect x="30" y="44" width="320" height="12" fill="#1e3a5f"/>
+             <text x="190" y="44" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">USER STORY</text>
+               <text x="50" y="80" fill="#2e86de" font-size="11" font-weight="700">As a</text>
+                 <text x="90" y="80" fill="#1e3a5f" font-size="11"> logged-in customer,</text>
+      <text x="50" y="100" fill="#2e86de" font-size="11" font-weight="700">I want to</text>
+        <text x="107" y="100" fill="#1e3a5f" font-size="11"> transfer funds between accounts,</text>
+          <text x="50" y="120" fill="#2e86de" font-size="11" font-weight="700">So that</text>
+            <text x="95" y="120" fill="#1e3a5f" font-size="11"> I can manage my money online.</text>
+              <text x="50" y="143" fill="#6b7280" font-size="8">Story Points: 5 · Priority: Must Have · Sprint: 3</text>
+                <!-- acceptance criteria box -->
+                  <rect x="30" y="165" width="320" height="80" rx="10" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1.5"/>
+                    <text x="50" y="184" fill="#0369a1" font-size="10" font-weight="700">Acceptance Criteria</text>
+                      <text x="50" y="200" fill="#1e3a5f" font-size="9">✓  Given I am on the transfer page, when I enter valid details, then transfer succeeds.</text>
+                        <text x="50" y="214" fill="#1e3a5f" font-size="9">✓  Given insufficient funds, when I submit, then I see a clear error message.</text>
+                          <text x="50" y="228" fill="#1e3a5f" font-size="9">✓  Transfer confirmation email is sent within 1 minute.</text>
+                          </svg>`,
        steps:["Write the role: 'As a [type of user]…' — be specific about who benefits.","Write the goal: 'I want to [do something]…' — focus on the action, not the solution.","Write the benefit: 'So that [reason/value]…' — this explains why it matters.","Add acceptance criteria using the Given / When / Then format to define done.","Estimate story points with the team and assign a priority using MoSCoW or similar."],
        elements:[
          {name:"As a [role]",desc:"Identifies who the story is for. Must be a specific user type, not 'the system'."},
@@ -510,13 +510,13 @@
          {name:"Req ID",desc:"A unique identifier for each requirement (e.g. REQ-001)."},
          {name:"Requirement",desc:"A concise statement of what the system must do."},
          {name:"Source",desc:"Where the requirement originated: document, workshop, stakeholder."},
-         {name:"Design Reference",desc:"The design or architecture document section that addresses this requirement."},
+    {name:"Design Reference",desc:"The design or architecture document section that addresses this requirement."},
          {name:"Test Case",desc:"The test case ID(s) that verify this requirement is correctly implemented."},
-         {name:"Status",desc:"Current delivery state: Backlog, In Dev, Testing, Done, or Deferred."}
+       {name:"Status",desc:"Current delivery state: Backlog, In Dev, Testing, Done, or Deferred."}
          ]},
       {id:8,name:"Business Process Model & Notation (BPMN)",category:"Process & Workflow",
        description:"Industry-standard notation for modelling business processes with tasks, gateways, events, and flow paths.",
-       when:"Use when you need a precise and auditable end-to-end process model. Some BPMN models can be made executable in compatible workflow tools.",
+       when:"Use when you need a precise, executable, or auditable model of an end-to-end business process.",
        tags:["process","workflow","BPMN","notation","modelling"],
        keywords:["process model","workflow","bpmn","swimlane","process map","business process","flow","sequence","gateway","automate process","map process","as-is","to-be","process diagram"],
        diagram:`<svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
@@ -554,20 +554,20 @@
                                                                        <text x="305" y="82" fill="#059669" font-size="7">Yes</text>
                                                                          <line x1="299" y1="110" x2="318" y2="130" stroke="#dc2626" stroke-width="1.5" marker-end="url(#a)"/>
                                                                            <text x="305" y="125" fill="#dc2626" font-size="7">No</text>
-                                                                             <line x1="398" y1="78" x2="424" y2="92" stroke="#6b7280" stroke-width="1.5" marker-end="url(#a)"/>
-                                                                               <line x1="398" y1="136" x2="424" y2="108" stroke="#6b7280" stroke-width="1.5" marker-end="url(#a)"/>
-                                                                                 <defs><marker id="a" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6b7280"/></marker></defs>
-                                                                                 </svg>`,
-       steps:["Draw a Pool (large rectangle) to represent the process scope and label it.","Divide it into Lanes (horizontal bands) for each participant or department.","Place a Start Event (thin green circle) at the beginning of the flow.","Add Tasks (rounded rectangles) for each activity in the process.","Add Gateways (diamonds) where the flow splits based on a decision.","Connect elements with Sequence Flows (arrows) following the process order.","End with an End Event (thick red circle)."],
-       elements:[
-         {name:"Pool",desc:"The outer container representing the whole process or organisation."},
-         {name:"Lane",desc:"A horizontal band within the pool representing one participant or role."},
-         {name:"Start Event (thin circle)",desc:"Marks where the process begins. Green border = normal start."},
-         {name:"End Event (thick circle)",desc:"Marks where the process ends. Red border = termination."},
-         {name:"Task (rounded rectangle)",desc:"A single step or activity performed by a participant."},
-         {name:"Gateway (diamond)",desc:"A decision or branching point. XOR = exclusive choice; AND = parallel."},
-         {name:"Sequence Flow (arrow)",desc:"Shows the order in which activities are performed."}
-         ]},
+      <line x1="398" y1="78" x2="424" y2="92" stroke="#6b7280" stroke-width="1.5" marker-end="url(#a)"/>
+        <line x1="398" y1="136" x2="424" y2="108" stroke="#6b7280" stroke-width="1.5" marker-end="url(#a)"/>
+      <defs><marker id="a" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6b7280"/></marker></defs>
+  </svg>`,
+  steps:["Draw a Pool (large rectangle) to represent the process scope and label it.","Divide it into Lanes (horizontal bands) for each participant or department.","Place a Start Event (thin green circle) at the beginning of the flow.","Add Tasks (rounded rectangles) for each activity in the process.","Add Gateways (diamonds) where the flow splits based on a decision.","Connect elements with Sequence Flows (arrows) following the process order.","End with an End Event (thick red circle)."],
+    elements:[
+      {name:"Pool",desc:"The outer container representing the whole process or organisation."},
+      {name:"Lane",desc:"A horizontal band within the pool representing one participant or role."},
+    {name:"Start Event (thin circle)",desc:"Marks where the process begins. Green border = normal start."},
+      {name:"End Event (thick circle)",desc:"Marks where the process ends. Red border = termination."},
+      {name:"Task (rounded rectangle)",desc:"A single step or activity performed by a participant."},
+      {name:"Gateway (diamond)",desc:"A decision or branching point. XOR = exclusive choice; AND = parallel."},
+      {name:"Sequence Flow (arrow)",desc:"Shows the order in which activities are performed."}
+      ]},
       {id:9,name:"Swimlane Diagram",category:"Process & Workflow",
        description:"A flowchart divided into lanes for each department or role, clearly showing handoffs and cross-functional responsibilities.",
        when:"Use when a process crosses multiple teams and you need to make handoff points visible.",
@@ -584,46 +584,46 @@
                        <text x="40" y="50" fill="#fff" font-size="8" font-weight="700" text-anchor="middle" transform="rotate(-90,40,50)">Customer</text>
                          <rect x="10" y="80" width="60" height="70" fill="#2e86de" rx="4"/>
                            <text x="40" y="120" fill="#fff" font-size="8" font-weight="700" text-anchor="middle" transform="rotate(-90,40,120)">Sales Team</text>
-                             <rect x="10" y="150" width="60" height="70" fill="#059669" rx="4"/>
-                               <text x="40" y="190" fill="#fff" font-size="8" font-weight="700" text-anchor="middle" transform="rotate(-90,40,190)">Finance</text>
-                                 <!-- lane 1 steps -->
-                                   <rect x="90" y="24" width="80" height="36" rx="5" fill="#fff" stroke="#2e86de" stroke-width="1.5"/>
-                                     <text x="130" y="40" fill="#1e3a5f" font-size="8" text-anchor="middle">Place Order</text>
-                                       <text x="130" y="51" fill="#1e3a5f" font-size="8" text-anchor="middle">Request</text>
-                                         <rect x="320" y="24" width="80" height="36" rx="5" fill="#fff" stroke="#2e86de" stroke-width="1.5"/>
-                                           <text x="360" y="40" fill="#1e3a5f" font-size="8" text-anchor="middle">Receive</text>
-                                             <text x="360" y="51" fill="#1e3a5f" font-size="8" text-anchor="middle">Confirmation</text>
-                                               <!-- lane 2 steps -->
-                                                 <rect x="190" y="94" width="80" height="36" rx="5" fill="#fff" stroke="#d97706" stroke-width="1.5"/>
-                                                   <text x="230" y="110" fill="#1e3a5f" font-size="8" text-anchor="middle">Review &amp;</text>
-                                                     <text x="230" y="121" fill="#1e3a5f" font-size="8" text-anchor="middle">Validate</text>
-                                                       <!-- lane 3 steps -->
-                                                         <rect x="190" y="164" width="80" height="36" rx="5" fill="#fff" stroke="#059669" stroke-width="1.5"/>
-                                                           <text x="230" y="180" fill="#1e3a5f" font-size="8" text-anchor="middle">Process</text>
-                                                             <text x="230" y="191" fill="#1e3a5f" font-size="8" text-anchor="middle">Payment</text>
-                                                               <rect x="295" y="164" width="80" height="36" rx="5" fill="#fff" stroke="#059669" stroke-width="1.5"/>
-                                                                 <text x="335" y="180" fill="#1e3a5f" font-size="8" text-anchor="middle">Send</text>
-                                                                   <text x="335" y="191" fill="#1e3a5f" font-size="8" text-anchor="middle">Invoice</text>
-                                                                     <!-- arrows -->
-                                                                       <defs><marker id="b" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6b7280"/></marker></defs>
-                                                                         <line x1="170" y1="42" x2="190" y2="95" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)" stroke-dasharray="4,2"/>
-                                                                           <line x1="230" y1="130" x2="230" y2="164" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)"/>
-                                                                             <line x1="270" y1="182" x2="295" y2="182" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)"/>
-                                                                               <line x1="335" y1="164" x2="335" y2="80" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)" stroke-dasharray="4,2"/>
-                                                                                 <line x1="335" y1="80" x2="360" y2="60" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)" stroke-dasharray="4,2"/>
-                                                                                   <text x="140" y="240" fill="#6b7280" font-size="8">Dashed arrows = handoff between lanes (departments)</text>
-                                                                                   </svg>`,
-       steps:["List all departments or roles involved in the process.","Draw horizontal lanes — one per department — labelled on the left.","Map the process steps left to right, placing each task in the lane of the responsible party.","Use solid arrows for steps within the same lane and dashed arrows for handoffs between lanes.","Add decision diamonds where the flow splits."],
-       elements:[
-         {name:"Lane",desc:"A horizontal band representing one department, team, or role."},
-         {name:"Task box",desc:"A step in the process. Its position in the lane shows who is responsible."},
-         {name:"Solid arrow",desc:"Sequence flow within the same lane."},
-         {name:"Dashed arrow (handoff)",desc:"Flow crossing lane boundaries — a transfer of work between departments."},
-         {name:"Diamond (decision)",desc:"A point where the flow branches based on a condition or approval."}
-         ]},
+        <rect x="10" y="150" width="60" height="70" fill="#059669" rx="4"/>
+          <text x="40" y="190" fill="#fff" font-size="8" font-weight="700" text-anchor="middle" transform="rotate(-90,40,190)">Finance</text>
+            <!-- lane 1 steps -->
+      <rect x="90" y="24" width="80" height="36" rx="5" fill="#fff" stroke="#2e86de" stroke-width="1.5"/>
+        <text x="130" y="40" fill="#1e3a5f" font-size="8" text-anchor="middle">Place Order</text>
+          <text x="130" y="51" fill="#1e3a5f" font-size="8" text-anchor="middle">Request</text>
+            <rect x="320" y="24" width="80" height="36" rx="5" fill="#fff" stroke="#2e86de" stroke-width="1.5"/>
+              <text x="360" y="40" fill="#1e3a5f" font-size="8" text-anchor="middle">Receive</text>
+                <text x="360" y="51" fill="#1e3a5f" font-size="8" text-anchor="middle">Confirmation</text>
+      <!-- lane 2 steps -->
+        <rect x="190" y="94" width="80" height="36" rx="5" fill="#fff" stroke="#d97706" stroke-width="1.5"/>
+          <text x="230" y="110" fill="#1e3a5f" font-size="8" text-anchor="middle">Review &amp;</text>
+            <text x="230" y="121" fill="#1e3a5f" font-size="8" text-anchor="middle">Validate</text>
+              <!-- lane 3 steps -->
+                <rect x="190" y="164" width="80" height="36" rx="5" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+                  <text x="230" y="180" fill="#1e3a5f" font-size="8" text-anchor="middle">Process</text>
+                    <text x="230" y="191" fill="#1e3a5f" font-size="8" text-anchor="middle">Payment</text>
+      <rect x="295" y="164" width="80" height="36" rx="5" fill="#fff" stroke="#059669" stroke-width="1.5"/>
+        <text x="335" y="180" fill="#1e3a5f" font-size="8" text-anchor="middle">Send</text>
+          <text x="335" y="191" fill="#1e3a5f" font-size="8" text-anchor="middle">Invoice</text>
+      <!-- arrows -->
+    <defs><marker id="b" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6b7280"/></marker></defs>
+      <line x1="170" y1="42" x2="190" y2="95" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)" stroke-dasharray="4,2"/>
+        <line x1="230" y1="130" x2="230" y2="164" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)"/>
+         <line x1="270" y1="182" x2="295" y2="182" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)"/>
+      <line x1="335" y1="164" x2="335" y2="80" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)" stroke-dasharray="4,2"/>
+        <line x1="335" y1="80" x2="360" y2="60" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)" stroke-dasharray="4,2"/>
+          <text x="140" y="240" fill="#6b7280" font-size="8">Dashed arrows = handoff between lanes (departments)</text>
+       </svg>`,
+  steps:["List all departments or roles involved in the process.","Draw horizontal lanes — one per department — labelled on the left.","Map the process steps left to right, placing each task in the lane of the responsible party.","Use solid arrows for steps within the same lane and dashed arrows for handoffs between lanes.","Add decision diamonds where the flow splits."],
+         elements:[
+  {name:"Lane",desc:"A horizontal band representing one department, team, or role."},
+    {name:"Task box",desc:"A step in the process. Its position in the lane shows who is responsible."},
+      {name:"Solid arrow",desc:"Sequence flow within the same lane."},
+             {name:"Dashed arrow (handoff)",desc:"Flow crossing lane boundaries — a transfer of work between departments."},
+           {name:"Diamond (decision)",desc:"A point where the flow branches based on a condition or approval."}
+           ]},
       {id:10,name:"Value Stream Mapping (VSM)",category:"Process & Workflow",
        description:"A lean technique mapping end-to-end flow of materials and information, highlighting value-adding steps versus waste.",
-       when:"Use for Lean operational or service-delivery improvement when you need to identify bottlenecks, delays, and non-value-adding activities.",
+       when:"Use when improving a process and you need to identify bottlenecks, delays, and non-value-adding activities.",
        tags:["process improvement","lean","waste","value","bottleneck"],
        keywords:["process improvement","lean","waste","value stream","bottleneck","efficiency","delays","non value","optimise process","flow time","cycle time","vsm"],
        diagram:`<svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
@@ -639,146 +639,146 @@
                            <rect x="220" y="50" width="70" height="50" rx="4" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
                              <text x="255" y="72" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">QA Check</text>
                                <text x="255" y="83" fill="#6b7280" font-size="7" text-anchor="middle">CT: 45m</text>
-                                 <text x="255" y="93" fill="#d97706" font-size="7" text-anchor="middle">NVA ✗</text>
-                                   <rect x="330" y="50" width="70" height="50" rx="4" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
-                                     <text x="365" y="72" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">Ship</text>
-                                       <text x="365" y="83" fill="#6b7280" font-size="7" text-anchor="middle">CT: 15m</text>
-                                         <text x="365" y="93" fill="#059669" font-size="7" text-anchor="middle">VA ✓</text>
-                                           <!-- customer -->
-                                             <rect x="430" y="60" width="60" height="40" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
-                                               <text x="460" y="84" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">Customer</text>
-                                                 <!-- push arrows -->
-                                                   <defs><marker id="c" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1e3a5f"/></marker></defs>
-                                                     <line x1="70" y1="80" x2="110" y2="80" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#c)"/>
-                                                       <line x1="180" y1="80" x2="220" y2="80" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#c)"/>
-                                                         <line x1="290" y1="80" x2="330" y2="80" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#c)"/>
-                                                           <line x1="400" y1="80" x2="430" y2="80" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#c)"/>
-                                                             <!-- wait triangles -->
-                                                               <polygon points="190,115 200,130 210,115" fill="#dc2626" opacity=".7"/>
-                                                                 <text x="200" y="145" fill="#dc2626" font-size="7" text-anchor="middle">Wait: 2h</text>
-                                                                   <polygon points="300,115 310,130 320,115" fill="#dc2626" opacity=".7"/>
-                                                                     <text x="310" y="145" fill="#dc2626" font-size="7" text-anchor="middle">Wait: 30m</text>
-                                                                       <!-- timeline -->
-                                                                         <line x1="110" y1="165" x2="400" y2="165" stroke="#1e3a5f" stroke-width="1.5"/>
-                                                                           <line x1="110" y1="160" x2="110" y2="170" stroke="#1e3a5f" stroke-width="1.5"/>
-                                                                             <line x1="400" y1="160" x2="400" y2="170" stroke="#1e3a5f" stroke-width="1.5"/>
-                                                                               <text x="255" y="160" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">Total Lead Time</text>
-                                                                                 <rect x="110" y="170" width="60" height="16" fill="#d1fae5"/>
-                                                                                   <text x="140" y="181" fill="#065f46" font-size="7" text-anchor="middle">VA: 25m</text>
-                                                                                     <rect x="170" y="170" width="60" height="16" fill="#fee2e2"/>
-                                                                                       <text x="200" y="181" fill="#dc2626" font-size="7" text-anchor="middle">NVA: 2h45m</text>
-                                                                                         <rect x="230" y="170" width="60" height="16" fill="#d1fae5"/>
-                                                                                           <text x="260" y="181" fill="#065f46" font-size="7" text-anchor="middle">VA: 15m</text>
-                                                                                             <text x="255" y="210" fill="#6b7280" font-size="8" text-anchor="middle">VA = Value-Adding · NVA = Non-Value-Adding (waste)</text>
-                                                                                             </svg>`,
+      <text x="255" y="93" fill="#d97706" font-size="7" text-anchor="middle">NVA ✗</text>
+        <rect x="330" y="50" width="70" height="50" rx="4" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
+    <text x="365" y="72" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">Ship</text>
+      <text x="365" y="83" fill="#6b7280" font-size="7" text-anchor="middle">CT: 15m</text>
+        <text x="365" y="93" fill="#059669" font-size="7" text-anchor="middle">VA ✓</text>
+          <!-- customer -->
+            <rect x="430" y="60" width="60" height="40" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+              <text x="460" y="84" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">Customer</text>
+    <!-- push arrows -->
+      <defs><marker id="c" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1e3a5f"/></marker></defs>
+    <line x1="70" y1="80" x2="110" y2="80" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#c)"/>
+      <line x1="180" y1="80" x2="220" y2="80" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#c)"/>
+        <line x1="290" y1="80" x2="330" y2="80" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#c)"/>
+          <line x1="400" y1="80" x2="430" y2="80" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#c)"/>
+            <!-- wait triangles -->
+      <polygon points="190,115 200,130 210,115" fill="#dc2626" opacity=".7"/>
+        <text x="200" y="145" fill="#dc2626" font-size="7" text-anchor="middle">Wait: 2h</text>
+    <polygon points="300,115 310,130 320,115" fill="#dc2626" opacity=".7"/>
+         <text x="310" y="145" fill="#dc2626" font-size="7" text-anchor="middle">Wait: 30m</text>
+           <!-- timeline -->
+             <line x1="110" y1="165" x2="400" y2="165" stroke="#1e3a5f" stroke-width="1.5"/>
+         <line x1="110" y1="160" x2="110" y2="170" stroke="#1e3a5f" stroke-width="1.5"/>
+               <line x1="400" y1="160" x2="400" y2="170" stroke="#1e3a5f" stroke-width="1.5"/>
+                 <text x="255" y="160" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">Total Lead Time</text>
+      <rect x="110" y="170" width="60" height="16" fill="#d1fae5"/>
+      <text x="140" y="181" fill="#065f46" font-size="7" text-anchor="middle">VA: 25m</text>
+      <rect x="170" y="170" width="60" height="16" fill="#fee2e2"/>
+        <text x="200" y="181" fill="#dc2626" font-size="7" text-anchor="middle">NVA: 2h45m</text>
+          <rect x="230" y="170" width="60" height="16" fill="#d1fae5"/>
+            <text x="260" y="181" fill="#065f46" font-size="7" text-anchor="middle">VA: 15m</text>
+              <text x="255" y="210" fill="#6b7280" font-size="8" text-anchor="middle">VA = Value-Adding · NVA = Non-Value-Adding (waste)</text>
+              </svg>`,
        steps:["Map the current state: draw each process step as a box, left to right, from supplier to customer.","Record cycle time (CT) and value-added status (VA/NVA) for each step.","Draw inventory or wait triangles between steps to show delays.","Add an information flow line at the top showing how orders and data move.","Draw the timeline at the bottom — total lead time vs value-adding time.","Identify waste and design the future state map with improvements."],
        elements:[
-         {name:"Process box",desc:"A single step in the value stream. Contains cycle time and VA/NVA status."},
+      {name:"Process box",desc:"A single step in the value stream. Contains cycle time and VA/NVA status."},
          {name:"VA (Value-Adding)",desc:"Steps the customer is willing to pay for — directly create value."},
-         {name:"NVA (Non-Value-Adding)",desc:"Waste: steps that consume time/resources without adding value. Targets for elimination."},
-         {name:"Wait triangle",desc:"Represents inventory, queue, or delay time between steps."},
-         {name:"Push arrow",desc:"Material or work being pushed to the next step regardless of demand."},
-         {name:"Timeline",desc:"Shows total lead time vs. value-adding time — reveals the improvement opportunity."}
-         ]},
-      {id:11,name:"Flowchart",category:"Process & Workflow",
-       description:"A simple diagram using standard shapes to map the steps and decision points in a process.",
+    {name:"NVA (Non-Value-Adding)",desc:"Waste: steps that consume time/resources without adding value. Targets for elimination."},
+    {name:"Wait triangle",desc:"Represents inventory, queue, or delay time between steps."},
+      {name:"Push arrow",desc:"Material or work being pushed to the next step regardless of demand."},
+    {name:"Timeline",desc:"Shows total lead time vs. value-adding time — reveals the improvement opportunity."}
+                 ]},
+  {id:11,name:"Flowchart",category:"Process & Workflow",
+  description:"A simple diagram using standard shapes to map the steps and decision points in a process.",
        when:"Use when you need a quick, accessible process view that any audience can follow.",
-       tags:["process","flow","decision","simple","diagram"],
-       keywords:["flowchart","flow diagram","process steps","decision","simple process","map steps","logic flow","decision tree","process overview"],
+    tags:["process","flow","decision","simple","diagram"],
+   keywords:["flowchart","flow diagram","process steps","decision","simple process","map steps","logic flow","decision tree","process overview"],
        diagram:`<svg viewBox="0 0 220 320" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
          <rect width="220" height="320" fill="#f8fafc" rx="8"/>
            <defs><marker id="d" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6b7280"/></marker></defs>
              <!-- Start oval -->
                <ellipse cx="110" cy="30" rx="50" ry="18" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
-                 <text x="110" y="34" fill="#065f46" font-size="9" font-weight="700" text-anchor="middle">START</text>
-      <!-- Process 1 -->
-        <rect x="60" y="70" width="100" height="36" rx="5" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
-          <text x="110" y="92" fill="#1e3a5f" font-size="9" text-anchor="middle">Enter Details</text>
-            <!-- Decision -->
-              <polygon points="110,128 160,158 110,188 60,158" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
-                <text x="110" y="162" fill="#92400e" font-size="8" text-anchor="middle">Valid?</text>
-                  <!-- Process 2 yes -->
-                    <rect x="155" y="218" width="55" height="32" rx="5" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
-                      <text x="182" y="238" fill="#1e3a5f" font-size="8" text-anchor="middle">Submit</text>
-                        <!-- Process 2 no -->
-                          <rect x="10" y="218" width="55" height="32" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
-                            <text x="38" y="238" fill="#dc2626" font-size="8" text-anchor="middle">Show Error</text>
-                              <!-- End oval -->
-                                <ellipse cx="110" cy="295" rx="50" ry="18" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
-                                  <text x="110" y="299" fill="#991b1b" font-size="9" font-weight="700" text-anchor="middle">END</text>
-                                    <!-- arrows -->
-                                      <line x1="110" y1="48" x2="110" y2="70" stroke="#6b7280" stroke-width="1.5" marker-end="url(#d)"/>
-                                        <line x1="110" y1="106" x2="110" y2="128" stroke="#6b7280" stroke-width="1.5" marker-end="url(#d)"/>
-                                          <line x1="160" y1="158" x2="182" y2="158" stroke="#059669" stroke-width="1.5"/>
-                                            <line x1="182" y1="158" x2="182" y2="218" stroke="#059669" stroke-width="1.5" marker-end="url(#d)"/>
-                                              <text x="168" y="154" fill="#059669" font-size="8">Yes</text>
-                                                <line x1="60" y1="158" x2="38" y2="158" stroke="#dc2626" stroke-width="1.5"/>
-                                                  <line x1="38" y1="158" x2="38" y2="218" stroke="#dc2626" stroke-width="1.5" marker-end="url(#d)"/>
-                                                    <text x="43" y="154" fill="#dc2626" font-size="8">No</text>
-                                                      <line x1="182" y1="250" x2="182" y2="295" stroke="#6b7280" stroke-width="1.5"/>
-                                                        <line x1="182" y1="295" x2="160" y2="295" stroke="#6b7280" stroke-width="1.5" marker-end="url(#d)"/>
-                                                          <line x1="38" y1="250" x2="38" y2="270" stroke="#dc2626" stroke-width="1.5"/>
-                                                            <line x1="38" y1="270" x2="110" y2="270" stroke="#dc2626" stroke-width="1.5"/>
-                                                              <line x1="110" y1="270" x2="110" y2="277" stroke="#dc2626" stroke-width="1.5" marker-end="url(#d)"/>
-                                                              </svg>`,
-       steps:["Start with a Terminal (oval) labelled START.","Add Process steps (rectangles) for each action or task.","Add Decision diamonds where the flow branches (Yes/No questions).","Connect shapes with arrows showing the order and direction of flow.","End with a Terminal (oval) labelled END for each possible outcome."],
-       elements:[
-         {name:"Terminal / Oval",desc:"Marks the Start or End of the process."},
-         {name:"Process / Rectangle",desc:"A step, action, or task performed in the process."},
-         {name:"Decision / Diamond",desc:"A question with two or more possible paths (typically Yes/No)."},
-         {name:"Arrow",desc:"Shows the direction of flow between steps."},
-         {name:"Parallelogram (optional)",desc:"Represents input or output — data entering or leaving the process."}
-         ]},
-      {id:12,name:"SWOT Analysis",category:"Strategy & Analysis",
-       description:"Evaluates a business, project, or initiative across Strengths, Weaknesses, Opportunities, and Threats.",
-       when:"Use at the start of a project or strategic review to build shared situational awareness.",
-       tags:["strategy","strengths","weaknesses","opportunities","threats"],
-       keywords:["swot","strengths","weaknesses","opportunities","threats","strategic analysis","situation analysis","business analysis","assessment","internal external","where are we","current state"],
-       diagram:`<svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
-         <rect width="340" height="300" fill="#f8fafc" rx="8"/>
-           <!-- quadrants -->
-             <rect x="10" y="30" width="150" height="120" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
-               <rect x="180" y="30" width="150" height="120" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
-                 <rect x="10" y="165" width="150" height="120" rx="6" fill="#dbeafe" stroke="#2e86de" stroke-width="1.5"/>
-                   <rect x="180" y="165" width="150" height="120" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
-                     <!-- labels -->
-                       <text x="85" y="52" fill="#065f46" font-size="13" font-weight="800" text-anchor="middle">S</text>
-                         <text x="85" y="65" fill="#065f46" font-size="8" font-weight="700" text-anchor="middle">STRENGTHS</text>
-                           <text x="85" y="77" fill="#065f46" font-size="7" text-anchor="middle">Internal · Helpful</text>
-                             <text x="255" y="52" fill="#991b1b" font-size="13" font-weight="800" text-anchor="middle">W</text>
-                               <text x="255" y="65" fill="#991b1b" font-size="8" font-weight="700" text-anchor="middle">WEAKNESSES</text>
-                                 <text x="255" y="77" fill="#991b1b" font-size="7" text-anchor="middle">Internal · Harmful</text>
-                                   <text x="85" y="187" fill="#1e40af" font-size="13" font-weight="800" text-anchor="middle">O</text>
-                                     <text x="85" y="200" fill="#1e40af" font-size="8" font-weight="700" text-anchor="middle">OPPORTUNITIES</text>
-                                       <text x="85" y="212" fill="#1e40af" font-size="7" text-anchor="middle">External · Helpful</text>
-                                         <text x="255" y="187" fill="#92400e" font-size="13" font-weight="800" text-anchor="middle">T</text>
-                                           <text x="255" y="200" fill="#92400e" font-size="8" font-weight="700" text-anchor="middle">THREATS</text>
-                                             <text x="255" y="212" fill="#92400e" font-size="7" text-anchor="middle">External · Harmful</text>
-                                               <!-- example bullets -->
-                                                 <text x="18" y="93" fill="#065f46" font-size="7">• Strong brand reputation</text>
-                                                   <text x="18" y="104" fill="#065f46" font-size="7">• Skilled team</text>
-                                                     <text x="18" y="115" fill="#065f46" font-size="7">• Low cost base</text>
-                                                       <text x="188" y="93" fill="#991b1b" font-size="7">• Limited market reach</text>
-                                                         <text x="188" y="104" fill="#991b1b" font-size="7">• Outdated technology</text>
-                                                           <text x="188" y="115" fill="#991b1b" font-size="7">• High staff turnover</text>
-                                                             <text x="18" y="228" fill="#1e40af" font-size="7">• Growing market</text>
-                                                               <text x="18" y="239" fill="#1e40af" font-size="7">• New regulations favour us</text>
-                                                                 <text x="18" y="250" fill="#1e40af" font-size="7">• Partnership potential</text>
-                                                                   <text x="188" y="228" fill="#92400e" font-size="7">• New competitors</text>
-                                                                     <text x="188" y="239" fill="#92400e" font-size="7">• Economic downturn</text>
-                                                                       <text x="188" y="250" fill="#92400e" font-size="7">• Supply chain risk</text>
-                                                                         <!-- axis labels -->
-                                                                           <text x="170" y="22" fill="#6b7280" font-size="8" text-anchor="middle" font-weight="600">HELPFUL ←→ HARMFUL</text>
-                                                                             <text x="4" y="130" fill="#6b7280" font-size="7" text-anchor="middle" transform="rotate(-90,4,130)">INTERNAL</text>
-                                                                               <text x="4" y="225" fill="#6b7280" font-size="7" text-anchor="middle" transform="rotate(-90,4,225)">EXTERNAL</text>
-                                                                               </svg>`,
-       steps:["Draw a 2×2 grid. Label rows: Internal / External. Label columns: Helpful / Harmful.","Top-left = Strengths, Top-right = Weaknesses, Bottom-left = Opportunities, Bottom-right = Threats.","Brainstorm with stakeholders and fill each quadrant with bullet points.","Strengths and Weaknesses come from inside the organisation.","Opportunities and Threats come from outside (market, competition, environment).","Use the outputs to build strategy: leverage strengths, address weaknesses, seize opportunities, mitigate threats."],
-       elements:[
-         {name:"Strengths (S)",desc:"Internal positive attributes. What does the organisation do well?"},
-         {name:"Weaknesses (W)",desc:"Internal negative attributes. Where does the organisation fall short?"},
-         {name:"Opportunities (O)",desc:"External positive factors the organisation could exploit."},
-         {name:"Threats (T)",desc:"External negative factors that could harm the organisation or project."}
-         ]},
+        <text x="110" y="34" fill="#065f46" font-size="9" font-weight="700" text-anchor="middle">START</text>
+          <!-- Process 1 -->
+            <rect x="60" y="70" width="100" height="36" rx="5" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
+              <text x="110" y="92" fill="#1e3a5f" font-size="9" text-anchor="middle">Enter Details</text>
+                <!-- Decision -->
+                  <polygon points="110,128 160,158 110,188 60,158" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+    <text x="110" y="162" fill="#92400e" font-size="8" text-anchor="middle">Valid?</text>
+    <!-- Process 2 yes -->
+      <rect x="155" y="218" width="55" height="32" rx="5" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
+    <text x="182" y="238" fill="#1e3a5f" font-size="8" text-anchor="middle">Submit</text>
+      <!-- Process 2 no -->
+                   <rect x="10" y="218" width="55" height="32" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+                     <text x="38" y="238" fill="#dc2626" font-size="8" text-anchor="middle">Show Error</text>
+                       <!-- End oval -->
+                         <ellipse cx="110" cy="295" rx="50" ry="18" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+      <text x="110" y="299" fill="#991b1b" font-size="9" font-weight="700" text-anchor="middle">END</text>
+        <!-- arrows -->
+    <line x1="110" y1="48" x2="110" y2="70" stroke="#6b7280" stroke-width="1.5" marker-end="url(#d)"/>
+      <line x1="110" y1="106" x2="110" y2="128" stroke="#6b7280" stroke-width="1.5" marker-end="url(#d)"/>
+    <line x1="160" y1="158" x2="182" y2="158" stroke="#059669" stroke-width="1.5"/>
+      <line x1="182" y1="158" x2="182" y2="218" stroke="#059669" stroke-width="1.5" marker-end="url(#d)"/>
+    <text x="168" y="154" fill="#059669" font-size="8">Yes</text>
+      <line x1="60" y1="158" x2="38" y2="158" stroke="#dc2626" stroke-width="1.5"/>
+      <line x1="38" y1="158" x2="38" y2="218" stroke="#dc2626" stroke-width="1.5" marker-end="url(#d)"/>
+      <text x="43" y="154" fill="#dc2626" font-size="8">No</text>
+         <line x1="182" y1="250" x2="182" y2="295" stroke="#6b7280" stroke-width="1.5"/>
+    <line x1="182" y1="295" x2="160" y2="295" stroke="#6b7280" stroke-width="1.5" marker-end="url(#d)"/>
+    <line x1="38" y1="250" x2="38" y2="270" stroke="#dc2626" stroke-width="1.5"/>
+      <line x1="38" y1="270" x2="110" y2="270" stroke="#dc2626" stroke-width="1.5"/>
+    <line x1="110" y1="270" x2="110" y2="277" stroke="#dc2626" stroke-width="1.5" marker-end="url(#d)"/>
+  </svg>`,
+                 steps:["Start with a Terminal (oval) labelled START.","Add Process steps (rectangles) for each action or task.","Add Decision diamonds where the flow branches (Yes/No questions).","Connect shapes with arrows showing the order and direction of flow.","End with a Terminal (oval) labelled END for each possible outcome."],
+  elements:[
+      {name:"Terminal / Oval",desc:"Marks the Start or End of the process."},
+  {name:"Process / Rectangle",desc:"A step, action, or task performed in the process."},
+    {name:"Decision / Diamond",desc:"A question with two or more possible paths (typically Yes/No)."},
+  {name:"Arrow",desc:"Shows the direction of flow between steps."},
+             {name:"Parallelogram (optional)",desc:"Represents input or output — data entering or leaving the process."}
+  ]},
+    {id:12,name:"SWOT Analysis",category:"Strategy & Analysis",
+  description:"Evaluates a business, project, or initiative across Strengths, Weaknesses, Opportunities, and Threats.",
+     when:"Use at the start of a project or strategic review to build shared situational awareness.",
+     tags:["strategy","strengths","weaknesses","opportunities","threats"],
+     keywords:["swot","strengths","weaknesses","opportunities","threats","strategic analysis","situation analysis","business analysis","assessment","internal external","where are we","current state"],
+     diagram:`<svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
+       <rect width="340" height="300" fill="#f8fafc" rx="8"/>
+         <!-- quadrants -->
+           <rect x="10" y="30" width="150" height="120" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+             <rect x="180" y="30" width="150" height="120" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+               <rect x="10" y="165" width="150" height="120" rx="6" fill="#dbeafe" stroke="#2e86de" stroke-width="1.5"/>
+                 <rect x="180" y="165" width="150" height="120" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+                   <!-- labels -->
+                     <text x="85" y="52" fill="#065f46" font-size="13" font-weight="800" text-anchor="middle">S</text>
+                       <text x="85" y="65" fill="#065f46" font-size="8" font-weight="700" text-anchor="middle">STRENGTHS</text>
+                         <text x="85" y="77" fill="#065f46" font-size="7" text-anchor="middle">Internal · Helpful</text>
+                           <text x="255" y="52" fill="#991b1b" font-size="13" font-weight="800" text-anchor="middle">W</text>
+                             <text x="255" y="65" fill="#991b1b" font-size="8" font-weight="700" text-anchor="middle">WEAKNESSES</text>
+                               <text x="255" y="77" fill="#991b1b" font-size="7" text-anchor="middle">Internal · Harmful</text>
+                                 <text x="85" y="187" fill="#1e40af" font-size="13" font-weight="800" text-anchor="middle">O</text>
+                                   <text x="85" y="200" fill="#1e40af" font-size="8" font-weight="700" text-anchor="middle">OPPORTUNITIES</text>
+      <text x="85" y="212" fill="#1e40af" font-size="7" text-anchor="middle">External · Helpful</text>
+        <text x="255" y="187" fill="#92400e" font-size="13" font-weight="800" text-anchor="middle">T</text>
+          <text x="255" y="200" fill="#92400e" font-size="8" font-weight="700" text-anchor="middle">THREATS</text>
+    <text x="255" y="212" fill="#92400e" font-size="7" text-anchor="middle">External · Harmful</text>
+    <!-- example bullets -->
+      <text x="18" y="93" fill="#065f46" font-size="7">• Strong brand reputation</text>
+      <text x="18" y="104" fill="#065f46" font-size="7">• Skilled team</text>
+        <text x="18" y="115" fill="#065f46" font-size="7">• Low cost base</text>
+    <text x="188" y="93" fill="#991b1b" font-size="7">• Limited market reach</text>
+      <text x="188" y="104" fill="#991b1b" font-size="7">• Outdated technology</text>
+        <text x="188" y="115" fill="#991b1b" font-size="7">• High staff turnover</text>
+          <text x="18" y="228" fill="#1e40af" font-size="7">• Growing market</text>
+            <text x="18" y="239" fill="#1e40af" font-size="7">• New regulations favour us</text>
+              <text x="18" y="250" fill="#1e40af" font-size="7">• Partnership potential</text>
+                <text x="188" y="228" fill="#92400e" font-size="7">• New competitors</text>
+                  <text x="188" y="239" fill="#92400e" font-size="7">• Economic downturn</text>
+                    <text x="188" y="250" fill="#92400e" font-size="7">• Supply chain risk</text>
+                      <!-- axis labels -->
+                        <text x="170" y="22" fill="#6b7280" font-size="8" text-anchor="middle" font-weight="600">HELPFUL ←→ HARMFUL</text>
+                          <text x="4" y="130" fill="#6b7280" font-size="7" text-anchor="middle" transform="rotate(-90,4,130)">INTERNAL</text>
+                            <text x="4" y="225" fill="#6b7280" font-size="7" text-anchor="middle" transform="rotate(-90,4,225)">EXTERNAL</text>
+                            </svg>`,
+     steps:["Draw a 2×2 grid. Label rows: Internal / External. Label columns: Helpful / Harmful.","Top-left = Strengths, Top-right = Weaknesses, Bottom-left = Opportunities, Bottom-right = Threats.","Brainstorm with stakeholders and fill each quadrant with bullet points.","Strengths and Weaknesses come from inside the organisation.","Opportunities and Threats come from outside (market, competition, environment).","Use the outputs to build strategy: leverage strengths, address weaknesses, seize opportunities, mitigate threats."],
+     elements:[
+       {name:"Strengths (S)",desc:"Internal positive attributes. What does the organisation do well?"},
+       {name:"Weaknesses (W)",desc:"Internal negative attributes. Where does the organisation fall short?"},
+       {name:"Opportunities (O)",desc:"External positive factors the organisation could exploit."},
+       {name:"Threats (T)",desc:"External negative factors that could harm the organisation or project."}
+       ]},
       {id:13,name:"PESTLE Analysis",category:"Strategy & Analysis",
        description:"Scans the macro-environment across Political, Economic, Social, Technological, Legal, and Environmental factors.",
        when:"Use when assessing external risks and opportunities for a strategic initiative or market entry.",
@@ -824,7 +824,7 @@
                                                                                </svg>`,
        steps:["Create six sections, one for each letter: P, E, S, T, L, E.","For each factor, brainstorm how the external environment affects your initiative.","Use prompts: What government policies apply? What are economic trends? What social shifts are happening?","Document both current factors and emerging trends.","Prioritise the most impactful factors and feed them into risk planning or strategy."],
        elements:[
-       {name:"Political (P)",desc:"Government policy, political stability, trade agreements, tax policy."},
+         {name:"Political (P)",desc:"Government policy, political stability, trade agreements, tax policy."},
          {name:"Economic (E)",desc:"Economic growth, inflation, exchange rates, interest rates, consumer spending."},
          {name:"Social (S)",desc:"Demographics, cultural trends, consumer attitudes, lifestyle changes."},
          {name:"Technological (T)",desc:"Innovation, R&D activity, automation, AI, digital disruption."},
@@ -836,119 +836,119 @@
        when:"Use when evaluating market attractiveness, competitive positioning, or before launching a new product or service.",
        tags:["strategy","competition","market","industry","forces"],
        keywords:["porter","five forces","competitive analysis","market analysis","rivalry","supplier power","buyer power","new entrant","substitute","industry analysis","competition","market entry"],
-       diagram:`<svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
-         <rect width="360" height="300" fill="#f8fafc" rx="8"/>
-           <!-- centre: rivalry -->
-             <rect x="120" y="110" width="120" height="80" rx="8" fill="#1e3a5f"/>
-               <text x="180" y="145" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">Competitive</text>
-                 <text x="180" y="158" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">Rivalry</text>
-                   <text x="180" y="171" fill="#f9a825" font-size="7" text-anchor="middle">Intensity of competition</text>
-                     <!-- top: new entrants -->
-                       <rect x="120" y="14" width="120" height="66" rx="8" fill="#dbeafe" stroke="#2e86de" stroke-width="1.5"/>
-                         <text x="180" y="38" fill="#1e40af" font-size="9" font-weight="700" text-anchor="middle">Threat of</text>
-                           <text x="180" y="50" fill="#1e40af" font-size="9" font-weight="700" text-anchor="middle">New Entrants</text>
-                             <text x="180" y="62" fill="#374151" font-size="7" text-anchor="middle">Barriers to entry?</text>
-                               <!-- bottom: substitutes -->
-                                 <rect x="120" y="222" width="120" height="66" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
-                                   <text x="180" y="247" fill="#92400e" font-size="9" font-weight="700" text-anchor="middle">Threat of</text>
-      <text x="180" y="259" fill="#92400e" font-size="9" font-weight="700" text-anchor="middle">Substitutes</text>
-        <text x="180" y="271" fill="#374151" font-size="7" text-anchor="middle">Alternative products?</text>
-          <!-- left: suppliers -->
-            <rect x="10" y="120" width="100" height="60" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
-              <text x="60" y="145" fill="#065f46" font-size="9" font-weight="700" text-anchor="middle">Supplier</text>
-                <text x="60" y="157" fill="#065f46" font-size="9" font-weight="700" text-anchor="middle">Power</text>
-                  <text x="60" y="169" fill="#374151" font-size="7" text-anchor="middle">Few suppliers?</text>
-                    <!-- right: buyers -->
-                      <rect x="250" y="120" width="100" height="60" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
-                        <text x="300" y="145" fill="#991b1b" font-size="9" font-weight="700" text-anchor="middle">Buyer</text>
-                          <text x="300" y="157" fill="#991b1b" font-size="9" font-weight="700" text-anchor="middle">Power</text>
-                            <text x="300" y="169" fill="#374151" font-size="7" text-anchor="middle">Many buyers?</text>
-                              <!-- arrows -->
-                                <defs><marker id="e" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6b7280"/></marker></defs>
-                                  <line x1="180" y1="80" x2="180" y2="110" stroke="#6b7280" stroke-width="1.5" marker-end="url(#e)"/>
-                                    <line x1="180" y1="190" x2="180" y2="222" stroke="#6b7280" stroke-width="1.5" marker-end="url(#e)"/>
-                                      <line x1="110" y1="150" x2="120" y2="150" stroke="#6b7280" stroke-width="1.5" marker-end="url(#e)"/>
-                                        <line x1="250" y1="150" x2="240" y2="150" stroke="#6b7280" stroke-width="1.5" marker-end="url(#e)"/>
-                                        </svg>`,
+    diagram:`<svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
+      <rect width="360" height="300" fill="#f8fafc" rx="8"/>
+        <!-- centre: rivalry -->
+          <rect x="120" y="110" width="120" height="80" rx="8" fill="#1e3a5f"/>
+            <text x="180" y="145" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">Competitive</text>
+              <text x="180" y="158" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">Rivalry</text>
+                <text x="180" y="171" fill="#f9a825" font-size="7" text-anchor="middle">Intensity of competition</text>
+                  <!-- top: new entrants -->
+                    <rect x="120" y="14" width="120" height="66" rx="8" fill="#dbeafe" stroke="#2e86de" stroke-width="1.5"/>
+                      <text x="180" y="38" fill="#1e40af" font-size="9" font-weight="700" text-anchor="middle">Threat of</text>
+                        <text x="180" y="50" fill="#1e40af" font-size="9" font-weight="700" text-anchor="middle">New Entrants</text>
+                          <text x="180" y="62" fill="#374151" font-size="7" text-anchor="middle">Barriers to entry?</text>
+                            <!-- bottom: substitutes -->
+                              <rect x="120" y="222" width="120" height="66" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+                                <text x="180" y="247" fill="#92400e" font-size="9" font-weight="700" text-anchor="middle">Threat of</text>
+                                  <text x="180" y="259" fill="#92400e" font-size="9" font-weight="700" text-anchor="middle">Substitutes</text>
+                                    <text x="180" y="271" fill="#374151" font-size="7" text-anchor="middle">Alternative products?</text>
+                                      <!-- left: suppliers -->
+                                        <rect x="10" y="120" width="100" height="60" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+                                          <text x="60" y="145" fill="#065f46" font-size="9" font-weight="700" text-anchor="middle">Supplier</text>
+                                            <text x="60" y="157" fill="#065f46" font-size="9" font-weight="700" text-anchor="middle">Power</text>
+                                              <text x="60" y="169" fill="#374151" font-size="7" text-anchor="middle">Few suppliers?</text>
+                                                <!-- right: buyers -->
+                                                  <rect x="250" y="120" width="100" height="60" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+                                                    <text x="300" y="145" fill="#991b1b" font-size="9" font-weight="700" text-anchor="middle">Buyer</text>
+                                                      <text x="300" y="157" fill="#991b1b" font-size="9" font-weight="700" text-anchor="middle">Power</text>
+                                                        <text x="300" y="169" fill="#374151" font-size="7" text-anchor="middle">Many buyers?</text>
+                                                          <!-- arrows -->
+                                                            <defs><marker id="e" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6b7280"/></marker></defs>
+                                                              <line x1="180" y1="80" x2="180" y2="110" stroke="#6b7280" stroke-width="1.5" marker-end="url(#e)"/>
+                                                                <line x1="180" y1="190" x2="180" y2="222" stroke="#6b7280" stroke-width="1.5" marker-end="url(#e)"/>
+             <line x1="110" y1="150" x2="120" y2="150" stroke="#6b7280" stroke-width="1.5" marker-end="url(#e)"/>
+               <line x1="250" y1="150" x2="240" y2="150" stroke="#6b7280" stroke-width="1.5" marker-end="url(#e)"/>
+               </svg>`,
        steps:["Place 'Competitive Rivalry' in the centre — assess how intense competition is in the industry.","Above: analyse 'Threat of New Entrants' — how easy is it for newcomers to enter?","Below: analyse 'Threat of Substitutes' — can customers switch to a different type of product?","Left: analyse 'Supplier Power' — how much leverage do suppliers have over pricing?","Right: analyse 'Buyer Power' — how much leverage do customers have over pricing?","Rate each force as High, Medium, or Low and determine overall industry attractiveness."],
-       elements:[
-         {name:"Competitive Rivalry",desc:"The intensity of competition between existing players in the industry."},
-         {name:"Threat of New Entrants",desc:"How easy it is for new competitors to enter the market."},
-         {name:"Threat of Substitutes",desc:"The risk that customers switch to a different product or service type."},
-         {name:"Supplier Power",desc:"The ability of suppliers to raise prices or reduce quality."},
-         {name:"Buyer Power",desc:"The ability of customers to push prices down or demand more value."}
-         ]},
-      {id:15,name:"Business Model Canvas",category:"Strategy & Analysis",
-       description:"A one-page visual template covering nine building blocks of a business model.",
-       when:"Use when designing a new business, validating a model, or communicating the business model to stakeholders.",
-       tags:["strategy","business model","value proposition","revenue","canvas"],
-       keywords:["business model","canvas","value proposition","revenue stream","customer segment","key activities","resources","partnership","cost structure","design business","startup","new product"],
-       diagram:`<svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
-         <rect width="500" height="280" fill="#f8fafc" rx="8"/>
-           <!-- 9 blocks -->
-             <rect x="5" y="5" width="85" height="140" rx="4" fill="#e8f0fe" stroke="#2e86de" stroke-width="1"/>
-               <text x="48" y="22" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">KEY</text>
-                 <text x="48" y="32" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">PARTNERS</text>
-                   <text x="48" y="50" fill="#374151" font-size="6.5" text-anchor="middle">Who helps us</text>
-                     <text x="48" y="60" fill="#374151" font-size="6.5" text-anchor="middle">deliver value?</text>
-                       <rect x="95" y="5" width="85" height="65" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
-                         <text x="138" y="22" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">KEY</text>
-                           <text x="138" y="32" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">ACTIVITIES</text>
-                             <text x="138" y="48" fill="#374151" font-size="6.5" text-anchor="middle">What must</text>
-                               <text x="138" y="57" fill="#374151" font-size="6.5" text-anchor="middle">we do?</text>
-                                 <rect x="95" y="75" width="85" height="70" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
-                                   <text x="138" y="92" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">KEY</text>
-                                     <text x="138" y="102" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">RESOURCES</text>
-                                       <text x="138" y="118" fill="#374151" font-size="6.5" text-anchor="middle">What assets</text>
-      <text x="138" y="127" fill="#374151" font-size="6.5" text-anchor="middle">are critical?</text>
-        <!-- value prop - centre -->
-          <rect x="185" y="5" width="130" height="140" rx="4" fill="#1e3a5f"/>
-            <text x="250" y="52" fill="#f9a825" font-size="8" font-weight="800" text-anchor="middle">VALUE</text>
-              <text x="250" y="64" fill="#f9a825" font-size="8" font-weight="800" text-anchor="middle">PROPOSITION</text>
-                <text x="250" y="82" fill="#b0c4e8" font-size="6.5" text-anchor="middle">What value do</text>
-                  <text x="250" y="92" fill="#b0c4e8" font-size="6.5" text-anchor="middle">we deliver to</text>
-                    <text x="250" y="102" fill="#b0c4e8" font-size="6.5" text-anchor="middle">the customer?</text>
-                      <!-- customer rel -->
-                        <rect x="320" y="5" width="85" height="65" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
-                          <text x="363" y="22" fill="#065f46" font-size="7" font-weight="700" text-anchor="middle">CUSTOMER</text>
-                            <text x="363" y="32" fill="#065f46" font-size="7" font-weight="700" text-anchor="middle">RELATIONS</text>
-                              <text x="363" y="48" fill="#374151" font-size="6.5" text-anchor="middle">How do we</text>
-                                <text x="363" y="57" fill="#374151" font-size="6.5" text-anchor="middle">build loyalty?</text>
-                                  <!-- channels -->
-                                    <rect x="320" y="75" width="85" height="70" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
-                                      <text x="363" y="92" fill="#065f46" font-size="7" font-weight="700" text-anchor="middle">CHANNELS</text>
-                                        <text x="363" y="108" fill="#374151" font-size="6.5" text-anchor="middle">How do we</text>
-                                          <text x="363" y="118" fill="#374151" font-size="6.5" text-anchor="middle">reach customers?</text>
-                                            <!-- customer segments -->
-                                              <rect x="410" y="5" width="85" height="140" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
-                                                <text x="453" y="22" fill="#92400e" font-size="7" font-weight="700" text-anchor="middle">CUSTOMER</text>
-                                                  <text x="453" y="32" fill="#92400e" font-size="7" font-weight="700" text-anchor="middle">SEGMENTS</text>
-                                                    <text x="453" y="50" fill="#374151" font-size="6.5" text-anchor="middle">Who are</text>
-                                                      <text x="453" y="60" fill="#374151" font-size="6.5" text-anchor="middle">we serving?</text>
-                                                        <!-- cost structure -->
-                                                          <rect x="5" y="155" width="240" height="70" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
-                                                            <text x="125" y="172" fill="#991b1b" font-size="7" font-weight="700" text-anchor="middle">COST STRUCTURE</text>
-                                                              <text x="125" y="188" fill="#374151" font-size="6.5" text-anchor="middle">What are our most important costs?</text>
-                                                                <text x="125" y="200" fill="#374151" font-size="6.5" text-anchor="middle">Fixed vs variable? Economies of scale?</text>
-                                                                  <!-- revenue streams -->
-                                                                    <rect x="255" y="155" width="240" height="70" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="1"/>
-                                                                      <text x="375" y="172" fill="#5b21b6" font-size="7" font-weight="700" text-anchor="middle">REVENUE STREAMS</text>
-                                                                        <text x="375" y="188" fill="#374151" font-size="6.5" text-anchor="middle">How does the business earn revenue?</text>
-                                                                          <text x="375" y="200" fill="#374151" font-size="6.5" text-anchor="middle">Subscriptions, sales, licensing, fees?</text>
-                                                                            <text x="250" y="250" fill="#6b7280" font-size="8" text-anchor="middle">9 building blocks on one page — left side = costs, right side = value &amp; revenue</text>
-                                                                            </svg>`,
-       steps:["Start with Customer Segments — who are you creating value for?","Define the Value Proposition — what problem do you solve for each segment?","Map Channels — how do you reach and deliver to customers?","Define Customer Relationships — how do you acquire, retain, and grow customers?","Identify Revenue Streams — how does each segment pay?","List Key Resources needed to deliver the value proposition.","List Key Activities the business must perform.","List Key Partners who help deliver the model.","Calculate Cost Structure — what are the major costs?"],
-       elements:[
-         {name:"Customer Segments",desc:"The different groups of people or organisations the business serves."},
-         {name:"Value Proposition",desc:"The bundle of products/services that creates value for a specific customer segment."},
-         {name:"Channels",desc:"How the company communicates with and reaches its customer segments."},
-         {name:"Customer Relationships",desc:"The types of relationships established with each customer segment."},
-         {name:"Revenue Streams",desc:"The cash the company generates from each customer segment."},
-         {name:"Key Resources",desc:"The most important assets required to make the business model work."},
-         {name:"Key Activities",desc:"The most important things the company must do to deliver its value proposition."},
-         {name:"Key Partners",desc:"The network of suppliers and partners that make the model work."},
-         {name:"Cost Structure",desc:"All costs incurred to operate the business model."}
-         ]},
+  elements:[
+      {name:"Competitive Rivalry",desc:"The intensity of competition between existing players in the industry."},
+  {name:"Threat of New Entrants",desc:"How easy it is for new competitors to enter the market."},
+      {name:"Threat of Substitutes",desc:"The risk that customers switch to a different product or service type."},
+  {name:"Supplier Power",desc:"The ability of suppliers to raise prices or reduce quality."},
+  {name:"Buyer Power",desc:"The ability of customers to push prices down or demand more value."}
+  ]},
+  {id:15,name:"Business Model Canvas",category:"Strategy & Analysis",
+    description:"A one-page visual template covering nine building blocks of a business model.",
+             when:"Use when designing a new business, validating a model, or communicating the business model to stakeholders.",
+    tags:["strategy","business model","value proposition","revenue","canvas"],
+          keywords:["business model","canvas","value proposition","revenue stream","customer segment","key activities","resources","partnership","cost structure","design business","startup","new product"],
+   diagram:`<svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
+     <rect width="500" height="280" fill="#f8fafc" rx="8"/>
+       <!-- 9 blocks -->
+    <rect x="5" y="5" width="85" height="140" rx="4" fill="#e8f0fe" stroke="#2e86de" stroke-width="1"/>
+      <text x="48" y="22" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">KEY</text>
+        <text x="48" y="32" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">PARTNERS</text>
+          <text x="48" y="50" fill="#374151" font-size="6.5" text-anchor="middle">Who helps us</text>
+            <text x="48" y="60" fill="#374151" font-size="6.5" text-anchor="middle">deliver value?</text>
+              <rect x="95" y="5" width="85" height="65" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+                <text x="138" y="22" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">KEY</text>
+                  <text x="138" y="32" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">ACTIVITIES</text>
+                    <text x="138" y="48" fill="#374151" font-size="6.5" text-anchor="middle">What must</text>
+                      <text x="138" y="57" fill="#374151" font-size="6.5" text-anchor="middle">we do?</text>
+                        <rect x="95" y="75" width="85" height="70" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+                          <text x="138" y="92" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">KEY</text>
+      <text x="138" y="102" fill="#1e40af" font-size="7" font-weight="700" text-anchor="middle">RESOURCES</text>
+      <text x="138" y="118" fill="#374151" font-size="6.5" text-anchor="middle">What assets</text>
+        <text x="138" y="127" fill="#374151" font-size="6.5" text-anchor="middle">are critical?</text>
+          <!-- value prop - centre -->
+            <rect x="185" y="5" width="130" height="140" rx="4" fill="#1e3a5f"/>
+              <text x="250" y="52" fill="#f9a825" font-size="8" font-weight="800" text-anchor="middle">VALUE</text>
+                <text x="250" y="64" fill="#f9a825" font-size="8" font-weight="800" text-anchor="middle">PROPOSITION</text>
+                  <text x="250" y="82" fill="#b0c4e8" font-size="6.5" text-anchor="middle">What value do</text>
+           <text x="250" y="92" fill="#b0c4e8" font-size="6.5" text-anchor="middle">we deliver to</text>
+             <text x="250" y="102" fill="#b0c4e8" font-size="6.5" text-anchor="middle">the customer?</text>
+               <!-- customer rel -->
+                 <rect x="320" y="5" width="85" height="65" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
+                   <text x="363" y="22" fill="#065f46" font-size="7" font-weight="700" text-anchor="middle">CUSTOMER</text>
+                     <text x="363" y="32" fill="#065f46" font-size="7" font-weight="700" text-anchor="middle">RELATIONS</text>
+                       <text x="363" y="48" fill="#374151" font-size="6.5" text-anchor="middle">How do we</text>
+                         <text x="363" y="57" fill="#374151" font-size="6.5" text-anchor="middle">build loyalty?</text>
+                           <!-- channels -->
+                             <rect x="320" y="75" width="85" height="70" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
+                               <text x="363" y="92" fill="#065f46" font-size="7" font-weight="700" text-anchor="middle">CHANNELS</text>
+    <text x="363" y="108" fill="#374151" font-size="6.5" text-anchor="middle">How do we</text>
+    <text x="363" y="118" fill="#374151" font-size="6.5" text-anchor="middle">reach customers?</text>
+    <!-- customer segments -->
+                   <rect x="410" y="5" width="85" height="140" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+      <text x="453" y="22" fill="#92400e" font-size="7" font-weight="700" text-anchor="middle">CUSTOMER</text>
+    <text x="453" y="32" fill="#92400e" font-size="7" font-weight="700" text-anchor="middle">SEGMENTS</text>
+    <text x="453" y="50" fill="#374151" font-size="6.5" text-anchor="middle">Who are</text>
+    <text x="453" y="60" fill="#374151" font-size="6.5" text-anchor="middle">we serving?</text>
+    <!-- cost structure -->
+    <rect x="5" y="155" width="240" height="70" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
+    <text x="125" y="172" fill="#991b1b" font-size="7" font-weight="700" text-anchor="middle">COST STRUCTURE</text>
+    <text x="125" y="188" fill="#374151" font-size="6.5" text-anchor="middle">What are our most important costs?</text>
+    <text x="125" y="200" fill="#374151" font-size="6.5" text-anchor="middle">Fixed vs variable? Economies of scale?</text>
+      <!-- revenue streams -->
+    <rect x="255" y="155" width="240" height="70" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="1"/>
+    <text x="375" y="172" fill="#5b21b6" font-size="7" font-weight="700" text-anchor="middle">REVENUE STREAMS</text>
+    <text x="375" y="188" fill="#374151" font-size="6.5" text-anchor="middle">How does the business earn revenue?</text>
+      <text x="375" y="200" fill="#374151" font-size="6.5" text-anchor="middle">Subscriptions, sales, licensing, fees?</text>
+        <text x="250" y="250" fill="#6b7280" font-size="8" text-anchor="middle">9 building blocks on one page — left side = costs, right side = value &amp; revenue</text>
+  </svg>`,
+  steps:["Start with Customer Segments — who are you creating value for?","Define the Value Proposition — what problem do you solve for each segment?","Map Channels — how do you reach and deliver to customers?","Define Customer Relationships — how do you acquire, retain, and grow customers?","Identify Revenue Streams — how does each segment pay?","List Key Resources needed to deliver the value proposition.","List Key Activities the business must perform.","List Key Partners who help deliver the model.","Calculate Cost Structure — what are the major costs?"],
+   elements:[
+     {name:"Customer Segments",desc:"The different groups of people or organisations the business serves."},
+      {name:"Value Proposition",desc:"The bundle of products/services that creates value for a specific customer segment."},
+    {name:"Channels",desc:"How the company communicates with and reaches its customer segments."},
+  {name:"Customer Relationships",desc:"The types of relationships established with each customer segment."},
+     {name:"Revenue Streams",desc:"The cash the company generates from each customer segment."},
+    {name:"Key Resources",desc:"The most important assets required to make the business model work."},
+     {name:"Key Activities",desc:"The most important things the company must do to deliver its value proposition."},
+     {name:"Key Partners",desc:"The network of suppliers and partners that make the model work."},
+     {name:"Cost Structure",desc:"All costs incurred to operate the business model."}
+     ]},
       {id:16,name:"Balanced Scorecard",category:"Strategy & Analysis",
        description:"Links strategic objectives to KPIs across four perspectives: Financial, Customer, Internal Processes, and Learning & Growth.",
        when:"Use when translating high-level strategy into measurable targets and aligning teams to organisational goals.",
@@ -958,38 +958,38 @@
          <rect width="400" height="300" fill="#f8fafc" rx="8"/>
            <!-- centre vision -->
              <ellipse cx="200" cy="150" r="42" fill="#1e3a5f"/>
-               <text x="200" y="145" fill="#fff" font-size="8" font-weight="700" text-anchor="middle">VISION &amp;</text>
-                 <text x="200" y="157" fill="#fff" font-size="8" font-weight="700" text-anchor="middle">STRATEGY</text>
-                   <!-- 4 boxes -->
-                     <rect x="10" y="108" width="130" height="84" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
-                       <text x="75" y="128" fill="#92400e" font-size="8" font-weight="700" text-anchor="middle">FINANCIAL</text>
-                         <text x="75" y="142" fill="#374151" font-size="7" text-anchor="middle">Obj: Grow revenue 15%</text>
-                           <text x="75" y="153" fill="#374151" font-size="7" text-anchor="middle">KPI: Revenue, ROI</text>
-                             <text x="75" y="164" fill="#374151" font-size="7" text-anchor="middle">Target: $5M by Q4</text>
-                               <text x="75" y="175" fill="#374151" font-size="7" text-anchor="middle">Initiative: New markets</text>
-                                 <rect x="260" y="108" width="130" height="84" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
-                                   <text x="325" y="128" fill="#065f46" font-size="8" font-weight="700" text-anchor="middle">CUSTOMER</text>
-                                     <text x="325" y="142" fill="#374151" font-size="7" text-anchor="middle">Obj: Improve NPS</text>
-                                       <text x="325" y="153" fill="#374151" font-size="7" text-anchor="middle">KPI: NPS, churn rate</text>
-                                         <text x="325" y="164" fill="#374151" font-size="7" text-anchor="middle">Target: NPS &gt; 50</text>
-                                           <text x="325" y="175" fill="#374151" font-size="7" text-anchor="middle">Initiative: CX programme</text>
-                                             <rect x="110" y="18" width="180" height="80" rx="6" fill="#dbeafe" stroke="#2e86de" stroke-width="1.5"/>
-                                               <text x="200" y="37" fill="#1e40af" font-size="8" font-weight="700" text-anchor="middle">INTERNAL PROCESSES</text>
-                                                 <text x="200" y="51" fill="#374151" font-size="7" text-anchor="middle">Obj: Reduce defects</text>
-                                                   <text x="200" y="62" fill="#374151" font-size="7" text-anchor="middle">KPI: Defect rate, cycle time</text>
-                                                     <text x="200" y="73" fill="#374151" font-size="7" text-anchor="middle">Initiative: Lean programme</text>
-                                                       <rect x="110" y="202" width="180" height="80" rx="6" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
-                                                         <text x="200" y="221" fill="#5b21b6" font-size="8" font-weight="700" text-anchor="middle">LEARNING &amp; GROWTH</text>
-                                                           <text x="200" y="235" fill="#374151" font-size="7" text-anchor="middle">Obj: Upskill team</text>
-                                                             <text x="200" y="246" fill="#374151" font-size="7" text-anchor="middle">KPI: Training hours, retention</text>
-                                                               <text x="200" y="257" fill="#374151" font-size="7" text-anchor="middle">Initiative: L&amp;D programme</text>
-                                                                 <!-- arrows to centre -->
-                                                                   <defs><marker id="f" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1e3a5f"/></marker></defs>
-                                                                     <line x1="140" y1="150" x2="158" y2="150" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#f)"/>
-                                                                       <line x1="260" y1="150" x2="242" y2="150" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#f)"/>
-                                                                         <line x1="200" y1="98" x2="200" y2="108" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#f)"/>
-                                                                           <line x1="200" y1="202" x2="200" y2="192" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#f)"/>
-                                                                           </svg>`,
+    <text x="200" y="145" fill="#fff" font-size="8" font-weight="700" text-anchor="middle">VISION &amp;</text>
+    <text x="200" y="157" fill="#fff" font-size="8" font-weight="700" text-anchor="middle">STRATEGY</text>
+      <!-- 4 boxes -->
+    <rect x="10" y="108" width="130" height="84" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+    <text x="75" y="128" fill="#92400e" font-size="8" font-weight="700" text-anchor="middle">FINANCIAL</text>
+      <text x="75" y="142" fill="#374151" font-size="7" text-anchor="middle">Obj: Grow revenue 15%</text>
+    <text x="75" y="153" fill="#374151" font-size="7" text-anchor="middle">KPI: Revenue, ROI</text>
+      <text x="75" y="164" fill="#374151" font-size="7" text-anchor="middle">Target: $5M by Q4</text>
+    <text x="75" y="175" fill="#374151" font-size="7" text-anchor="middle">Initiative: New markets</text>
+      <rect x="260" y="108" width="130" height="84" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+      <text x="325" y="128" fill="#065f46" font-size="8" font-weight="700" text-anchor="middle">CUSTOMER</text>
+      <text x="325" y="142" fill="#374151" font-size="7" text-anchor="middle">Obj: Improve NPS</text>
+      <text x="325" y="153" fill="#374151" font-size="7" text-anchor="middle">KPI: NPS, churn rate</text>
+      <text x="325" y="164" fill="#374151" font-size="7" text-anchor="middle">Target: NPS &gt; 50</text>
+         <text x="325" y="175" fill="#374151" font-size="7" text-anchor="middle">Initiative: CX programme</text>
+    <rect x="110" y="18" width="180" height="80" rx="6" fill="#dbeafe" stroke="#2e86de" stroke-width="1.5"/>
+      <text x="200" y="37" fill="#1e40af" font-size="8" font-weight="700" text-anchor="middle">INTERNAL PROCESSES</text>
+        <text x="200" y="51" fill="#374151" font-size="7" text-anchor="middle">Obj: Reduce defects</text>
+      <text x="200" y="62" fill="#374151" font-size="7" text-anchor="middle">KPI: Defect rate, cycle time</text>
+        <text x="200" y="73" fill="#374151" font-size="7" text-anchor="middle">Initiative: Lean programme</text>
+          <rect x="110" y="202" width="180" height="80" rx="6" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+            <text x="200" y="221" fill="#5b21b6" font-size="8" font-weight="700" text-anchor="middle">LEARNING &amp; GROWTH</text>
+              <text x="200" y="235" fill="#374151" font-size="7" text-anchor="middle">Obj: Upskill team</text>
+                <text x="200" y="246" fill="#374151" font-size="7" text-anchor="middle">KPI: Training hours, retention</text>
+                  <text x="200" y="257" fill="#374151" font-size="7" text-anchor="middle">Initiative: L&amp;D programme</text>
+                    <!-- arrows to centre -->
+                      <defs><marker id="f" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1e3a5f"/></marker></defs>
+                        <line x1="140" y1="150" x2="158" y2="150" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#f)"/>
+                          <line x1="260" y1="150" x2="242" y2="150" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#f)"/>
+                            <line x1="200" y1="98" x2="200" y2="108" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#f)"/>
+                              <line x1="200" y1="202" x2="200" y2="192" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#f)"/>
+                              </svg>`,
        steps:["Define the organisation's Vision and Strategy at the centre.","For each of the four perspectives, identify 2–3 strategic objectives.","For each objective, define KPIs (measures), targets, and initiatives.","Connect the perspectives — Learning enables better Processes, which improves Customer outcomes, which drives Financial results.","Review KPI performance regularly (monthly or quarterly) and update targets as needed."],
        elements:[
          {name:"Financial Perspective",desc:"Are we delivering value to shareholders? Revenue, profit, ROI."},
@@ -1016,36 +1016,36 @@
                      <text x="457" y="116" fill="#fff" font-size="8" font-weight="700" text-anchor="middle">EFFECT</text>
                        <text x="457" y="128" fill="#fca5a5" font-size="7" text-anchor="middle">Late delivery</text>
                          <!-- top bones -->
-                           <line x1="110" y1="120" x2="80" y2="60" stroke="#2e86de" stroke-width="2"/>
-                             <text x="55" y="55" fill="#1e40af" font-size="8" font-weight="700">People</text>
-                               <line x1="80" y1="60" x2="65" y2="40" stroke="#2e86de" stroke-width="1" opacity=".6"/>
-      <text x="15" y="38" fill="#374151" font-size="7">Skill gap</text>
-        <line x1="80" y1="60" x2="55" y2="55" stroke="#2e86de" stroke-width="1" opacity=".6"/>
-          <text x="8" y="53" fill="#374151" font-size="7">Turnover</text>
-            <line x1="240" y1="120" x2="210" y2="60" stroke="#059669" stroke-width="2"/>
-              <text x="185" y="55" fill="#065f46" font-size="8" font-weight="700">Process</text>
-                <line x1="210" y1="60" x2="195" y2="40" stroke="#059669" stroke-width="1" opacity=".6"/>
-                  <text x="140" y="38" fill="#374151" font-size="7">No checklist</text>
-                    <line x1="210" y1="60" x2="185" y2="55" stroke="#059669" stroke-width="1" opacity=".6"/>
-                      <text x="135" y="54" fill="#374151" font-size="7">Manual steps</text>
-                        <line x1="370" y1="120" x2="340" y2="60" stroke="#d97706" stroke-width="2"/>
-                          <text x="315" y="55" fill="#92400e" font-size="8" font-weight="700">Technology</text>
-                            <line x1="340" y1="60" x2="325" y2="40" stroke="#d97706" stroke-width="1" opacity=".6"/>
-                              <text x="270" y="38" fill="#374151" font-size="7">Old system</text>
-                                <!-- bottom bones -->
-                                  <line x1="110" y1="120" x2="80" y2="180" stroke="#7c3aed" stroke-width="2"/>
-                                    <text x="55" y="200" fill="#5b21b6" font-size="8" font-weight="700">Materials</text>
-                                      <line x1="80" y1="180" x2="60" y2="200" stroke="#7c3aed" stroke-width="1" opacity=".6"/>
-                                        <text x="8" y="215" fill="#374151" font-size="7">Late supply</text>
-                                          <line x1="240" y1="120" x2="210" y2="180" stroke="#dc2626" stroke-width="2"/>
-                                            <text x="185" y="200" fill="#991b1b" font-size="8" font-weight="700">Environment</text>
-                                              <line x1="210" y1="180" x2="190" y2="200" stroke="#dc2626" stroke-width="1" opacity=".6"/>
-                                                <text x="135" y="215" fill="#374151" font-size="7">Remote work</text>
-                                                  <line x1="370" y1="120" x2="340" y2="180" stroke="#6b7280" stroke-width="2"/>
-                                                    <text x="315" y="200" fill="#374151" font-size="8" font-weight="700">Measurement</text>
-                                                      <line x1="340" y1="180" x2="320" y2="200" stroke="#6b7280" stroke-width="1" opacity=".6"/>
-                                                        <text x="270" y="215" fill="#374151" font-size="7">No KPIs</text>
-                                                        </svg>`,
+               <line x1="110" y1="120" x2="80" y2="60" stroke="#2e86de" stroke-width="2"/>
+                 <text x="55" y="55" fill="#1e40af" font-size="8" font-weight="700">People</text>
+                   <line x1="80" y1="60" x2="65" y2="40" stroke="#2e86de" stroke-width="1" opacity=".6"/>
+                     <text x="15" y="38" fill="#374151" font-size="7">Skill gap</text>
+                       <line x1="80" y1="60" x2="55" y2="55" stroke="#2e86de" stroke-width="1" opacity=".6"/>
+                         <text x="8" y="53" fill="#374151" font-size="7">Turnover</text>
+                           <line x1="240" y1="120" x2="210" y2="60" stroke="#059669" stroke-width="2"/>
+                             <text x="185" y="55" fill="#065f46" font-size="8" font-weight="700">Process</text>
+                               <line x1="210" y1="60" x2="195" y2="40" stroke="#059669" stroke-width="1" opacity=".6"/>
+                                 <text x="140" y="38" fill="#374151" font-size="7">No checklist</text>
+                                   <line x1="210" y1="60" x2="185" y2="55" stroke="#059669" stroke-width="1" opacity=".6"/>
+                                     <text x="135" y="54" fill="#374151" font-size="7">Manual steps</text>
+                                       <line x1="370" y1="120" x2="340" y2="60" stroke="#d97706" stroke-width="2"/>
+                                         <text x="315" y="55" fill="#92400e" font-size="8" font-weight="700">Technology</text>
+                                           <line x1="340" y1="60" x2="325" y2="40" stroke="#d97706" stroke-width="1" opacity=".6"/>
+                                             <text x="270" y="38" fill="#374151" font-size="7">Old system</text>
+                                               <!-- bottom bones -->
+                                                 <line x1="110" y1="120" x2="80" y2="180" stroke="#7c3aed" stroke-width="2"/>
+                                                   <text x="55" y="200" fill="#5b21b6" font-size="8" font-weight="700">Materials</text>
+                                                     <line x1="80" y1="180" x2="60" y2="200" stroke="#7c3aed" stroke-width="1" opacity=".6"/>
+                                                       <text x="8" y="215" fill="#374151" font-size="7">Late supply</text>
+                                                         <line x1="240" y1="120" x2="210" y2="180" stroke="#dc2626" stroke-width="2"/>
+                                                           <text x="185" y="200" fill="#991b1b" font-size="8" font-weight="700">Environment</text>
+                                                             <line x1="210" y1="180" x2="190" y2="200" stroke="#dc2626" stroke-width="1" opacity=".6"/>
+                                                               <text x="135" y="215" fill="#374151" font-size="7">Remote work</text>
+                                                                 <line x1="370" y1="120" x2="340" y2="180" stroke="#6b7280" stroke-width="2"/>
+      <text x="315" y="200" fill="#374151" font-size="8" font-weight="700">Measurement</text>
+        <line x1="340" y1="180" x2="320" y2="200" stroke="#6b7280" stroke-width="1" opacity=".6"/>
+          <text x="270" y="215" fill="#374151" font-size="7">No KPIs</text>
+          </svg>`,
        steps:["Write the problem (effect) in a box on the right side.","Draw a horizontal arrow (the spine) pointing to it from the left.","Identify 4–6 major cause categories (e.g. People, Process, Technology, Materials) and draw diagonal bones branching from the spine.","For each category, brainstorm causes and draw smaller sub-bones.","Continue adding sub-causes until root causes are identified.","Prioritise the most likely root causes for investigation."],
        elements:[
          {name:"Effect (head)",desc:"The problem or outcome being investigated, placed at the right."},
@@ -1055,8 +1055,8 @@
          {name:"Root cause",desc:"The deepest sub-cause at the tip of a bone — the fundamental reason for the problem."}
          ]},
       {id:18,name:"5 Whys",category:"Problem Solving",
-       description:"Repeatedly asks 'Why?'—often around five times—to move from a surface symptom toward an actionable root cause.",
-       when:"Use for straightforward problems where a single chain of causation is likely. Pair it with other analysis for complex, multi-cause problems.",
+       description:"Iteratively asks 'Why?' five times to drill down from a surface symptom to the fundamental root cause.",
+       when:"Use for straightforward problems where a single chain of causation is likely — quick and collaborative.",
        tags:["root cause","problem","iterative","simple","why"],
        keywords:["5 whys","why why","root cause","drill down","problem","investigate","cause","simple analysis","quick analysis","iterative"],
        diagram:`<svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
@@ -1098,7 +1098,7 @@
          {name:"Corrective action",desc:"The fix applied at the root cause level to prevent recurrence."}
          ]},
       {id:19,name:"Pareto Analysis (80/20 Rule)",category:"Problem Solving",
-       description:"Identifies the vital few causes that produce the majority of effects. The 80/20 pattern is a useful rule of thumb, not a guaranteed ratio.",
+       description:"Identifies the vital few causes that produce the majority of effects — 80% of problems come from 20% of causes.",
        when:"Use when you have data on defects, complaints, or failures and want to focus improvement effort on the highest impact.",
        tags:["problem","data","80/20","prioritisation","defects"],
        keywords:["pareto","80 20","vital few","frequency","defects","complaints","most common","prioritise problems","impact","data driven","high impact"],
@@ -1139,13 +1139,13 @@
                                                                            <!-- vertical drop -->
                                                                              <line x1="180" y1="28" x2="180" y2="200" stroke="#dc2626" stroke-width="1" stroke-dasharray="3,2" opacity=".5"/>
                                                                                <!-- y axis label -->
-         <text x="14" y="115" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle" transform="rotate(-90,14,115)">Frequency</text>
-           <!-- legend -->
-             <rect x="55" y="230" width="10" height="10" fill="#1e3a5f"/>
-               <text x="70" y="239" fill="#374151" font-size="8">Vital Few (80% of issues)</text>
-                 <line x1="195" y1="235" x2="215" y2="235" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2"/>
-                   <text x="220" y="239" fill="#374151" font-size="8">Cumulative %</text>
-                   </svg>`,
+                                                                                 <text x="14" y="115" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle" transform="rotate(-90,14,115)">Frequency</text>
+                                                                                   <!-- legend -->
+                                                                                     <rect x="55" y="230" width="10" height="10" fill="#1e3a5f"/>
+                                                                                       <text x="70" y="239" fill="#374151" font-size="8">Vital Few (80% of issues)</text>
+                                                                                         <line x1="195" y1="235" x2="215" y2="235" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2"/>
+                                                                                           <text x="220" y="239" fill="#374151" font-size="8">Cumulative %</text>
+                                                                                           </svg>`,
        steps:["Collect frequency data for each defect type, complaint category, or failure cause.","Sort the categories from highest frequency to lowest.","Draw a bar chart with categories on the X axis and frequency on the Y (left).","Calculate cumulative percentage for each bar and plot as a line on a second Y axis (right).","Draw a horizontal reference line at 80%.","The bars to the left of where the cumulative line crosses 80% are the 'vital few' — focus improvement effort here."],
        elements:[
          {name:"Bars",desc:"Each bar represents one cause category, ordered from most to least frequent."},
@@ -1155,7 +1155,7 @@
          {name:"Trivial Many",desc:"The long tail of less impactful causes — lower priority for improvement."}
          ]},
       {id:20,name:"Decision Matrix (Weighted Scoring)",category:"Decision Making",
-       description:"Scores options against agreed weighted criteria to produce a transparent, repeatable ranking. Criteria, weights, and scores should be reviewed for bias.",
+       description:"Scores options against weighted criteria to produce an objective ranking, removing bias from decisions.",
        when:"Use when choosing between multiple solutions, vendors, or approaches where several criteria matter.",
        tags:["decision","scoring","criteria","evaluation","options"],
        keywords:["decision","choose","option","criteria","evaluate","score","weight","matrix","compare options","vendor selection","solution selection","best option","which is better","ranking"],
@@ -1205,10 +1205,10 @@
                                                                                              <!-- dividers -->
                                                                                                <line x1="160" y1="36" x2="160" y2="208" stroke="#e2e8f0" stroke-width="1"/>
                                                                                                  <line x1="225" y1="36" x2="225" y2="208" stroke="#e2e8f0" stroke-width="1"/>
-                                                                                                   <line x1="305" y1="36" x2="305" y2="208" stroke="#e2e8f0" stroke-width="1"/>
-                                                                                                     <line x1="385" y1="36" x2="385" y2="208" stroke="#e2e8f0" stroke-width="1"/>
-                                                                                                       <text x="240" y="222" fill="#6b7280" font-size="8" text-anchor="middle">Score = (Raw score × Weight). Highest total wins.</text>
-                                                                                                       </svg>`,
+      <line x1="305" y1="36" x2="305" y2="208" stroke="#e2e8f0" stroke-width="1"/>
+        <line x1="385" y1="36" x2="385" y2="208" stroke="#e2e8f0" stroke-width="1"/>
+          <text x="240" y="222" fill="#6b7280" font-size="8" text-anchor="middle">Score = (Raw score × Weight). Highest total wins.</text>
+          </svg>`,
        steps:["List the decision criteria in rows (e.g. Cost, Integration, Scalability).","Assign a weight to each criterion (weights must sum to 100%).","List each option as a column.","Rate each option against each criterion (e.g. 1–10).","Multiply each raw score by its criterion weight to get a weighted score.","Sum the weighted scores per option — the highest total is the recommended choice."],
        elements:[
          {name:"Criteria",desc:"The factors that matter in making this decision (cost, risk, fit, etc.)."},
@@ -1276,7 +1276,7 @@
          {name:"Expected Value (EV)",desc:"Probability × Payoff summed across all outcomes at a chance node."}
          ]},
       {id:22,name:"Cost–Benefit Analysis (CBA)",category:"Decision Making",
-       description:"Quantifies and compares expected costs and benefits to assess viability, documenting assumptions, time horizon, risks, and where relevant the time value of money.",
+       description:"Quantifies and compares total expected costs against total expected benefits to determine financial viability.",
        when:"Use when seeking project approval, comparing investment options, or justifying a business case.",
        tags:["decision","financial","cost","benefit","business case"],
        keywords:["cost benefit","cba","roi","return on investment","business case","financial analysis","justify","investment","worth it","value for money","budget","costs","savings"],
@@ -1347,30 +1347,30 @@
                        <text x="20" y="118" fill="#374151" font-size="8">• 15% error rate</text>
                          <text x="20" y="132" fill="#374151" font-size="8">• Siloed data</text>
                            <text x="20" y="146" fill="#374151" font-size="8">• Paper-based approvals</text>
-                             <!-- gap box -->
-                               <rect x="155" y="30" width="110" height="140" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-dasharray="5,3"/>
-                                 <text x="210" y="55" fill="#92400e" font-size="10" font-weight="800" text-anchor="middle">GAP</text>
-                                   <text x="210" y="68" fill="#92400e" font-size="8" text-anchor="middle">What needs to change</text>
-                                     <text x="165" y="90" fill="#374151" font-size="8">• Automate reports</text>
-                                       <text x="165" y="104" fill="#374151" font-size="8">• Streamline process</text>
-                                         <text x="165" y="118" fill="#374151" font-size="8">• Implement QA</text>
-                                           <text x="165" y="132" fill="#374151" font-size="8">• Integrate systems</text>
-                                             <text x="165" y="146" fill="#374151" font-size="8">• Digital approvals</text>
-                                               <!-- to-be box -->
-                                                 <rect x="280" y="30" width="130" height="140" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
-                                                   <text x="345" y="55" fill="#065f46" font-size="10" font-weight="800" text-anchor="middle">TO-BE</text>
-                                                     <text x="345" y="68" fill="#065f46" font-size="8" text-anchor="middle">Future State</text>
-                                                       <text x="290" y="90" fill="#374151" font-size="8">• Automated reporting</text>
-                                                         <text x="290" y="104" fill="#374151" font-size="8">• Same-day cycle time</text>
-                                                           <text x="290" y="118" fill="#374151" font-size="8">&lt;2% error rate</text>
-                                                             <text x="290" y="132" fill="#374151" font-size="8">• Integrated platform</text>
-                                                               <text x="290" y="146" fill="#374151" font-size="8">• Digital workflows</text>
-                                                                 <!-- arrows -->
-                                                                   <defs><marker id="j" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#1e3a5f"/></marker></defs>
-                                                                     <line x1="140" y1="100" x2="155" y2="100" stroke="#1e3a5f" stroke-width="2" marker-end="url(#j)"/>
-                                                                       <line x1="265" y1="100" x2="280" y2="100" stroke="#1e3a5f" stroke-width="2" marker-end="url(#j)"/>
-                                                                         <text x="210" y="195" fill="#6b7280" font-size="8" text-anchor="middle">Gap = difference between current performance and desired future performance</text>
-                                                                         </svg>`,
+       <!-- gap box -->
+         <rect x="155" y="30" width="110" height="140" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-dasharray="5,3"/>
+           <text x="210" y="55" fill="#92400e" font-size="10" font-weight="800" text-anchor="middle">GAP</text>
+             <text x="210" y="68" fill="#92400e" font-size="8" text-anchor="middle">What needs to change</text>
+               <text x="165" y="90" fill="#374151" font-size="8">• Automate reports</text>
+                 <text x="165" y="104" fill="#374151" font-size="8">• Streamline process</text>
+                   <text x="165" y="118" fill="#374151" font-size="8">• Implement QA</text>
+                     <text x="165" y="132" fill="#374151" font-size="8">• Integrate systems</text>
+                       <text x="165" y="146" fill="#374151" font-size="8">• Digital approvals</text>
+                         <!-- to-be box -->
+                           <rect x="280" y="30" width="130" height="140" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+                             <text x="345" y="55" fill="#065f46" font-size="10" font-weight="800" text-anchor="middle">TO-BE</text>
+                               <text x="345" y="68" fill="#065f46" font-size="8" text-anchor="middle">Future State</text>
+                                 <text x="290" y="90" fill="#374151" font-size="8">• Automated reporting</text>
+                                   <text x="290" y="104" fill="#374151" font-size="8">• Same-day cycle time</text>
+                                     <text x="290" y="118" fill="#374151" font-size="8">&lt;2% error rate</text>
+                                       <text x="290" y="132" fill="#374151" font-size="8">• Integrated platform</text>
+                                         <text x="290" y="146" fill="#374151" font-size="8">• Digital workflows</text>
+                                           <!-- arrows -->
+                                             <defs><marker id="j" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#1e3a5f"/></marker></defs>
+                                               <line x1="140" y1="100" x2="155" y2="100" stroke="#1e3a5f" stroke-width="2" marker-end="url(#j)"/>
+                                                 <line x1="265" y1="100" x2="280" y2="100" stroke="#1e3a5f" stroke-width="2" marker-end="url(#j)"/>
+                                                   <text x="210" y="195" fill="#6b7280" font-size="8" text-anchor="middle">Gap = difference between current performance and desired future performance</text>
+                                                   </svg>`,
        steps:["Document the current state (as-is): map processes, capabilities, and performance as they are today.","Define the desired future state (to-be): what does success look like?","Identify gaps by comparing as-is vs. to-be across key dimensions (process, people, technology, data).","Prioritise gaps by impact and urgency.","Define initiatives or projects to close each gap.","Use the gap list to scope the change programme and build a roadmap."],
        elements:[
          {name:"As-Is (Current State)",desc:"The documented baseline — how things work today, including pain points."},
@@ -1380,7 +1380,7 @@
          {name:"Initiative",desc:"A project or action designed to close a specific gap."}
          ]},
       {id:24,name:"Force Field Analysis",category:"Change Management",
-       description:"Identifies—and optionally scores—forces driving and resisting change, helping teams strengthen drivers or reduce barriers.",
+       description:"Lists and scores forces driving change and forces resisting it, to plan where to strengthen drivers or reduce barriers.",
        when:"Use when planning a change initiative and you need to understand resistance or build buy-in.",
        tags:["change","resistance","driving forces","restraining forces","change management"],
        keywords:["change management","resistance to change","driving forces","restraining forces","change barriers","force field","lewin","buy-in","overcome resistance","change plan"],
@@ -1404,29 +1404,29 @@
                                          <text x="55" y="141" fill="#065f46" font-size="8" text-anchor="middle">Customer demand</text>
                                            <line x1="100" y1="137" x2="210" y2="137" stroke="#059669" stroke-width="4" opacity=".7"/>
                                              <text x="108" y="133" fill="#065f46" font-size="7">2</text>
-    <rect x="10" y="158" width="75" height="22" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
-      <text x="47" y="173" fill="#065f46" font-size="8" text-anchor="middle">Regulatory pressure</text>
-        <line x1="85" y1="169" x2="210" y2="169" stroke="#059669" stroke-width="2" opacity=".7"/>
-          <text x="93" y="165" fill="#065f46" font-size="7">1</text>
-            <!-- restraining forces (right) -->
-              <text x="325" y="52" fill="#dc2626" font-size="9" font-weight="700" text-anchor="middle">← RESTRAINING FORCES</text>
-                <rect x="280" y="62" width="130" height="22" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
-                  <text x="345" y="77" fill="#991b1b" font-size="8" text-anchor="middle">High implementation cost</text>
-                    <line x1="210" y1="73" x2="280" y2="73" stroke="#dc2626" stroke-width="8" opacity=".7"/>
-                      <text x="262" y="69" fill="#991b1b" font-size="7">4</text>
-                        <rect x="295" y="94" width="115" height="22" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
-                          <text x="353" y="109" fill="#991b1b" font-size="8" text-anchor="middle">Staff resistance</text>
-                            <line x1="210" y1="105" x2="295" y2="105" stroke="#dc2626" stroke-width="5" opacity=".7"/>
-                              <text x="277" y="101" fill="#991b1b" font-size="7">3</text>
-                                <rect x="310" y="126" width="100" height="22" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
-                                  <text x="360" y="141" fill="#991b1b" font-size="8" text-anchor="middle">Lack of skills</text>
-                                    <line x1="210" y1="137" x2="310" y2="137" stroke="#dc2626" stroke-width="3" opacity=".7"/>
-                                      <text x="292" y="133" fill="#991b1b" font-size="7">2</text>
-                                        <defs><marker id="k" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#059669"/></marker></defs>
-                                          <text x="90" y="240" fill="#059669" font-size="8" font-weight="700">Driving total: 10</text>
-                                            <text x="270" y="240" fill="#dc2626" font-size="8" font-weight="700">Restraining total: 9</text>
-                                              <text x="210" y="250" fill="#6b7280" font-size="8" text-anchor="middle">Arrow thickness = strength score (1–5)</text>
-                                              </svg>`,
+                                               <rect x="10" y="158" width="75" height="22" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
+                                                 <text x="47" y="173" fill="#065f46" font-size="8" text-anchor="middle">Regulatory pressure</text>
+                                                   <line x1="85" y1="169" x2="210" y2="169" stroke="#059669" stroke-width="2" opacity=".7"/>
+                                                     <text x="93" y="165" fill="#065f46" font-size="7">1</text>
+                                                       <!-- restraining forces (right) -->
+                                                         <text x="325" y="52" fill="#dc2626" font-size="9" font-weight="700" text-anchor="middle">← RESTRAINING FORCES</text>
+                                                           <rect x="280" y="62" width="130" height="22" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
+                                                             <text x="345" y="77" fill="#991b1b" font-size="8" text-anchor="middle">High implementation cost</text>
+                                                               <line x1="210" y1="73" x2="280" y2="73" stroke="#dc2626" stroke-width="8" opacity=".7"/>
+                                                                 <text x="262" y="69" fill="#991b1b" font-size="7">4</text>
+                                                                   <rect x="295" y="94" width="115" height="22" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
+                                                                     <text x="353" y="109" fill="#991b1b" font-size="8" text-anchor="middle">Staff resistance</text>
+                                                                       <line x1="210" y1="105" x2="295" y2="105" stroke="#dc2626" stroke-width="5" opacity=".7"/>
+                                                                         <text x="277" y="101" fill="#991b1b" font-size="7">3</text>
+                                                                           <rect x="310" y="126" width="100" height="22" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
+                                                                             <text x="360" y="141" fill="#991b1b" font-size="8" text-anchor="middle">Lack of skills</text>
+                                                                               <line x1="210" y1="137" x2="310" y2="137" stroke="#dc2626" stroke-width="3" opacity=".7"/>
+                                                                                 <text x="292" y="133" fill="#991b1b" font-size="7">2</text>
+                                                                                   <defs><marker id="k" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#059669"/></marker></defs>
+                                                                                     <text x="90" y="240" fill="#059669" font-size="8" font-weight="700">Driving total: 10</text>
+                                                                                       <text x="270" y="240" fill="#dc2626" font-size="8" font-weight="700">Restraining total: 9</text>
+                                                                                         <text x="210" y="250" fill="#6b7280" font-size="8" text-anchor="middle">Arrow thickness = strength score (1–5)</text>
+                                                                                         </svg>`,
        steps:["Write the proposed change in the centre.","Draw a vertical line down the middle.","On the left, list all forces driving the change (reasons to proceed).","On the right, list all forces resisting the change (barriers).","Score each force 1–5 based on its strength and draw arrows — thicker = stronger.","Sum driving scores and restraining scores.","Plan actions to either strengthen drivers or weaken restrainers."],
        elements:[
          {name:"Proposed Change",desc:"The change initiative being analysed, placed at the centre."},
@@ -1436,8 +1436,8 @@
          {name:"Net Force",desc:"Driving total minus Restraining total — positive means change is viable."}
          ]},
       {id:25,name:"Kotter's 8-Step Change Model",category:"Change Management",
-       description:"An adaptable eight-step framework for leading organisational change from urgency through to embedding.",
-       when:"Use as an adaptable guide for large-scale organisational change; revisit steps as conditions and learning evolve.",
+       description:"A structured eight-step framework for leading organisational change from urgency through to embedding.",
+       when:"Use as a roadmap when leading large-scale organisational change to maintain momentum.",
        tags:["change","leadership","transformation","organisational change","model"],
        keywords:["change management","kotter","organisational change","transformation","change model","lead change","urgency","coalition","embed change","cultural change"],
        diagram:`<svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
@@ -1467,38 +1467,38 @@
                                                        <text x="49" y="148" fill="#fff" font-size="11" font-weight="800" text-anchor="middle">5</text>
                                                          <text x="49" y="161" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Remove</text>
                                                            <text x="49" y="171" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Obstacles</text>
-    <rect x="100" y="130" width="88" height="50" rx="6" fill="#059669" opacity=".85"/>
-      <text x="144" y="148" fill="#fff" font-size="11" font-weight="800" text-anchor="middle">6</text>
-        <text x="144" y="161" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Short-term</text>
-          <text x="144" y="171" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Wins</text>
-            <rect x="195" y="130" width="88" height="50" rx="6" fill="#d97706"/>
-              <text x="239" y="148" fill="#fff" font-size="11" font-weight="800" text-anchor="middle">7</text>
-                <text x="239" y="161" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Sustain</text>
-                  <text x="239" y="171" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Acceleration</text>
-                    <rect x="290" y="130" width="88" height="50" rx="6" fill="#dc2626"/>
-                      <text x="334" y="148" fill="#fff" font-size="11" font-weight="800" text-anchor="middle">8</text>
-                        <text x="334" y="161" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Anchor in</text>
-                          <text x="334" y="171" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Culture</text>
-                            <!-- row arrows -->
-                              <line x1="93" y1="47" x2="100" y2="47" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
-                                <line x1="188" y1="47" x2="195" y2="47" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
-                                  <line x1="283" y1="47" x2="290" y2="47" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
-                                    <line x1="93" y1="155" x2="100" y2="155" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
-                                      <line x1="188" y1="155" x2="195" y2="155" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
-                                        <line x1="283" y1="155" x2="290" y2="155" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
-                                          <!-- connect rows -->
-                                            <line x1="378" y1="72" x2="378" y2="130" stroke="#6b7280" stroke-width="1.5"/>
-                                              <line x1="378" y1="130" x2="49" y2="130" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
-                                                <!-- key insight -->
-                                                  <rect x="5" y="196" width="410" height="76" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
-                                                    <text x="215" y="214" fill="#1e3a5f" font-size="9" font-weight="700" text-anchor="middle">Key Insight per Step</text>
-                                                      <text x="15" y="230" fill="#374151" font-size="7">1. Show data that burning platform exists</text>
-                                                        <text x="15" y="242" fill="#374151" font-size="7">2. Include key influencers — not just senior leaders</text>
-                                                          <text x="15" y="254" fill="#374151" font-size="7">3. Vision must be simple enough to explain in 5 min</text>
-                                                            <text x="215" y="230" fill="#374151" font-size="7">5. Identify and remove structural barriers early</text>
-                                                              <text x="215" y="242" fill="#374151" font-size="7">6. Celebrate small wins to build momentum</text>
-                                                                <text x="215" y="254" fill="#374151" font-size="7">8. Change must be woven into hiring and culture</text>
-                                                                </svg>`,
+                                                             <rect x="100" y="130" width="88" height="50" rx="6" fill="#059669" opacity=".85"/>
+                                                               <text x="144" y="148" fill="#fff" font-size="11" font-weight="800" text-anchor="middle">6</text>
+                                                                 <text x="144" y="161" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Short-term</text>
+                                                                   <text x="144" y="171" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Wins</text>
+                                                                     <rect x="195" y="130" width="88" height="50" rx="6" fill="#d97706"/>
+                                                                       <text x="239" y="148" fill="#fff" font-size="11" font-weight="800" text-anchor="middle">7</text>
+                                                                         <text x="239" y="161" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Sustain</text>
+                                                                           <text x="239" y="171" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Acceleration</text>
+                                                                             <rect x="290" y="130" width="88" height="50" rx="6" fill="#dc2626"/>
+                                                                               <text x="334" y="148" fill="#fff" font-size="11" font-weight="800" text-anchor="middle">8</text>
+                                                                                 <text x="334" y="161" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Anchor in</text>
+                                                                                   <text x="334" y="171" fill="#fff" font-size="7" font-weight="700" text-anchor="middle">Culture</text>
+                                                                                     <!-- row arrows -->
+                                                                                       <line x1="93" y1="47" x2="100" y2="47" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
+                                                                                         <line x1="188" y1="47" x2="195" y2="47" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
+                                                                                           <line x1="283" y1="47" x2="290" y2="47" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
+                                                                                             <line x1="93" y1="155" x2="100" y2="155" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
+                                                                                               <line x1="188" y1="155" x2="195" y2="155" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
+                                                                                                 <line x1="283" y1="155" x2="290" y2="155" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
+                                                                                                   <!-- connect rows -->
+                                                                                                     <line x1="378" y1="72" x2="378" y2="130" stroke="#6b7280" stroke-width="1.5"/>
+                                                                                                       <line x1="378" y1="130" x2="49" y2="130" stroke="#6b7280" stroke-width="1.5" marker-end="url(#l)"/>
+                                                                                                         <!-- key insight -->
+                                                                                                           <rect x="5" y="196" width="410" height="76" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+                                                                                                             <text x="215" y="214" fill="#1e3a5f" font-size="9" font-weight="700" text-anchor="middle">Key Insight per Step</text>
+                                                                                                               <text x="15" y="230" fill="#374151" font-size="7">1. Show data that burning platform exists</text>
+                                                                                                                 <text x="15" y="242" fill="#374151" font-size="7">2. Include key influencers — not just senior leaders</text>
+                                                                                                                   <text x="15" y="254" fill="#374151" font-size="7">3. Vision must be simple enough to explain in 5 min</text>
+                                                                                                                     <text x="215" y="230" fill="#374151" font-size="7">5. Identify and remove structural barriers early</text>
+                                                                                                                       <text x="215" y="242" fill="#374151" font-size="7">6. Celebrate small wins to build momentum</text>
+                                                                                                                         <text x="215" y="254" fill="#374151" font-size="7">8. Change must be woven into hiring and culture</text>
+                                                                                                                         </svg>`,
        steps:["Step 1 – Create Urgency: build the case for change with data and compelling stories.","Step 2 – Build a Guiding Coalition: form a team of influential leaders across the organisation.","Step 3 – Form a Vision: develop a clear, inspiring vision and strategy for the change.","Step 4 – Communicate the Vision: communicate relentlessly through multiple channels.","Step 5 – Remove Obstacles: empower broad-based action by eliminating barriers.","Step 6 – Create Short-term Wins: plan and achieve visible improvements within 6–12 months.","Step 7 – Sustain Acceleration: use wins to build momentum and tackle bigger changes.","Step 8 – Anchor in Culture: embed the change in norms, values, hiring, and promotion."],
        elements:[
          {name:"Steps 1–3 (Create Climate)",desc:"Building the conditions for change: urgency, coalition, and vision."},
@@ -1554,28 +1554,28 @@
                                                                                    <text x="358" y="109" fill="#991b1b" font-size="7" text-anchor="middle">Complex checkout</text>
                                                                                      <rect x="405" y="90" width="95" height="30" fill="#d1fae5" stroke="#e2e8f0" stroke-width=".5"/>
                                                                                        <text x="453" y="109" fill="#065f46" font-size="7" text-anchor="middle">Good follow-up</text>
-                                                                                         <!-- emotion curve -->
-                                                                                           <rect x="0" y="120" width="120" height="50" fill="#e8f0fe"/>
-                                                                                             <text x="10" y="148" fill="#1e3a5f" font-size="8" font-weight="700">Emotion</text>
-                                                                                               <polyline points="168,158 263,145 358,168 453,138" fill="none" stroke="#2e86de" stroke-width="2.5"/>
-                                                                                                 <circle cx="168" cy="158" r="4" fill="#2e86de"/>
-                                                                                                   <circle cx="263" cy="145" r="4" fill="#2e86de"/>
-                                                                                                     <circle cx="358" cy="168" r="4" fill="#dc2626"/>
-                                                                                                       <circle cx="453" cy="138" r="4" fill="#059669"/>
-                                                                                                         <text x="168" y="175" fill="#374151" font-size="7" text-anchor="middle">😐 Neutral</text>
-                                                                                                           <text x="263" y="162" fill="#374151" font-size="7" text-anchor="middle">🙂 Interested</text>
-                                                                                                             <text x="358" y="185" fill="#dc2626" font-size="7" text-anchor="middle">😤 Frustrated</text>
-                                                                                                               <text x="453" y="155" fill="#059669" font-size="7" text-anchor="middle">😊 Happy</text>
-                                                                                                                 <!-- opportunities -->
-                                                                                                                   <rect x="0" y="192" width="500" height="36" fill="#fef3c7"/>
-                                                                                                                     <text x="10" y="208" fill="#92400e" font-size="8" font-weight="700">Opportunities:</text>
-                                                                                                                       <text x="10" y="222" fill="#374151" font-size="7">• Personalise ads  • Curate reviews  • Simplify checkout (biggest gap!)  • Add loyalty programme</text>
-                                                                                                                       </svg>`,
+     <!-- emotion curve -->
+       <rect x="0" y="120" width="120" height="50" fill="#e8f0fe"/>
+         <text x="10" y="148" fill="#1e3a5f" font-size="8" font-weight="700">Emotion</text>
+           <polyline points="168,158 263,145 358,168 453,138" fill="none" stroke="#2e86de" stroke-width="2.5"/>
+             <circle cx="168" cy="158" r="4" fill="#2e86de"/>
+               <circle cx="263" cy="145" r="4" fill="#2e86de"/>
+                 <circle cx="358" cy="168" r="4" fill="#dc2626"/>
+                   <circle cx="453" cy="138" r="4" fill="#059669"/>
+                     <text x="168" y="175" fill="#374151" font-size="7" text-anchor="middle">😐 Neutral</text>
+                       <text x="263" y="162" fill="#374151" font-size="7" text-anchor="middle">🙂 Interested</text>
+                         <text x="358" y="185" fill="#dc2626" font-size="7" text-anchor="middle">😤 Frustrated</text>
+                           <text x="453" y="155" fill="#059669" font-size="7" text-anchor="middle">😊 Happy</text>
+                             <!-- opportunities -->
+                               <rect x="0" y="192" width="500" height="36" fill="#fef3c7"/>
+                                 <text x="10" y="208" fill="#92400e" font-size="8" font-weight="700">Opportunities:</text>
+                                   <text x="10" y="222" fill="#374151" font-size="7">• Personalise ads  • Curate reviews  • Simplify checkout (biggest gap!)  • Add loyalty programme</text>
+                                   </svg>`,
        steps:["Define the persona whose journey you are mapping.","Identify the key stages of the journey (Awareness → Consideration → Purchase → Post-sale).","For each stage, list: what the customer does (actions), how they interact (touchpoints), and what frustrates them (pain points).","Plot the customer's emotional state across the journey as a curve.","Identify opportunities — especially where emotion dips — to improve the experience."],
        elements:[
          {name:"Stages",desc:"The high-level phases of the customer's experience from first contact to after purchase."},
          {name:"Actions",desc:"What the customer does at each stage."},
-            {name:"Touchpoints",desc:"The channels or interfaces where the customer interacts with the organisation."},
+         {name:"Touchpoints",desc:"The channels or interfaces where the customer interacts with the organisation."},
          {name:"Pain Points",desc:"Frustrations, barriers, or unmet needs at each stage."},
          {name:"Emotion Curve",desc:"A line showing how the customer feels throughout the journey — dips reveal improvement opportunities."},
          {name:"Opportunities",desc:"Specific improvements identified from the pain points and emotion curve."}
@@ -1588,54 +1588,54 @@
        diagram:`<svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
          <rect width="360" height="320" fill="#f8fafc" rx="8"/>
            <!-- quadrants -->
-    <rect x="10" y="10" width="160" height="120" rx="8" fill="#dbeafe" stroke="#2e86de" stroke-width="1.5"/>
-      <rect x="190" y="10" width="160" height="120" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
-        <rect x="10" y="145" width="160" height="120" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
-          <rect x="190" y="145" width="160" height="120" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
-            <!-- centre circle -->
-              <circle cx="180" cy="138" r="32" fill="#1e3a5f"/>
-                <text x="180" y="134" fill="#fff" font-size="8" font-weight="700" text-anchor="middle">USER</text>
-                  <text x="180" y="145" fill="#f9a825" font-size="7" text-anchor="middle">Sarah, 34</text>
-                    <text x="180" y="156" fill="#b0c4e8" font-size="7" text-anchor="middle">Finance Manager</text>
-                      <!-- labels -->
-                        <text x="90" y="30" fill="#1e40af" font-size="10" font-weight="700" text-anchor="middle">THINKS</text>
-                          <text x="270" y="30" fill="#92400e" font-size="10" font-weight="700" text-anchor="middle">FEELS</text>
-                            <text x="90" y="165" fill="#065f46" font-size="10" font-weight="700" text-anchor="middle">SAYS</text>
-                              <text x="270" y="165" fill="#991b1b" font-size="10" font-weight="700" text-anchor="middle">DOES</text>
-                                <!-- content -->
-                                  <text x="20" y="50" fill="#374151" font-size="7">• "Is this tool trustworthy?"</text>
-                                    <text x="20" y="63" fill="#374151" font-size="7">• "Will it save me time?"</text>
-                                      <text x="20" y="76" fill="#374151" font-size="7">• "My manager expects results"</text>
-                                        <text x="20" y="89" fill="#374151" font-size="7">• "I hope this isn't complex"</text>
-                                          <text x="200" y="50" fill="#374151" font-size="7">• Anxious about errors</text>
-                                            <text x="200" y="63" fill="#374151" font-size="7">• Frustrated with old tools</text>
-                                              <text x="200" y="76" fill="#374151" font-size="7">• Hopeful for efficiency</text>
-                                                <text x="200" y="89" fill="#374151" font-size="7">• Proud when she delivers</text>
-                                                  <text x="20" y="183" fill="#374151" font-size="7">• "The current system is slow"</text>
-                                                    <text x="20" y="196" fill="#374151" font-size="7">• "I just need it to work"</text>
-                                                      <text x="20" y="209" fill="#374151" font-size="7">• "Can we test it first?"</text>
-                                                        <text x="200" y="183" fill="#374151" font-size="7">• Builds manual workarounds</text>
-                                                          <text x="200" y="196" fill="#374151" font-size="7">• Checks data multiple times</text>
-                                                            <text x="200" y="209" fill="#374151" font-size="7">• Attends every demo</text>
-                                                              <!-- bottom: pains & gains -->
-                                                                <rect x="10" y="278" width="160" height="36" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
-                                                                  <text x="90" y="294" fill="#991b1b" font-size="8" font-weight="700" text-anchor="middle">PAINS</text>
-                                                                    <text x="90" y="307" fill="#374151" font-size="7" text-anchor="middle">Slow tools · Data errors · Rework</text>
-                                                                      <rect x="190" y="278" width="160" height="36" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
-                                                                        <text x="270" y="294" fill="#065f46" font-size="8" font-weight="700" text-anchor="middle">GAINS</text>
-                                                                          <text x="270" y="307" fill="#374151" font-size="7" text-anchor="middle">Speed · Accuracy · Recognition</text>
-                                                                          </svg>`,
+             <rect x="10" y="10" width="160" height="120" rx="8" fill="#dbeafe" stroke="#2e86de" stroke-width="1.5"/>
+               <rect x="190" y="10" width="160" height="120" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+                 <rect x="10" y="145" width="160" height="120" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+                   <rect x="190" y="145" width="160" height="120" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+                     <!-- centre circle -->
+                       <circle cx="180" cy="138" r="32" fill="#1e3a5f"/>
+                         <text x="180" y="134" fill="#fff" font-size="8" font-weight="700" text-anchor="middle">USER</text>
+                           <text x="180" y="145" fill="#f9a825" font-size="7" text-anchor="middle">Sarah, 34</text>
+                             <text x="180" y="156" fill="#b0c4e8" font-size="7" text-anchor="middle">Finance Manager</text>
+                               <!-- labels -->
+                                 <text x="90" y="30" fill="#1e40af" font-size="10" font-weight="700" text-anchor="middle">THINKS</text>
+                                   <text x="270" y="30" fill="#92400e" font-size="10" font-weight="700" text-anchor="middle">FEELS</text>
+                                     <text x="90" y="165" fill="#065f46" font-size="10" font-weight="700" text-anchor="middle">SAYS</text>
+                                       <text x="270" y="165" fill="#991b1b" font-size="10" font-weight="700" text-anchor="middle">DOES</text>
+                                         <!-- content -->
+                                           <text x="20" y="50" fill="#374151" font-size="7">• "Is this tool trustworthy?"</text>
+                                             <text x="20" y="63" fill="#374151" font-size="7">• "Will it save me time?"</text>
+                                               <text x="20" y="76" fill="#374151" font-size="7">• "My manager expects results"</text>
+                                                 <text x="20" y="89" fill="#374151" font-size="7">• "I hope this isn't complex"</text>
+                                                   <text x="200" y="50" fill="#374151" font-size="7">• Anxious about errors</text>
+                                                     <text x="200" y="63" fill="#374151" font-size="7">• Frustrated with old tools</text>
+                                                       <text x="200" y="76" fill="#374151" font-size="7">• Hopeful for efficiency</text>
+                                                         <text x="200" y="89" fill="#374151" font-size="7">• Proud when she delivers</text>
+                                                           <text x="20" y="183" fill="#374151" font-size="7">• "The current system is slow"</text>
+                                                             <text x="20" y="196" fill="#374151" font-size="7">• "I just need it to work"</text>
+                                                               <text x="20" y="209" fill="#374151" font-size="7">• "Can we test it first?"</text>
+                                                                 <text x="200" y="183" fill="#374151" font-size="7">• Builds manual workarounds</text>
+                                                                   <text x="200" y="196" fill="#374151" font-size="7">• Checks data multiple times</text>
+                                                                     <text x="200" y="209" fill="#374151" font-size="7">• Attends every demo</text>
+                                                                       <!-- bottom: pains & gains -->
+                                                                         <rect x="10" y="278" width="160" height="36" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
+                                                                           <text x="90" y="294" fill="#991b1b" font-size="8" font-weight="700" text-anchor="middle">PAINS</text>
+                                                                             <text x="90" y="307" fill="#374151" font-size="7" text-anchor="middle">Slow tools · Data errors · Rework</text>
+                                                                               <rect x="190" y="278" width="160" height="36" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
+                                                                                 <text x="270" y="294" fill="#065f46" font-size="8" font-weight="700" text-anchor="middle">GAINS</text>
+                                                                                   <text x="270" y="307" fill="#374151" font-size="7" text-anchor="middle">Speed · Accuracy · Recognition</text>
+                                                                                   </svg>`,
        steps:["Identify the specific user you are mapping (give them a name and role).","Fill in the four quadrants based on research or workshops: Thinks, Feels, Says, Does.","Thinks: internal thoughts and beliefs — what's on their mind?","Feels: emotional state — what are they worried about, excited by, or frustrated with?","Says: direct quotes or paraphrases from interviews or observations.","Does: observable behaviours and actions.","Add Pains (frustrations/barriers) and Gains (goals/desires) at the bottom."],
-  elements:[
+       elements:[
          {name:"Thinks",desc:"Internal thoughts, beliefs, and concerns — often not openly shared."},
-    {name:"Feels",desc:"Emotional state: anxious, excited, frustrated, hopeful."},
-    {name:"Says",desc:"What the user actually voices in interviews or meetings."},
-    {name:"Does",desc:"Observable behaviours — what they physically do."},
-    {name:"Pains",desc:"Frustrations, barriers, risks, and fears."},
-    {name:"Gains",desc:"Goals, desires, and measures of success."}
-    ]},
+         {name:"Feels",desc:"Emotional state: anxious, excited, frustrated, hopeful."},
+         {name:"Says",desc:"What the user actually voices in interviews or meetings."},
+         {name:"Does",desc:"Observable behaviours — what they physically do."},
+         {name:"Pains",desc:"Frustrations, barriers, risks, and fears."},
+         {name:"Gains",desc:"Goals, desires, and measures of success."}
+         ]},
       {id:28,name:"Persona",category:"User Experience",
-       description:"An evidence-based, semi-fictional profile representing a key user segment, including goals, behaviours, and pain points.",
+       description:"A semi-fictional profile representing a key user segment including goals, behaviours, and pain points.",
        when:"Use when the team lacks shared understanding of who the users are, or when designing for specific user types.",
        tags:["user","persona","segment","profile","design"],
        keywords:["persona","user profile","user type","segment","user group","who is the user","target user","behaviour","user need","design for user"],
@@ -1645,50 +1645,50 @@
              <rect x="0" y="0" width="360" height="70" rx="8" fill="#1e3a5f"/>
                <rect x="0" y="58" width="360" height="12" fill="#1e3a5f"/>
                  <circle cx="50" cy="35" r="28" fill="#2e86de"/>
-        <text x="50" y="40" fill="#fff" font-size="18" text-anchor="middle">👩</text>
-          <text x="100" y="26" fill="#fff" font-size="13" font-weight="800">Sarah Mitchell</text>
-            <text x="100" y="40" fill="#b0c4e8" font-size="9">Finance Manager · Age 34 · London</text>
-              <text x="100" y="53" fill="#f9a825" font-size="8">Tech-savvy · Detail-oriented · Time-poor</text>
-                <!-- sections -->
-                  <rect x="10" y="78" width="160" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
-                    <text x="20" y="94" fill="#1e3a5f" font-size="9" font-weight="700">Goals</text>
-                      <text x="20" y="108" fill="#374151" font-size="7">• Deliver accurate reports fast</text>
-                        <text x="20" y="120" fill="#374151" font-size="7">• Reduce manual data work</text>
-                          <text x="20" y="132" fill="#374151" font-size="7">• Earn trust from leadership</text>
-                            <text x="20" y="144" fill="#374151" font-size="7">• Have time for strategic work</text>
-                              <text x="20" y="156" fill="#374151" font-size="7">• Stay ahead of compliance</text>
-                                <rect x="185" y="78" width="165" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
-                                  <text x="195" y="94" fill="#dc2626" font-size="9" font-weight="700">Frustrations</text>
-                                    <text x="195" y="108" fill="#374151" font-size="7">• Slow legacy systems</text>
-                                      <text x="195" y="120" fill="#374151" font-size="7">• Manual reconciliation errors</text>
-                                        <text x="195" y="132" fill="#374151" font-size="7">• Unclear data ownership</text>
-                                          <text x="195" y="144" fill="#374151" font-size="7">• Too many approval steps</text>
-                                            <text x="195" y="156" fill="#374151" font-size="7">• Siloed departments</text>
-    <rect x="10" y="188" width="160" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
-      <text x="20" y="204" fill="#2e86de" font-size="9" font-weight="700">Behaviours</text>
-        <text x="20" y="218" fill="#374151" font-size="7">• Uses spreadsheets as backup</text>
-          <text x="20" y="230" fill="#374151" font-size="7">• Attends all product demos</text>
-            <text x="20" y="242" fill="#374151" font-size="7">• Double-checks every figure</text>
-              <text x="20" y="254" fill="#374151" font-size="7">• Relies on peer recommendations</text>
-                <rect x="185" y="188" width="165" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
-                  <text x="195" y="204" fill="#059669" font-size="9" font-weight="700">Quote</text>
-                    <text x="195" y="222" fill="#374151" font-size="7" font-style="italic">"I just need the numbers</text>
-                      <text x="195" y="234" fill="#374151" font-size="7" font-style="italic"> to be right, first time,</text>
-                        <text x="195" y="246" fill="#374151" font-size="7" font-style="italic"> every time."</text>
-                          <text x="195" y="265" fill="#6b7280" font-size="7">Tech comfort: ████████░░ 8/10</text>
-                            <text x="195" y="278" fill="#6b7280" font-size="7">Influence: ██████░░░░ 6/10</text>
-                            </svg>`,
+                   <text x="50" y="40" fill="#fff" font-size="18" text-anchor="middle">👩</text>
+                     <text x="100" y="26" fill="#fff" font-size="13" font-weight="800">Sarah Mitchell</text>
+                       <text x="100" y="40" fill="#b0c4e8" font-size="9">Finance Manager · Age 34 · London</text>
+                         <text x="100" y="53" fill="#f9a825" font-size="8">Tech-savvy · Detail-oriented · Time-poor</text>
+                           <!-- sections -->
+                             <rect x="10" y="78" width="160" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+                               <text x="20" y="94" fill="#1e3a5f" font-size="9" font-weight="700">Goals</text>
+                                 <text x="20" y="108" fill="#374151" font-size="7">• Deliver accurate reports fast</text>
+                                   <text x="20" y="120" fill="#374151" font-size="7">• Reduce manual data work</text>
+                                     <text x="20" y="132" fill="#374151" font-size="7">• Earn trust from leadership</text>
+                                       <text x="20" y="144" fill="#374151" font-size="7">• Have time for strategic work</text>
+                                         <text x="20" y="156" fill="#374151" font-size="7">• Stay ahead of compliance</text>
+                                           <rect x="185" y="78" width="165" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+                                             <text x="195" y="94" fill="#dc2626" font-size="9" font-weight="700">Frustrations</text>
+                                               <text x="195" y="108" fill="#374151" font-size="7">• Slow legacy systems</text>
+                                                 <text x="195" y="120" fill="#374151" font-size="7">• Manual reconciliation errors</text>
+                                                   <text x="195" y="132" fill="#374151" font-size="7">• Unclear data ownership</text>
+                                                     <text x="195" y="144" fill="#374151" font-size="7">• Too many approval steps</text>
+                                                       <text x="195" y="156" fill="#374151" font-size="7">• Siloed departments</text>
+                                                         <rect x="10" y="188" width="160" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+                                                           <text x="20" y="204" fill="#2e86de" font-size="9" font-weight="700">Behaviours</text>
+                                                             <text x="20" y="218" fill="#374151" font-size="7">• Uses spreadsheets as backup</text>
+                                                               <text x="20" y="230" fill="#374151" font-size="7">• Attends all product demos</text>
+                                                                 <text x="20" y="242" fill="#374151" font-size="7">• Double-checks every figure</text>
+                                                                   <text x="20" y="254" fill="#374151" font-size="7">• Relies on peer recommendations</text>
+                                                                     <rect x="185" y="188" width="165" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+                                                                       <text x="195" y="204" fill="#059669" font-size="9" font-weight="700">Quote</text>
+                                                                         <text x="195" y="222" fill="#374151" font-size="7" font-style="italic">"I just need the numbers</text>
+                                                                           <text x="195" y="234" fill="#374151" font-size="7" font-style="italic"> to be right, first time,</text>
+                                                                             <text x="195" y="246" fill="#374151" font-size="7" font-style="italic"> every time."</text>
+                                                                               <text x="195" y="265" fill="#6b7280" font-size="7">Tech comfort: ████████░░ 8/10</text>
+                                                                                 <text x="195" y="278" fill="#6b7280" font-size="7">Influence: ██████░░░░ 6/10</text>
+                                                                                 </svg>`,
        steps:["Conduct user research: interviews, surveys, observations, analytics.","Identify distinct user segments from the research data.","For each key segment, create one persona — give them a realistic name, photo/avatar, age, and role.","Fill in: Goals (what they want to achieve), Frustrations (barriers and pain points), Behaviours (how they act), and a representative Quote.","Add contextual details: tech comfort level, influence, tools used.","Share and validate the persona with the wider team — update as you learn more."],
        elements:[
          {name:"Name & Demographics",desc:"A realistic profile that makes the persona feel human and relatable."},
          {name:"Goals",desc:"What the user is trying to achieve — their motivations and desired outcomes."},
          {name:"Frustrations",desc:"Pain points, barriers, and things that cause them friction."},
-         {name:"Behaviours",desc:"How they actually act — tools they use, workarounds they've built, habits."},
+    {name:"Behaviours",desc:"How they actually act — tools they use, workarounds they've built, habits."},
          {name:"Quote",desc:"A representative statement in their own words that captures their mindset."},
          {name:"Sliders / Attributes",desc:"Ratings like tech comfort or influence that help tailor the design."}
          ]},
       {id:29,name:"Context Diagram",category:"Requirements",
-       description:"Shows a system as a single box with all external entities and the data flows between them.",
+          description:"Shows a system as a single box with all external entities and the data flows between them.",
        when:"Use at project start to define system boundaries and agree on what is inside vs. outside scope.",
        tags:["requirements","scope","system boundary","context","data flow"],
        keywords:["context diagram","system boundary","scope","external entities","data flow","system context","what is in scope","boundary","interface","integration"],
@@ -1720,11 +1720,11 @@
                                                          <text x="252" y="158" fill="#374151" font-size="7">Stock update</text>
                                                            <line x1="190" y1="100" x2="190" y2="60" stroke="#059669" stroke-width="1.5" marker-end="url(#m2)"/>
                                                              <text x="194" y="84" fill="#374151" font-size="7">Payment request</text>
-                                                               <line x1="200" y1="60" x2="200" y2="100" stroke="#059669" stroke-width="1.5" marker-end="url(#m2)"/>
-                                                                 <text x="204" y="84" fill="#374151" font-size="7"> Auth response</text>
-                                                                   <line x1="190" y1="180" x2="190" y2="220" stroke="#d97706" stroke-width="1.5" marker-end="url(#m)"/>
-                                                                     <text x="194" y="206" fill="#374151" font-size="7">Order data</text>
-                                                                     </svg>`,
+    <line x1="200" y1="60" x2="200" y2="100" stroke="#059669" stroke-width="1.5" marker-end="url(#m2)"/>
+      <text x="204" y="84" fill="#374151" font-size="7"> Auth response</text>
+        <line x1="190" y1="180" x2="190" y2="220" stroke="#d97706" stroke-width="1.5" marker-end="url(#m)"/>
+          <text x="194" y="206" fill="#374151" font-size="7">Order data</text>
+          </svg>`,
        steps:["Draw the system as a single rectangle in the centre and label it clearly.","Identify all external entities (users, systems, organisations) that interact with the system and draw them as rectangles or ovals outside.","Draw arrows between each external entity and the system to show data flows.","Label each arrow with the name of the data or information being exchanged.","Decide what stays inside vs. outside — everything inside the system box is in scope."],
        elements:[
          {name:"System (centre box)",desc:"The system under analysis — everything inside this box is in scope."},
@@ -1758,40 +1758,40 @@
                                          <text x="210" y="28" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">ORDER</text>
                                            <text x="165" y="54" fill="#2e86de" font-size="8" font-weight="700">PK  OrderID</text>
                                              <line x1="155" y1="60" x2="265" y2="60" stroke="#e2e8f0" stroke-width="1"/>
-    <text x="165" y="73" fill="#dc2626" font-size="8">FK  CustomerID</text>
-    <line x1="155" y1="78" x2="265" y2="78" stroke="#e2e8f0" stroke-width="1"/>
-      <text x="165" y="91" fill="#374151" font-size="8">OrderDate</text>
-        <text x="165" y="104" fill="#374151" font-size="8">Status</text>
-          <text x="165" y="117" fill="#374151" font-size="8">TotalAmount</text>
-            <!-- Product entity -->
-              <rect x="300" y="40" width="110" height="150" rx="6" fill="#fff" stroke="#1e3a5f" stroke-width="2"/>
-                <rect x="300" y="40" width="110" height="28" rx="6" fill="#059669"/>
-                  <rect x="300" y="56" width="110" height="12" fill="#059669"/>
-                    <text x="355" y="58" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">PRODUCT</text>
-                      <text x="310" y="84" fill="#2e86de" font-size="8" font-weight="700">PK  ProductID</text>
-                        <line x1="300" y1="90" x2="410" y2="90" stroke="#e2e8f0" stroke-width="1"/>
-                          <text x="310" y="103" fill="#374151" font-size="8">Name</text>
-                            <text x="310" y="116" fill="#374151" font-size="8">Price</text>
-                              <text x="310" y="129" fill="#374151" font-size="8">StockLevel</text>
-                                <text x="310" y="142" fill="#374151" font-size="8">Category</text>
-                                  <!-- relationships -->
-                                    <line x1="120" y1="100" x2="155" y2="95" stroke="#1e3a5f" stroke-width="2"/>
-                                      <text x="123" y="92" fill="#1e3a5f" font-size="8" font-weight="700">1</text>
-                                        <text x="142" y="92" fill="#1e3a5f" font-size="8" font-weight="700">N</text>
-                                          <text x="128" y="108" fill="#6b7280" font-size="7">places</text>
-                                            <line x1="265" y1="95" x2="300" y2="100" stroke="#1e3a5f" stroke-width="2"/>
-                                              <text x="268" y="92" fill="#1e3a5f" font-size="8" font-weight="700">N</text>
-                                                <text x="286" y="92" fill="#1e3a5f" font-size="8" font-weight="700">M</text>
-                                                  <text x="266" y="108" fill="#6b7280" font-size="7">contains</text>
-                                                    <!-- legend -->
-                                                      <rect x="10" y="210" width="400" height="44" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
-                                                        <text x="20" y="227" fill="#2e86de" font-size="8" font-weight="700">PK = Primary Key</text>
-                                                          <text x="20" y="242" fill="#374151" font-size="8">Unique identifier for each record</text>
-                                                            <text x="160" y="227" fill="#dc2626" font-size="8" font-weight="700">FK = Foreign Key</text>
-                                                              <text x="160" y="242" fill="#374151" font-size="8">Links to a PK in another entity</text>
-                                                                <text x="300" y="227" fill="#1e3a5f" font-size="8" font-weight="700">1:N / M:N = Cardinality</text>
-                                                                  <text x="300" y="242" fill="#374151" font-size="8">Ratio of related records</text>
-                                                                  </svg>`,
+                                               <text x="165" y="73" fill="#dc2626" font-size="8">FK  CustomerID</text>
+                                                 <line x1="155" y1="78" x2="265" y2="78" stroke="#e2e8f0" stroke-width="1"/>
+                                                   <text x="165" y="91" fill="#374151" font-size="8">OrderDate</text>
+                                                     <text x="165" y="104" fill="#374151" font-size="8">Status</text>
+                                                       <text x="165" y="117" fill="#374151" font-size="8">TotalAmount</text>
+                                                         <!-- Product entity -->
+                                                           <rect x="300" y="40" width="110" height="150" rx="6" fill="#fff" stroke="#1e3a5f" stroke-width="2"/>
+                                                             <rect x="300" y="40" width="110" height="28" rx="6" fill="#059669"/>
+                                                               <rect x="300" y="56" width="110" height="12" fill="#059669"/>
+                                                                 <text x="355" y="58" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">PRODUCT</text>
+                                                                   <text x="310" y="84" fill="#2e86de" font-size="8" font-weight="700">PK  ProductID</text>
+                                                                     <line x1="300" y1="90" x2="410" y2="90" stroke="#e2e8f0" stroke-width="1"/>
+                                                                       <text x="310" y="103" fill="#374151" font-size="8">Name</text>
+                                                                         <text x="310" y="116" fill="#374151" font-size="8">Price</text>
+                                                                           <text x="310" y="129" fill="#374151" font-size="8">StockLevel</text>
+                                                                             <text x="310" y="142" fill="#374151" font-size="8">Category</text>
+                                                                               <!-- relationships -->
+                                                                                 <line x1="120" y1="100" x2="155" y2="95" stroke="#1e3a5f" stroke-width="2"/>
+                                                                                   <text x="123" y="92" fill="#1e3a5f" font-size="8" font-weight="700">1</text>
+                                                                                     <text x="142" y="92" fill="#1e3a5f" font-size="8" font-weight="700">N</text>
+                                                                                       <text x="128" y="108" fill="#6b7280" font-size="7">places</text>
+                                                                                         <line x1="265" y1="95" x2="300" y2="100" stroke="#1e3a5f" stroke-width="2"/>
+                                                                                           <text x="268" y="92" fill="#1e3a5f" font-size="8" font-weight="700">N</text>
+                                                                                             <text x="286" y="92" fill="#1e3a5f" font-size="8" font-weight="700">M</text>
+                                                                                               <text x="266" y="108" fill="#6b7280" font-size="7">contains</text>
+                                                                                                 <!-- legend -->
+                                                                                                   <rect x="10" y="210" width="400" height="44" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
+                                                                                                     <text x="20" y="227" fill="#2e86de" font-size="8" font-weight="700">PK = Primary Key</text>
+                                                                                                       <text x="20" y="242" fill="#374151" font-size="8">Unique identifier for each record</text>
+                                                                                                         <text x="160" y="227" fill="#dc2626" font-size="8" font-weight="700">FK = Foreign Key</text>
+                                                                                                           <text x="160" y="242" fill="#374151" font-size="8">Links to a PK in another entity</text>
+                                                                                                             <text x="300" y="227" fill="#1e3a5f" font-size="8" font-weight="700">1:N / M:N = Cardinality</text>
+                                                                                                               <text x="300" y="242" fill="#374151" font-size="8">Ratio of related records</text>
+                                                                                                               </svg>`,
        steps:["Identify the entities — the main 'things' in the system that store data (Customer, Order, Product).","For each entity, list its attributes (fields) and identify the Primary Key (PK) — the unique identifier.","Identify relationships between entities: which entities link to which.","Determine the cardinality (1:1, 1:N, M:N) of each relationship.","Add Foreign Keys (FK) to show how entities reference each other.","Draw the diagram with entities as rectangles, attributes listed inside, and relationship lines connecting them."],
        elements:[
          {name:"Entity",desc:"A 'thing' about which data is stored — typically becomes a database table."},
@@ -1802,7 +1802,7 @@
          {name:"Cardinality (1:1, 1:N, M:N)",desc:"The numeric relationship between records: one-to-one, one-to-many, many-to-many."}
          ]},
       {id:31,name:"Data Flow Diagram (DFD)",category:"Data & Information",
-       description:"Illustrates how data moves through a system using external entities, processes, data stores, and data flows.",
+       description:"Illustrates how data moves through a system — inputs, processing steps, stores, and outputs.",
        when:"Use when mapping data flows between processes and systems, especially for integration or data migration projects.",
        tags:["data","flow","processes","stores","integration"],
        keywords:["data flow","dfd","data movement","integration","data migration","input output","process data","information flow","systems integration","data diagram"],
@@ -1843,15 +1843,15 @@
                                                                            <line x1="316" y1="116" x2="255" y2="152" stroke="#2e86de" stroke-width="1.5" marker-end="url(#n)"/>
                                                                              <text x="305" y="140" fill="#374151" font-size="7">Dispatch</text>
                                                                                <text x="340" y="140" fill="#374151" font-size="7">instruction</text>
-           <!-- legend -->
-    <circle cx="22" cy="248" r="8" fill="none" stroke="#2e86de" stroke-width="1.5"/>
-      <text x="34" y="252" fill="#374151" font-size="7">Process (circle)</text>
-        <rect x="100" y="242" width="14" height="10" rx="2" fill="#e8f0fe" stroke="#1e3a5f" stroke-width="1"/>
-          <text x="118" y="252" fill="#374151" font-size="7">External entity (square)</text>
-            <line x1="230" y1="247" x2="260" y2="247" stroke="#059669" stroke-width="1.5"/>
-              <line x1="230" y1="252" x2="260" y2="252" stroke="#059669" stroke-width="1.5"/>
-                <text x="264" y="252" fill="#374151" font-size="7">Data store (open rect)</text>
-       </svg>`,
+                                                                                 <!-- legend -->
+                                                                                   <circle cx="22" cy="248" r="8" fill="none" stroke="#2e86de" stroke-width="1.5"/>
+                                                                                     <text x="34" y="252" fill="#374151" font-size="7">Process (circle)</text>
+                                                                                       <rect x="100" y="242" width="14" height="10" rx="2" fill="#e8f0fe" stroke="#1e3a5f" stroke-width="1"/>
+                                                                                         <text x="118" y="252" fill="#374151" font-size="7">External entity (square)</text>
+                                                                                           <line x1="230" y1="247" x2="260" y2="247" stroke="#059669" stroke-width="1.5"/>
+                                                                                             <line x1="230" y1="252" x2="260" y2="252" stroke="#059669" stroke-width="1.5"/>
+                                                                                               <text x="264" y="252" fill="#374151" font-size="7">Data store (open rect)</text>
+                                                                                               </svg>`,
        steps:["Start with a Context Diagram (Level 0) showing the system as one circle with external entities.","Explode the system into Level 1: draw each major process as a numbered circle.","Add external entities as squares and data stores as open-ended rectangles.","Draw data flow arrows between elements, labelling each with the data being transferred.","Ensure every process has at least one input and one output.","Decompose complex processes further into Level 2 sub-process DFDs as needed."],
        elements:[
          {name:"Process (circle/bubble)",desc:"A function that transforms, stores, or distributes data."},
@@ -1863,7 +1863,7 @@
          ]},
       {id:32,name:"SIPOC",category:"Process & Workflow",
        description:"Summarises a process at a high level by identifying Suppliers, Inputs, Process steps, Outputs, and Customers.",
-       when:"Use at the beginning of a process improvement project to set high-level scope before detailed process modelling.",
+       when:"Use at the beginning of a process improvement project to set scope before diving into detail.",
        tags:["process","scope","suppliers","customers","outputs"],
        keywords:["sipoc","process scope","suppliers","inputs","outputs","customers","process overview","high level process","process summary","six sigma","improvement"],
        diagram:`<svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
@@ -1922,12 +1922,12 @@
          {name:"Suppliers (S)",desc:"Who provides the inputs? Could be internal departments, vendors, or systems."},
          {name:"Inputs (I)",desc:"The materials, data, or information needed to run the process."},
          {name:"Process (P)",desc:"The high-level steps of the process — kept to 5–7 steps at this stage."},
-         {name:"Outputs (O)",desc:"What the process produces: deliverables, products, reports, decisions."},
+    {name:"Outputs (O)",desc:"What the process produces: deliverables, products, reports, decisions."},
          {name:"Customers (C)",desc:"Who receives the output? Internal teams, end customers, regulators."}
-         ]}
-      ];
+    ]}
+             ];
 
-    // ── QUICK CHIPS ──
+  // ── QUICK CHIPS ──
     const QUICK_CHIPS = ["manage stakeholders","prioritise requirements","map a process","root cause analysis","make a decision","manage change","improve customer experience","analyse strategy","design a database"];
     const ALL_CATEGORIES = [...new Set(BA_MODELS.map(m => m.category))].sort();
     let currentQuery = "";
@@ -1941,7 +1941,7 @@
         let pts = 0;
         for (const kw of model.keywords) { if (q.includes(kw)) pts += kw.split(" ").length * 4; }
         for (const token of tokens) {
-              for (const kw of model.keywords) { if (kw.includes(token)) pts += 1; }
+            for (const kw of model.keywords) { if (kw.includes(token)) pts += 1; }
               if (model.name.toLowerCase().includes(token)) pts += 3;
               if (model.category.toLowerCase().includes(token)) pts += 2;
               if (model.description.toLowerCase().includes(token)) pts += 1;
@@ -1953,7 +1953,7 @@
     // ── RENDER CARDS ──
     function badgeLabel(rank, total) {
         if (!currentQuery) return null;
-        if (rank === 0) return { cls:"top", text:"⭐ Suggested Match" };
+        if (rank === 0) return { cls:"top", text:"⭐ Best Match" };
         if (rank <= Math.min(2, total - 1)) return { cls:"good", text:"Strong Match" };
         return null;
     }
