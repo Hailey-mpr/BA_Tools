@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BA Model Recommender</title>
+  <title>BA Framework & Technique Recommender</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -122,7 +122,7 @@
 <body>
 <header>
   <div class="logo">BA <span>Model</span> Recommender</div>
-  <p>Describe your challenge or the outcome you need — get instant recommendations for the right Business Analysis model or tool.</p>
+  <p>Explore Business Analysis framework and technique suggestions based on your keywords. Use project context, stakeholder needs, and organisational methodology to make the final choice.</p>
 </header>
 <div class="search-wrap">
   <div class="search-box">
@@ -1953,7 +1953,7 @@ function score(model, query) {
 // ── RENDER CARDS ──
 function badgeLabel(rank, total) {
   if (!currentQuery) return null;
-  if (rank === 0) return { cls:"top", text:"⭐ Best Match" };
+  if (rank === 0) return { cls:"top", text:"Suggested Match" };
   if (rank <= Math.min(2, total - 1)) return { cls:"good", text:"Strong Match" };
   return null;
 }
