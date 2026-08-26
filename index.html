@@ -1,172 +1,613 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BA Framework & Technique Recommender</title>
+  <title>BA Toolkit — Framework Recommender</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --primary:#1e3a5f; --accent:#2e86de; --accent2:#f9a825;
-      --bg:#f4f6fa; --card-bg:#ffffff; --text:#1a1a2e; --muted:#6b7280;
-      --border:#e2e8f0; --tag-bg:#e8f0fe; --tag-text:#1a56db; --radius:12px;
-    }
-    body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
-    /* HEADER */
-    header { background:linear-gradient(135deg,var(--primary) 0%,#2c5282 100%); color:#fff; padding:36px 24px 32px; text-align:center; }
-    header .logo { font-size:2rem; font-weight:800; letter-spacing:-0.5px; }
-    header .logo span { color:var(--accent2); }
-    header p { margin-top:8px; font-size:1rem; color:#b0c4e8; max-width:560px; margin-left:auto; margin-right:auto; }
-    /* SEARCH */
-    .search-wrap { background:var(--primary); padding:0 24px 28px; }
-    .search-box { display:flex; max-width:680px; margin:0 auto; background:#fff; border-radius:50px; box-shadow:0 4px 24px rgba(0,0,0,.18); overflow:hidden; }
-    .search-box input { flex:1; border:none; outline:none; padding:16px 22px; font-size:1rem; color:var(--text); background:transparent; }
-    .search-box input::placeholder { color:var(--muted); }
-    .search-box button { background:var(--accent); border:none; cursor:pointer; padding:0 28px; color:#fff; font-size:.95rem; font-weight:600; transition:background .2s; white-space:nowrap; }
-    .search-box button:hover { background:#1a6fc4; }
-    /* CHIPS */
-    .quick-picks { max-width:680px; margin:14px auto 0; display:flex; flex-wrap:wrap; gap:8px; }
-    .quick-picks span { font-size:.78rem; color:#9ab4d8; margin-right:4px; }
-    .chip { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:#d4e4f7; border-radius:20px; padding:4px 14px; font-size:.8rem; cursor:pointer; transition:background .2s,color .2s; }
-    .chip:hover,.chip:active { background:var(--accent2); color:#1a1a2e; border-color:var(--accent2); }
-    /* MAIN */
-    main { max-width:1100px; margin:0 auto; padding:32px 20px 60px; }
-    .section-title { font-size:1rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:16px; }
-    .result-count { display:inline-block; background:var(--accent); color:#fff; border-radius:20px; padding:1px 10px; font-size:.75rem; margin-left:8px; vertical-align:middle; font-weight:700; }
-    /* CARDS */
-    .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:20px; }
-    .card { background:var(--card-bg); border-radius:var(--radius); border:1px solid var(--border); padding:22px 22px 18px; display:flex; flex-direction:column; transition:box-shadow .2s,transform .2s; position:relative; cursor:pointer; }
-    .card:hover,.card:focus-within { box-shadow:0 8px 32px rgba(30,58,95,.12); transform:translateY(-2px); }
-    .card-hint { font-size:.73rem; color:var(--accent); font-weight:600; margin-top:12px; display:flex; align-items:center; gap:4px; }
-    .card-hint svg { width:14px; height:14px; }
-    .badge-wrap { position:absolute; top:16px; right:16px; }
-    .badge { font-size:.72rem; font-weight:700; padding:3px 10px; border-radius:20px; }
-    .badge.top  { background:#fef3c7; color:#92400e; }
-    .badge.good { background:#d1fae5; color:#065f46; }
-    .card-category { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent); margin-bottom:6px; }
-    .card-title { font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:8px; padding-right:60px; }
-    .card-desc { font-size:.88rem; color:#4a5568; line-height:1.55; flex:1; }
-    .card-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
-    .tag { background:var(--tag-bg); color:var(--tag-text); border-radius:20px; padding:3px 11px; font-size:.72rem; font-weight:600; }
-    .tag.highlight { background:#fef3c7; color:#92400e; }
-    .when { margin-top:12px; background:#f8fafc; border-left:3px solid var(--accent); border-radius:0 6px 6px 0; padding:8px 12px; font-size:.82rem; color:#374151; line-height:1.5; }
-    .when strong { color:var(--primary); }
-    /* EMPTY */
-    .empty { text-align:center; padding:60px 20px; color:var(--muted); }
-    .empty .icon { font-size:3rem; margin-bottom:12px; }
-    .empty h3 { font-size:1.1rem; margin-bottom:6px; color:var(--text); }
-    /* FILTERS */
-    .filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
-    .filter-pill { border:1px solid var(--border); background:#fff; border-radius:20px; padding:5px 16px; font-size:.82rem; cursor:pointer; transition:background .2s,color .2s,border-color .2s; font-weight:500; color:var(--muted); }
-    .filter-pill.active,.filter-pill:hover,.filter-pill:active { background:var(--primary); color:#fff; border-color:var(--primary); }
-    /* FOOTER */
-    footer { text-align:center; padding:20px; color:var(--muted); font-size:.82rem; border-top:1px solid var(--border); }
-    /* ── MODAL ── */
-    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(10,20,40,.6); z-index:1000; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(3px); }
-    .modal-overlay.open { display:flex; }
-    .modal { background:#fff; border-radius:16px; width:100%; max-width:780px; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,.3); display:flex; flex-direction:column; }
-    .modal-header { display:flex; align-items:flex-start; justify-content:space-between; padding:24px 28px 16px; border-bottom:1px solid var(--border); position:sticky; top:0; background:#fff; z-index:2; border-radius:16px 16px 0 0; }
-    .modal-header-text .modal-cat { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent); margin-bottom:4px; }
-    .modal-header-text h2 { font-size:1.25rem; font-weight:800; color:var(--primary); }
-    .modal-close { background:none; border:none; cursor:pointer; color:var(--muted); padding:4px; border-radius:8px; transition:background .2s,color .2s; flex-shrink:0; margin-left:16px; margin-top:2px; }
-    .modal-close:hover { background:var(--bg); color:var(--text); }
-    .modal-body { padding:24px 28px 32px; display:flex; flex-direction:column; gap:28px; }
-    /* diagram area */
-    .diagram-wrap { background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; align-items:center; justify-content:center; min-height:200px; overflow:auto; }
-    .diagram-wrap svg { max-width:100%; height:auto; }
-    /* how to draw */
-    .modal-section h3 { font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin-bottom:10px; }
-    .steps-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
-    .steps-list li { display:flex; gap:12px; font-size:.88rem; color:#374151; line-height:1.5; }
-    .step-num { background:var(--primary); color:#fff; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:700; flex-shrink:0; margin-top:1px; }
-    /* elements legend */
-    .elements-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px; }
-    .element-card { background:#f8fafc; border:1px solid var(--border); border-radius:8px; padding:10px 14px; }
-    .element-card .el-name { font-size:.82rem; font-weight:700; color:var(--primary); margin-bottom:3px; }
-    .element-card .el-desc { font-size:.8rem; color:#4a5568; line-height:1.45; }
-    /* RESPONSIVE */
-    @media(max-width:768px){
-      .cards{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
-      main{padding:24px 16px 48px;}
-    }
-    @media(max-width:540px){
-      header{padding:28px 16px 24px;}
-      header .logo{font-size:1.4rem;}
-      header p{font-size:.88rem;}
-      .search-wrap{padding:0 16px 20px;}
-      .search-box{flex-direction:column;border-radius:16px;}
-      .search-box input{padding:14px 18px;font-size:.95rem;border-bottom:1px solid var(--border);}
-      .search-box button{padding:13px 18px;font-size:.9rem;width:100%;text-align:center;}
-      .quick-picks{margin-top:12px;gap:6px;}
-      .chip{font-size:.75rem;padding:4px 12px;}
-      .filters{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;gap:6px;margin-bottom:18px;}
-      .filters::-webkit-scrollbar{display:none;}
-      .filter-pill{flex-shrink:0;font-size:.78rem;padding:5px 14px;white-space:nowrap;}
-      .cards{grid-template-columns:1fr;gap:14px;}
-      .card{padding:18px 16px 14px;}
-      .card-title{font-size:.98rem;padding-right:72px;}
-      .card-desc{font-size:.84rem;}
-      .when{font-size:.8rem;}
-      .badge-wrap{top:14px;right:14px;}
-      .badge{font-size:.68rem;padding:2px 8px;}
-      .section-title{font-size:.88rem;}
-      main{padding:20px 12px 40px;}
-      footer{font-size:.78rem;padding:16px 12px;}
-      .modal-header{padding:18px 18px 14px;}
-      .modal-body{padding:18px 18px 24px;gap:20px;}
-      .modal-header-text h2{font-size:1.05rem;}
-      .elements-grid{grid-template-columns:1fr;}
-    }
+/* ── TOKENS ── */
+:root {
+  --background:     oklch(0.985 0.008 85);
+  --foreground:     oklch(0.24 0.035 255);
+  --card:           oklch(1 0 0);
+  --primary:        oklch(0.31 0.062 253);
+  --primary-fg:     oklch(0.98 0.01 85);
+  --secondary:      oklch(0.95 0.014 90);
+  --muted-fg:       oklch(0.5 0.03 255);
+  --accent:         oklch(0.79 0.146 76);
+  --accent-fg:      oklch(0.24 0.05 60);
+  --border:         oklch(0.9 0.014 90);
+  --ring:           oklch(0.79 0.146 76);
+  --shadow-card:    0 2px 8px oklch(0.24 0.035 255 / 8%), 0 1px 2px oklch(0.24 0.035 255 / 6%);
+  --shadow-hover:   0 8px 28px oklch(0.24 0.035 255 / 14%), 0 2px 6px oklch(0.24 0.035 255 / 8%);
+  --shadow-modal:   0 24px 64px oklch(0.1 0.04 255 / 40%);
+  --radius:         14px;
+  --radius-sm:      8px;
+  --radius-pill:    999px;
+  /* category colours */
+  --cat-stakeholder:  oklch(0.55 0.14 250);
+  --cat-requirements: oklch(0.55 0.13 155);
+  --cat-process:      oklch(0.55 0.12 205);
+  --cat-strategy:     oklch(0.55 0.16 300);
+  --cat-problem:      oklch(0.6  0.15  55);
+  --cat-decision:     oklch(0.55 0.13  25);
+  --cat-change:       oklch(0.55 0.12 180);
+  --cat-ux:           oklch(0.58 0.16 350);
+  --cat-data:         oklch(0.5  0.1  265);
+}
+[data-theme="dark"] {
+  --background:  oklch(0.19 0.028 260);
+  --foreground:  oklch(0.95 0.008 85);
+  --card:        oklch(0.235 0.032 258);
+  --primary:     oklch(0.9 0.02 85);
+  --primary-fg:  oklch(0.22 0.04 258);
+  --secondary:   oklch(0.28 0.035 258);
+  --muted-fg:    oklch(0.72 0.02 258);
+  --accent:      oklch(0.79 0.146 76);
+  --accent-fg:   oklch(0.22 0.05 60);
+  --border:      oklch(1 0 0 / 12%);
+  --shadow-card: 0 2px 8px oklch(0 0 0 / 30%);
+  --shadow-hover:0 8px 28px oklch(0 0 0 / 45%);
+  --cat-stakeholder:  oklch(0.72 0.13 250);
+  --cat-requirements: oklch(0.74 0.13 155);
+  --cat-process:      oklch(0.74 0.11 205);
+  --cat-strategy:     oklch(0.74 0.14 300);
+  --cat-problem:      oklch(0.78 0.14  65);
+  --cat-decision:     oklch(0.72 0.13  25);
+  --cat-change:       oklch(0.74 0.11 180);
+  --cat-ux:           oklch(0.75 0.15 350);
+  --cat-data:         oklch(0.72 0.1  265);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+  line-height: 1.6;
+  transition: background 0.2s, color 0.2s;
+}
+h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: oklch(0.28 0.055 255 / 85%);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid oklch(1 0 0 / 10%);
+  padding: 0 24px;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 100%;
+}
+[data-theme="dark"] .nav { background: oklch(0.16 0.03 260 / 88%); }
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800; font-size: 1.1rem; letter-spacing: -0.03em;
+  color: var(--primary-fg);
+  display: flex; align-items: center; gap: 8px;
+}
+[data-theme="dark"] .nav-logo { color: var(--foreground); }
+.nav-logo .logo-dot { color: var(--accent); }
+.theme-toggle {
+  background: oklch(1 0 0 / 12%);
+  border: 1px solid oklch(1 0 0 / 20%);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: background 0.2s, border-color 0.2s;
+  color: var(--accent);
+}
+.theme-toggle:hover { background: oklch(1 0 0 / 20%); }
+.theme-toggle:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+/* ── HERO ── */
+.hero {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, oklch(0.38 0.08 253) 0%, oklch(0.24 0.05 258) 55%, oklch(0.19 0.04 262) 100%);
+  padding: 52px 24px 48px;
+  position: relative;
+  overflow: hidden;
+}
+/* grid paper texture */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(oklch(1 0 0 / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / 4%) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 80% at 30% 20%, black 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner { position: relative; max-width: 760px; margin: 0 auto; text-align: center; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: oklch(1 0 0 / 10%);
+  border: 1px solid oklch(1 0 0 / 18%);
+  border-radius: var(--radius-pill);
+  padding: 4px 14px 4px 10px;
+  font-size: 0.78rem; font-weight: 600;
+  color: oklch(0.88 0.04 85);
+  margin-bottom: 20px;
+}
+.hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  color: oklch(0.97 0.01 85);
+  line-height: 1.12;
+  margin-bottom: 14px;
+}
+.hero-title em { font-style: normal; color: var(--accent); }
+.hero-sub {
+  font-size: clamp(0.92rem, 2vw, 1.05rem);
+  color: oklch(0.78 0.03 255);
+  max-width: 520px;
+  margin: 0 auto 32px;
+}
+
+/* ── SEARCH ── */
+.search-wrap { max-width: 620px; margin: 0 auto 20px; }
+.search-box {
+  display: flex;
+  background: oklch(1 0 0 / 10%);
+  border: 1.5px solid oklch(1 0 0 / 22%);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+.search-box:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px oklch(0.79 0.146 76 / 25%);
+}
+.search-icon { display: flex; align-items: center; padding: 0 14px 0 18px; color: oklch(0.78 0.03 255); flex-shrink: 0; }
+.search-box input {
+  flex: 1; border: none; outline: none;
+  padding: 14px 4px;
+  font-size: 0.97rem; font-family: 'DM Sans', sans-serif;
+  color: oklch(0.97 0.01 85);
+  background: transparent;
+}
+.search-box input::placeholder { color: oklch(0.68 0.025 255); }
+.search-clear {
+  background: none; border: none; cursor: pointer;
+  color: oklch(0.68 0.025 255);
+  padding: 0 10px;
+  display: none; align-items: center;
+  transition: color 0.15s;
+}
+.search-clear.visible { display: flex; }
+.search-clear:hover { color: oklch(0.97 0.01 85); }
+.search-btn {
+  background: var(--accent);
+  border: none; cursor: pointer;
+  padding: 0 22px;
+  color: var(--accent-fg);
+  font-size: 0.88rem; font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: background 0.2s;
+  white-space: nowrap;
+  border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+}
+.search-btn:hover { background: oklch(0.72 0.15 76); }
+.search-btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+/* ── CHIPS ── */
+.chips-row {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  justify-content: center;
+  max-width: 660px; margin: 0 auto;
+}
+.chips-label { font-size: 0.75rem; color: oklch(0.68 0.025 255); align-self: center; margin-right: 2px; }
+.chip {
+  background: oklch(1 0 0 / 9%);
+  border: 1px solid oklch(1 0 0 / 18%);
+  color: oklch(0.88 0.03 85);
+  border-radius: var(--radius-pill);
+  padding: 4px 13px;
+  font-size: 0.78rem; font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+  font-family: 'DM Sans', sans-serif;
+}
+.chip:hover, .chip:active { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.chip:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.chip.surprise {
+  background: oklch(1 0 0 / 5%);
+  border-style: dashed;
+}
+
+/* ── MAIN ── */
+main { max-width: 1160px; margin: 0 auto; padding: 36px 20px 72px; }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  display: flex; gap: 8px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+  margin-bottom: 28px;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+.filter-pill {
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 6px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  border-radius: var(--radius-pill);
+  padding: 6px 16px;
+  font-size: 0.8rem; font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+  color: var(--muted-fg);
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+}
+.filter-pill:hover { border-color: var(--accent); color: var(--foreground); }
+.filter-pill:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.filter-pill.active { background: var(--primary); border-color: var(--primary); color: var(--primary-fg); }
+[data-theme="dark"] .filter-pill.active { background: oklch(0.31 0.062 253); color: oklch(0.95 0.008 85); border-color: oklch(0.31 0.062 253); }
+.cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.pill-count { font-size: 0.7rem; background: var(--secondary); border-radius: var(--radius-pill); padding: 1px 7px; color: var(--muted-fg); }
+.filter-pill.active .pill-count { background: oklch(1 0 0 / 18%); color: var(--primary-fg); }
+
+/* ── RESULTS HEADER ── */
+.results-header {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.results-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted-fg);
+}
+.result-count {
+  display: inline-flex; align-items: center;
+  background: var(--primary); color: var(--primary-fg);
+  border-radius: var(--radius-pill);
+  padding: 2px 10px; font-size: 0.72rem; font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+}
+[data-theme="dark"] .result-count { background: oklch(0.31 0.062 253); color: oklch(0.95 0.008 85); }
+.results-hint { font-size: 0.75rem; color: var(--muted-fg); }
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 0.78rem;
+  color: var(--muted-fg);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+.disclaimer strong { color: var(--foreground); }
+
+/* ── CARDS ── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--cat-color, var(--primary));
+  padding: 22px 22px 18px;
+  display: flex; flex-direction: column;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+  cursor: pointer;
+  position: relative;
+}
+.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+.card:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.card-cat-icon { font-size: 1rem; line-height: 1; }
+.card-category {
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--cat-color, var(--muted-fg));
+  flex: 1;
+}
+.badge-wrap { position: absolute; top: 14px; right: 14px; }
+.badge {
+  font-size: 0.68rem; font-weight: 700;
+  padding: 3px 9px; border-radius: var(--radius-pill);
+}
+.badge.top  { background: oklch(0.95 0.08 80); color: oklch(0.45 0.12 55); }
+.badge.good { background: oklch(0.93 0.06 155); color: oklch(0.4 0.12 155); }
+[data-theme="dark"] .badge.top  { background: oklch(0.38 0.1 70); color: oklch(0.92 0.12 80); }
+[data-theme="dark"] .badge.good { background: oklch(0.3 0.08 160); color: oklch(0.85 0.1 155); }
+.card-title {
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 8px;
+  padding-right: 72px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.card-desc {
+  font-size: 0.875rem;
+  color: var(--muted-fg);
+  line-height: 1.55; flex: 1;
+}
+.when {
+  margin-top: 12px;
+  background: var(--secondary);
+  border-left: 3px solid var(--cat-color, var(--primary));
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: var(--muted-fg);
+  line-height: 1.5;
+}
+.when strong { color: var(--foreground); }
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.tag {
+  background: var(--secondary);
+  color: var(--muted-fg);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px; font-size: 0.7rem; font-weight: 600;
+  border: 1px solid var(--border);
+}
+.tag.highlight { background: oklch(0.95 0.08 80); color: oklch(0.45 0.12 55); border-color: transparent; }
+[data-theme="dark"] .tag.highlight { background: oklch(0.38 0.1 70); color: oklch(0.92 0.12 80); }
+.card-cta {
+  margin-top: 14px;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--cat-color, var(--primary));
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+.card:hover .card-cta { opacity: 1; }
+.card-cta svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* ── EMPTY STATE ── */
+.empty {
+  grid-column: 1/-1;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 64px 24px;
+  text-align: center;
+  color: var(--muted-fg);
+}
+.empty-icon { font-size: 2.8rem; margin-bottom: 12px; }
+.empty h3 { font-size: 1.05rem; margin-bottom: 6px; color: var(--foreground); font-family: 'Space Grotesk', sans-serif; }
+.empty p { font-size: 0.88rem; margin-bottom: 18px; }
+.empty-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.empty-chip {
+  background: var(--secondary); border: 1px solid var(--border);
+  border-radius: var(--radius-pill); padding: 5px 14px;
+  font-size: 0.78rem; font-weight: 500; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  color: var(--foreground);
+}
+.empty-chip:hover { border-color: var(--accent); background: oklch(0.95 0.08 80 / 20%); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 20px;
+  font-size: 0.8rem;
+  color: var(--muted-fg);
+}
+
+/* ── MODAL OVERLAY ── */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: oklch(0.1 0.04 255 / 55%);
+  z-index: 200;
+  align-items: center; justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  width: 100%; max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-modal);
+  display: flex; flex-direction: column;
+  border-top: 4px solid var(--modal-accent, var(--accent));
+}
+.modal-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 22px 26px 16px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0;
+  background: var(--card);
+  z-index: 2;
+  border-radius: calc(var(--radius) - 4px) calc(var(--radius) - 4px) 0 0;
+}
+.modal-cat-label {
+  font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--modal-accent, var(--accent));
+  margin-bottom: 4px;
+}
+.modal-title { font-size: 1.2rem; font-weight: 800; color: var(--foreground); }
+.modal-close {
+  background: var(--secondary); border: none; cursor: pointer;
+  color: var(--muted-fg);
+  width: 34px; height: 34px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0; margin-left: 16px;
+}
+.modal-close:hover { background: var(--border); color: var(--foreground); }
+.modal-close:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.modal-body { padding: 24px 26px 32px; display: flex; flex-direction: column; gap: 26px; }
+.modal-section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--muted-fg);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.diagram-wrap {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 200px; overflow: auto;
+}
+.diagram-wrap svg { max-width: 100%; height: auto; }
+.steps-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.steps-list li { display: flex; gap: 12px; font-size: 0.875rem; color: var(--foreground); line-height: 1.55; }
+.step-num {
+  background: var(--primary); color: var(--primary-fg);
+  border-radius: 50%; width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.68rem; font-weight: 700;
+  flex-shrink: 0; margin-top: 2px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+[data-theme="dark"] .step-num { background: oklch(0.31 0.062 253); color: oklch(0.95 0.008 85); }
+.elements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.element-card {
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+}
+.el-name { font-size: 0.8rem; font-weight: 700; color: var(--foreground); margin-bottom: 3px; font-family: 'Space Grotesk', sans-serif; }
+.el-desc { font-size: 0.78rem; color: var(--muted-fg); line-height: 1.45; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .cards { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  main { padding: 24px 16px 56px; }
+}
+@media (max-width: 540px) {
+  .hero { padding: 36px 16px 36px; }
+  .hero-title { font-size: 1.8rem; }
+  .search-box { flex-direction: column; border-radius: var(--radius); }
+  .search-icon { padding: 14px 14px 4px; }
+  .search-box input { padding: 4px 16px 12px; }
+  .search-clear { display: none !important; }
+  .search-btn { border-radius: 0 0 var(--radius) var(--radius); padding: 13px; width: 100%; }
+  .chips-row { gap: 6px; }
+  .chip { font-size: 0.73rem; padding: 4px 11px; }
+  .cards { grid-template-columns: 1fr; }
+  .card-title { padding-right: 64px; }
+  .modal-header { padding: 16px 18px 12px; }
+  .modal-body { padding: 18px 18px 28px; }
+  .elements-grid { grid-template-columns: 1fr; }
+  .nav { padding: 0 16px; }
+}
   </style>
 </head>
 <body>
-<header>
-  <div class="logo">BA Framework <span>& Technique</span> Recommender</div>
-  <p>Explore Business Analysis framework and technique suggestions based on your keywords. Use project context, stakeholder needs, and organisational methodology to make the final choice.</p>
-</header>
-<div class="search-wrap">
-  <div class="search-box">
-    <input id="searchInput" type="text" placeholder="e.g. manage stakeholders, prioritise requirements, map a process…" autocomplete="off" />
-    <button onclick="runSearch()">Recommend</button>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Site navigation">
+  <div class="nav-logo">
+    <span>BA</span><span class="logo-dot"> ✦ </span><span>Toolkit</span>
   </div>
-  <div class="quick-picks" id="quickPicks"></div>
-</div>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" role="banner">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      32 frameworks across 9 disciplines
+    </div>
+    <h1 class="hero-title">Describe the problem.<br><em>Get the right framework.</em></h1>
+    <p class="hero-sub">Type the challenge you're facing or the outcome you need — the right BA model surfaces instantly.</p>
+
+    <div class="search-wrap">
+      <div class="search-box" role="search">
+        <span class="search-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 12l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        <input id="searchInput" type="search" autocomplete="off"
+          placeholder="e.g. manage stakeholders, root cause, map a process…"
+          aria-label="Search for a BA framework" />
+        <button class="search-clear" id="clearBtn" aria-label="Clear search">
+          <svg width="14" height="14" viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <button class="search-btn" onclick="runSearch()" aria-label="Search">Find framework</button>
+      </div>
+    </div>
+
+    <div class="chips-row" id="quickPicks" aria-label="Quick search suggestions"></div>
+  </div>
+</section>
+
+<!-- MAIN -->
 <main>
-  <div class="filters" id="filters"></div>
-  <div class="section-title" id="sectionTitle">All Models <span class="result-count" id="countBadge">0</span></div>
-  <div class="cards" id="cardsContainer"></div>
+  <div class="disclaimer">
+    <strong>Recommendations are context-dependent.</strong> Use these suggestions as a starting point — the best tool depends on your project, stakeholders, and constraints. Multiple models are often used together.
+  </div>
+  <div class="filter-bar" id="filterBar" role="group" aria-label="Filter by category"></div>
+  <div class="results-header">
+    <span class="results-title" id="sectionTitle">All Frameworks</span>
+    <span class="result-count" id="countBadge">32</span>
+    <span class="results-hint" id="resultsHint"></span>
+  </div>
+  <div class="cards" id="cardsContainer" role="list" aria-live="polite" aria-label="Framework recommendations"></div>
 </main>
-<footer>Built for Business Analysts · Covers 30+ frameworks across strategy, process, stakeholders, requirements &amp; more</footer>
+
+<footer>
+  <p>BA Toolkit — 32 frameworks across strategy, process, stakeholders, requirements &amp; more · Built for Business Analysts</p>
+</footer>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal" id="modalBox">
     <div class="modal-header">
-      <div class="modal-header-text">
-        <div class="modal-cat" id="modalCat"></div>
-        <h2 id="modalTitle"></h2>
+      <div>
+        <div class="modal-cat-label" id="modalCat"></div>
+        <h2 class="modal-title" id="modalTitle"></h2>
       </div>
-      <button class="modal-close" onclick="closeModal()" aria-label="Close">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close dialog">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
     </div>
     <div class="modal-body">
-      <div class="modal-section">
-        <h3>Diagram</h3>
+      <div>
+        <div class="modal-section-title">Diagram</div>
         <div class="diagram-wrap" id="modalDiagram"></div>
       </div>
-      <div class="modal-section">
-        <h3>How to draw it</h3>
+      <div>
+        <div class="modal-section-title">How to draw it</div>
         <ol class="steps-list" id="modalSteps"></ol>
       </div>
-      <div class="modal-section">
-        <h3>Elements explained</h3>
+      <div>
+        <div class="modal-section-title">Elements explained</div>
         <div class="elements-grid" id="modalElements"></div>
       </div>
     </div>
   </div>
 </div>
+
 <script>
+const BA_MODELS = [
 const BA_MODELS = [
 {id:1,name:"RACI Chart",category:"Stakeholder Management",
 description:"Maps every task or decision to four roles: Responsible, Accountable, Consulted, and Informed. Eliminates confusion about who owns what.",
@@ -221,12 +662,12 @@ diagram:`<svg viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="210" y="225" fill="#2e86de" font-size="9" font-weight="700">C=Consulted</text>
   <text x="300" y="225" fill="#6b7280" font-size="9" font-weight="700">I=Informed</text>
 </svg>`,
-steps:["List all tasks or decisions down the left column (rows).","List all team members or roles across the top (columns).","For each task-person intersection, assign one letter: R, A, C, or I.","Ensure every row has exactly one A (accountable) and at least one R (responsible).","Review with the team — resolve conflicts where no one is assigned or multiple As exist."],
+steps:["List all tasks or decisions down the left column (rows).","List all team members or roles across the top (columns).","For each task-person intersection, assign one letter: R, A, C, or I.","Ensure every row has exactly one A (accountable) and at least one R (responsible).","Review with the team â€” resolve conflicts where no one is assigned or multiple As exist."],
 elements:[
-  {name:"R – Responsible",desc:"The person who does the work. There can be multiple R's per task."},
-  {name:"A – Accountable",desc:"The one who owns the outcome and approves it. Only ONE per task."},
-  {name:"C – Consulted",desc:"Subject matter experts consulted before the task is completed."},
-  {name:"I – Informed",desc:"People kept updated on progress or decisions but not actively involved."},
+  {name:"R â€“ Responsible",desc:"The person who does the work. There can be multiple R's per task."},
+  {name:"A â€“ Accountable",desc:"The one who owns the outcome and approves it. Only ONE per task."},
+  {name:"C â€“ Consulted",desc:"Subject matter experts consulted before the task is completed."},
+  {name:"I â€“ Informed",desc:"People kept updated on progress or decisions but not actively involved."},
   {name:"Rows (Tasks)",desc:"Each row represents one activity, decision, or deliverable."},
   {name:"Columns (People)",desc:"Each column represents one person, team, or role."}
 ]},
@@ -268,16 +709,16 @@ diagram:`<svg viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="104" y="59" fill="#6b7280" font-size="7" text-anchor="middle">Suppliers</text>
   <text x="236" y="59" fill="#6b7280" font-size="7" text-anchor="middle">Public</text>
 </svg>`,
-steps:["Draw a small circle in the centre — this represents the solution itself.","Add a second ring around it for the core project team (BA, PM, developers).","Add a third ring for direct stakeholders who are affected by or use the solution.","Add an outer ring for indirect stakeholders in the broader environment.","Place each stakeholder name in the appropriate ring based on proximity and impact."],
+steps:["Draw a small circle in the centre â€” this represents the solution itself.","Add a second ring around it for the core project team (BA, PM, developers).","Add a third ring for direct stakeholders who are affected by or use the solution.","Add an outer ring for indirect stakeholders in the broader environment.","Place each stakeholder name in the appropriate ring based on proximity and impact."],
 elements:[
   {name:"Centre (Solution)",desc:"The system, product, or change being delivered."},
-  {name:"Ring 1 – Core Team",desc:"People working directly on the solution day-to-day (BA, PM, developers)."},
-  {name:"Ring 2 – Direct Stakeholders",desc:"Those who use or are significantly affected: end users, sponsor, finance."},
-  {name:"Ring 3 – Indirect Stakeholders",desc:"Wider environment parties: regulators, suppliers, public, partners."},
+  {name:"Ring 1 â€“ Core Team",desc:"People working directly on the solution day-to-day (BA, PM, developers)."},
+  {name:"Ring 2 â€“ Direct Stakeholders",desc:"Those who use or are significantly affected: end users, sponsor, finance."},
+  {name:"Ring 3 â€“ Indirect Stakeholders",desc:"Wider environment parties: regulators, suppliers, public, partners."},
   {name:"Proximity",desc:"Closer to centre = stronger relationship with and impact on the solution."}
 ]},
 {id:3,name:"Power / Interest Grid",category:"Stakeholder Management",
-description:"Plots stakeholders on a 2×2 grid of Power vs. Interest to decide how much engagement each group needs.",
+description:"Plots stakeholders on a 2Ã—2 grid of Power vs. Interest to decide how much engagement each group needs.",
 when:"Use when you have many stakeholders and need to prioritise where to invest engagement effort.",
 tags:["stakeholders","power","interest","engagement","prioritisation"],
 keywords:["stakeholder","power","interest","influence","engagement strategy","who to manage","stakeholder priority","manage closely","keep informed","matrix"],
@@ -312,10 +753,10 @@ diagram:`<svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="30" y1="260" x2="325" y2="260" stroke="#1e3a5f" stroke-width="2" marker-end="url(#arr)"/>
   <line x1="30" y1="260" x2="30" y2="15" stroke="#1e3a5f" stroke-width="2" marker-end="url(#arr)"/>
   <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1e3a5f"/></marker></defs>
-  <text x="175" y="280" fill="#1e3a5f" font-size="10" font-weight="700" text-anchor="middle">INTEREST →</text>
-  <text x="12" y="145" fill="#1e3a5f" font-size="10" font-weight="700" text-anchor="middle" transform="rotate(-90,12,145)">POWER →</text>
+  <text x="175" y="280" fill="#1e3a5f" font-size="10" font-weight="700" text-anchor="middle">INTEREST â†’</text>
+  <text x="12" y="145" fill="#1e3a5f" font-size="10" font-weight="700" text-anchor="middle" transform="rotate(-90,12,145)">POWER â†’</text>
 </svg>`,
-steps:["Draw two axes: Power (vertical, low→high) and Interest (horizontal, low→high).","This creates four quadrants: Monitor, Keep Informed, Keep Satisfied, Manage Closely.","List every stakeholder and assess their level of power and interest in the project.","Plot each stakeholder as a dot or bubble in the appropriate quadrant.","Use the quadrant label to guide your engagement strategy for each group."],
+steps:["Draw two axes: Power (vertical, lowâ†’high) and Interest (horizontal, lowâ†’high).","This creates four quadrants: Monitor, Keep Informed, Keep Satisfied, Manage Closely.","List every stakeholder and assess their level of power and interest in the project.","Plot each stakeholder as a dot or bubble in the appropriate quadrant.","Use the quadrant label to guide your engagement strategy for each group."],
 elements:[
   {name:"Power axis (Y)",desc:"The stakeholder's authority or ability to influence the project outcome."},
   {name:"Interest axis (X)",desc:"How much the stakeholder cares about the project's outcomes."},
@@ -337,35 +778,35 @@ diagram:`<svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="95" y="66" fill="#fff" font-size="10" font-weight="700" text-anchor="middle">MUST HAVE</text>
   <text x="95" y="82" fill="#fca5a5" font-size="8" text-anchor="middle">Non-negotiable.</text>
   <text x="95" y="93" fill="#fca5a5" font-size="8" text-anchor="middle">Delivery fails without these.</text>
-  <text x="30" y="110" fill="#fff" font-size="7">• Login / authentication</text>
-  <text x="30" y="120" fill="#fff" font-size="7">• Core transaction flow</text>
+  <text x="30" y="110" fill="#fff" font-size="7">â€¢ Login / authentication</text>
+  <text x="30" y="120" fill="#fff" font-size="7">â€¢ Core transaction flow</text>
   <!-- S -->
   <rect x="190" y="20" width="150" height="100" rx="8" fill="#d97706"/>
   <text x="265" y="50" fill="#fff" font-size="14" font-weight="800" text-anchor="middle">S</text>
   <text x="265" y="66" fill="#fff" font-size="10" font-weight="700" text-anchor="middle">SHOULD HAVE</text>
   <text x="265" y="82" fill="#fde68a" font-size="8" text-anchor="middle">Important but not critical.</text>
   <text x="265" y="93" fill="#fde68a" font-size="8" text-anchor="middle">Include if possible.</text>
-  <text x="200" y="110" fill="#fff" font-size="7">• Email notifications</text>
-  <text x="200" y="120" fill="#fff" font-size="7">• Reporting dashboard</text>
+  <text x="200" y="110" fill="#fff" font-size="7">â€¢ Email notifications</text>
+  <text x="200" y="120" fill="#fff" font-size="7">â€¢ Reporting dashboard</text>
   <!-- C -->
   <rect x="20" y="140" width="150" height="100" rx="8" fill="#2e86de"/>
   <text x="95" y="170" fill="#fff" font-size="14" font-weight="800" text-anchor="middle">C</text>
   <text x="95" y="186" fill="#fff" font-size="10" font-weight="700" text-anchor="middle">COULD HAVE</text>
   <text x="95" y="202" fill="#bfdbfe" font-size="8" text-anchor="middle">Nice to have if time allows.</text>
-  <text x="30" y="218" fill="#fff" font-size="7">• Dark mode toggle</text>
-  <text x="30" y="228" fill="#fff" font-size="7">• Export to PDF</text>
+  <text x="30" y="218" fill="#fff" font-size="7">â€¢ Dark mode toggle</text>
+  <text x="30" y="228" fill="#fff" font-size="7">â€¢ Export to PDF</text>
   <!-- W -->
   <rect x="190" y="140" width="150" height="100" rx="8" fill="#6b7280"/>
   <text x="265" y="170" fill="#fff" font-size="14" font-weight="800" text-anchor="middle">W</text>
   <text x="265" y="186" fill="#fff" font-size="10" font-weight="700" text-anchor="middle">WON'T HAVE</text>
   <text x="265" y="202" fill="#e5e7eb" font-size="8" text-anchor="middle">Out of scope this release.</text>
-  <text x="200" y="218" fill="#fff" font-size="7">• Multi-language support</text>
-  <text x="200" y="228" fill="#fff" font-size="7">• Offline mode</text>
+  <text x="200" y="218" fill="#fff" font-size="7">â€¢ Multi-language support</text>
+  <text x="200" y="228" fill="#fff" font-size="7">â€¢ Offline mode</text>
 </svg>`,
-steps:["Gather all candidate requirements in a list.","As a team, discuss and assign each requirement to one of four categories.","Start with Must Haves — these are the minimum for the solution to work.","Move to Should Haves — valuable additions that fit within capacity.","Identify Could Haves (low priority) and Won't Haves (explicitly deferred).","Check the Must Have list doesn't exceed ~60% of delivery capacity."],
+steps:["Gather all candidate requirements in a list.","As a team, discuss and assign each requirement to one of four categories.","Start with Must Haves â€” these are the minimum for the solution to work.","Move to Should Haves â€” valuable additions that fit within capacity.","Identify Could Haves (low priority) and Won't Haves (explicitly deferred).","Check the Must Have list doesn't exceed ~60% of delivery capacity."],
 elements:[
   {name:"Must Have (M)",desc:"Critical requirements. The solution cannot launch without these."},
-  {name:"Should Have (S)",desc:"High-value requirements. Include if capacity allows — strong business case."},
+  {name:"Should Have (S)",desc:"High-value requirements. Include if capacity allows â€” strong business case."},
   {name:"Could Have (C)",desc:"Desirable but not critical. Drop first if time or budget is tight."},
   {name:"Won't Have (W)",desc:"Explicitly out of scope for this iteration. Prevents scope creep."}
 ]},
@@ -378,7 +819,7 @@ diagram:`<svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect width="380" height="280" fill="#f8fafc" rx="8"/>
   <!-- system boundary -->
   <rect x="90" y="20" width="220" height="230" rx="10" fill="none" stroke="#1e3a5f" stroke-width="2" stroke-dasharray="6,3"/>
-  <text x="200" y="14" fill="#1e3a5f" font-size="10" font-weight="700" text-anchor="middle">«system»  Online Banking</text>
+  <text x="200" y="14" fill="#1e3a5f" font-size="10" font-weight="700" text-anchor="middle">Â«systemÂ»  Online Banking</text>
   <!-- use cases (ellipses) -->
   <ellipse cx="200" cy="70" rx="55" ry="20" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
   <text x="200" y="74" fill="#1e3a5f" font-size="9" font-weight="600" text-anchor="middle">Login</text>
@@ -409,14 +850,14 @@ diagram:`<svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="310" y1="115" x2="255" y2="75" stroke="#6b7280" stroke-width="1"/>
   <line x1="310" y1="125" x2="255" y2="130" stroke="#6b7280" stroke-width="1"/>
 </svg>`,
-steps:["Draw a rectangle to represent the system boundary and label it with the system name.","Identify actors — people or external systems that interact with the system — and draw them as stick figures outside the boundary.","Identify use cases (what the system does for each actor) and draw them as ellipses inside the boundary.","Draw association lines connecting each actor to the use cases they participate in.","Add «include» or «extend» relationships between use cases where needed."],
+steps:["Draw a rectangle to represent the system boundary and label it with the system name.","Identify actors â€” people or external systems that interact with the system â€” and draw them as stick figures outside the boundary.","Identify use cases (what the system does for each actor) and draw them as ellipses inside the boundary.","Draw association lines connecting each actor to the use cases they participate in.","Add Â«includeÂ» or Â«extendÂ» relationships between use cases where needed."],
 elements:[
   {name:"System Boundary (rectangle)",desc:"The box that contains all use cases, representing the scope of the system."},
   {name:"Actor (stick figure)",desc:"A user, role, or external system that interacts with the system."},
   {name:"Use Case (ellipse)",desc:"A specific function or goal the system fulfils for an actor."},
   {name:"Association line",desc:"Links an actor to the use cases they initiate or participate in."},
-  {name:"«include»",desc:"A use case that is always called by another use case (shared sub-flow)."},
-  {name:"«extend»",desc:"An optional use case that extends another under certain conditions."}
+  {name:"Â«includeÂ»",desc:"A use case that is always called by another use case (shared sub-flow)."},
+  {name:"Â«extendÂ»",desc:"An optional use case that extends another under certain conditions."}
 ]},
 {id:6,name:"User Stories",category:"Requirements",
 description:"Short plain-language statements: As a [role], I want [goal] so that [benefit]. Keeps requirements user-centred.",
@@ -436,15 +877,15 @@ diagram:`<svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="107" y="100" fill="#1e3a5f" font-size="11"> transfer funds between accounts,</text>
   <text x="50" y="120" fill="#2e86de" font-size="11" font-weight="700">So that</text>
   <text x="95" y="120" fill="#1e3a5f" font-size="11"> I can manage my money online.</text>
-  <text x="50" y="143" fill="#6b7280" font-size="8">Story Points: 5 · Priority: Must Have · Sprint: 3</text>
+  <text x="50" y="143" fill="#6b7280" font-size="8">Story Points: 5 Â· Priority: Must Have Â· Sprint: 3</text>
   <!-- acceptance criteria box -->
   <rect x="30" y="165" width="320" height="80" rx="10" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1.5"/>
   <text x="50" y="184" fill="#0369a1" font-size="10" font-weight="700">Acceptance Criteria</text>
-  <text x="50" y="200" fill="#1e3a5f" font-size="9">✓  Given I am on the transfer page, when I enter valid details, then transfer succeeds.</text>
-  <text x="50" y="214" fill="#1e3a5f" font-size="9">✓  Given insufficient funds, when I submit, then I see a clear error message.</text>
-  <text x="50" y="228" fill="#1e3a5f" font-size="9">✓  Transfer confirmation email is sent within 1 minute.</text>
+  <text x="50" y="200" fill="#1e3a5f" font-size="9">âœ“  Given I am on the transfer page, when I enter valid details, then transfer succeeds.</text>
+  <text x="50" y="214" fill="#1e3a5f" font-size="9">âœ“  Given insufficient funds, when I submit, then I see a clear error message.</text>
+  <text x="50" y="228" fill="#1e3a5f" font-size="9">âœ“  Transfer confirmation email is sent within 1 minute.</text>
 </svg>`,
-steps:["Write the role: 'As a [type of user]…' — be specific about who benefits.","Write the goal: 'I want to [do something]…' — focus on the action, not the solution.","Write the benefit: 'So that [reason/value]…' — this explains why it matters.","Add acceptance criteria using the Given / When / Then format to define done.","Estimate story points with the team and assign a priority using MoSCoW or similar."],
+steps:["Write the role: 'As a [type of user]â€¦' â€” be specific about who benefits.","Write the goal: 'I want to [do something]â€¦' â€” focus on the action, not the solution.","Write the benefit: 'So that [reason/value]â€¦' â€” this explains why it matters.","Add acceptance criteria using the Given / When / Then format to define done.","Estimate story points with the team and assign a priority using MoSCoW or similar."],
 elements:[
   {name:"As a [role]",desc:"Identifies who the story is for. Must be a specific user type, not 'the system'."},
   {name:"I want to [goal]",desc:"The action the user wants to perform. One goal per story."},
@@ -475,15 +916,15 @@ diagram:`<svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect x="0" y="144" width="520" height="36" fill="#f0f4ff"/>
   <text x="40" y="58" fill="#1e3a5f" font-size="9" font-weight="600">REQ-001</text>
   <text x="100" y="58" fill="#374151" font-size="8">User can log in securely</text>
-  <text x="230" y="58" fill="#374151" font-size="8">BRD §3.1</text>
+  <text x="230" y="58" fill="#374151" font-size="8">BRD Â§3.1</text>
   <text x="300" y="58" fill="#374151" font-size="8">SD-AUTH-01</text>
   <text x="375" y="58" fill="#374151" font-size="8">TC-001,TC-002</text>
-  <text x="450" y="58" fill="#059669" font-size="8" font-weight="700">✓ Done</text>
+  <text x="450" y="58" fill="#059669" font-size="8" font-weight="700">âœ“ Done</text>
   <text x="40" y="94" fill="#1e3a5f" font-size="9" font-weight="600">REQ-002</text>
   <text x="100" y="94" fill="#374151" font-size="8">Transfer funds between accounts</text>
   <text x="230" y="94" fill="#374151" font-size="8">Workshop</text>
   <text x="300" y="94" fill="#374151" font-size="8">SD-TXN-03</text>
-  <text x="375" y="94" fill="#374151" font-size="8">TC-010–014</text>
+  <text x="375" y="94" fill="#374151" font-size="8">TC-010â€“014</text>
   <text x="450" y="94" fill="#d97706" font-size="8" font-weight="700">In Dev</text>
   <text x="40" y="130" fill="#1e3a5f" font-size="9" font-weight="600">REQ-003</text>
   <text x="100" y="130" fill="#374151" font-size="8">View transaction history</text>
@@ -493,7 +934,7 @@ diagram:`<svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="450" y="130" fill="#2e86de" font-size="8" font-weight="700">Testing</text>
   <text x="40" y="166" fill="#1e3a5f" font-size="9" font-weight="600">REQ-004</text>
   <text x="100" y="166" fill="#374151" font-size="8">Export statements to PDF</text>
-  <text x="230" y="166" fill="#374151" font-size="8">BRD §4.2</text>
+  <text x="230" y="166" fill="#374151" font-size="8">BRD Â§4.2</text>
   <text x="300" y="166" fill="#374151" font-size="8">SD-EXP-02</text>
   <text x="375" y="166" fill="#374151" font-size="8">TC-030</text>
   <text x="450" y="166" fill="#6b7280" font-size="8" font-weight="700">Backlog</text>
@@ -503,7 +944,7 @@ diagram:`<svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="290" y1="36" x2="290" y2="180" stroke="#e2e8f0" stroke-width="1"/>
   <line x1="365" y1="36" x2="365" y2="180" stroke="#e2e8f0" stroke-width="1"/>
   <line x1="440" y1="36" x2="440" y2="180" stroke="#e2e8f0" stroke-width="1"/>
-  <text x="20" y="210" fill="#6b7280" font-size="8">Each row traces one requirement end-to-end from source → design → test → status.</text>
+  <text x="20" y="210" fill="#6b7280" font-size="8">Each row traces one requirement end-to-end from source â†’ design â†’ test â†’ status.</text>
 </svg>`,
 steps:["Create a table with columns: Req ID, Requirement description, Source, Design reference, Test case(s), Status.","List every requirement as a row and assign it a unique ID.","Record the source (document, workshop, stakeholder) for each requirement.","Link each requirement to the design artefact that addresses it.","Link each requirement to the test case(s) that verify it.","Update the status column as the project progresses (Backlog, In Dev, Testing, Done)."],
 elements:[
@@ -613,12 +1054,12 @@ diagram:`<svg viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="335" y1="80" x2="360" y2="60" stroke="#6b7280" stroke-width="1.5" marker-end="url(#b)" stroke-dasharray="4,2"/>
   <text x="140" y="240" fill="#6b7280" font-size="8">Dashed arrows = handoff between lanes (departments)</text>
 </svg>`,
-steps:["List all departments or roles involved in the process.","Draw horizontal lanes — one per department — labelled on the left.","Map the process steps left to right, placing each task in the lane of the responsible party.","Use solid arrows for steps within the same lane and dashed arrows for handoffs between lanes.","Add decision diamonds where the flow splits."],
+steps:["List all departments or roles involved in the process.","Draw horizontal lanes â€” one per department â€” labelled on the left.","Map the process steps left to right, placing each task in the lane of the responsible party.","Use solid arrows for steps within the same lane and dashed arrows for handoffs between lanes.","Add decision diamonds where the flow splits."],
 elements:[
   {name:"Lane",desc:"A horizontal band representing one department, team, or role."},
   {name:"Task box",desc:"A step in the process. Its position in the lane shows who is responsible."},
   {name:"Solid arrow",desc:"Sequence flow within the same lane."},
-  {name:"Dashed arrow (handoff)",desc:"Flow crossing lane boundaries — a transfer of work between departments."},
+  {name:"Dashed arrow (handoff)",desc:"Flow crossing lane boundaries â€” a transfer of work between departments."},
   {name:"Diamond (decision)",desc:"A point where the flow branches based on a condition or approval."}
 ]},
 {id:10,name:"Value Stream Mapping (VSM)",category:"Process & Workflow",
@@ -635,15 +1076,15 @@ diagram:`<svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect x="110" y="50" width="70" height="50" rx="4" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
   <text x="145" y="72" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">Receive</text>
   <text x="145" y="83" fill="#6b7280" font-size="7" text-anchor="middle">CT: 10m</text>
-  <text x="145" y="93" fill="#059669" font-size="7" text-anchor="middle">VA ✓</text>
+  <text x="145" y="93" fill="#059669" font-size="7" text-anchor="middle">VA âœ“</text>
   <rect x="220" y="50" width="70" height="50" rx="4" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
   <text x="255" y="72" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">QA Check</text>
   <text x="255" y="83" fill="#6b7280" font-size="7" text-anchor="middle">CT: 45m</text>
-  <text x="255" y="93" fill="#d97706" font-size="7" text-anchor="middle">NVA ✗</text>
+  <text x="255" y="93" fill="#d97706" font-size="7" text-anchor="middle">NVA âœ—</text>
   <rect x="330" y="50" width="70" height="50" rx="4" fill="#fff" stroke="#1e3a5f" stroke-width="1.5"/>
   <text x="365" y="72" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">Ship</text>
   <text x="365" y="83" fill="#6b7280" font-size="7" text-anchor="middle">CT: 15m</text>
-  <text x="365" y="93" fill="#059669" font-size="7" text-anchor="middle">VA ✓</text>
+  <text x="365" y="93" fill="#059669" font-size="7" text-anchor="middle">VA âœ“</text>
   <!-- customer -->
   <rect x="430" y="60" width="60" height="40" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
   <text x="460" y="84" fill="#1e3a5f" font-size="8" font-weight="700" text-anchor="middle">Customer</text>
@@ -669,16 +1110,16 @@ diagram:`<svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="200" y="181" fill="#dc2626" font-size="7" text-anchor="middle">NVA: 2h45m</text>
   <rect x="230" y="170" width="60" height="16" fill="#d1fae5"/>
   <text x="260" y="181" fill="#065f46" font-size="7" text-anchor="middle">VA: 15m</text>
-  <text x="255" y="210" fill="#6b7280" font-size="8" text-anchor="middle">VA = Value-Adding · NVA = Non-Value-Adding (waste)</text>
+  <text x="255" y="210" fill="#6b7280" font-size="8" text-anchor="middle">VA = Value-Adding Â· NVA = Non-Value-Adding (waste)</text>
 </svg>`,
-steps:["Map the current state: draw each process step as a box, left to right, from supplier to customer.","Record cycle time (CT) and value-added status (VA/NVA) for each step.","Draw inventory or wait triangles between steps to show delays.","Add an information flow line at the top showing how orders and data move.","Draw the timeline at the bottom — total lead time vs value-adding time.","Identify waste and design the future state map with improvements."],
+steps:["Map the current state: draw each process step as a box, left to right, from supplier to customer.","Record cycle time (CT) and value-added status (VA/NVA) for each step.","Draw inventory or wait triangles between steps to show delays.","Add an information flow line at the top showing how orders and data move.","Draw the timeline at the bottom â€” total lead time vs value-adding time.","Identify waste and design the future state map with improvements."],
 elements:[
   {name:"Process box",desc:"A single step in the value stream. Contains cycle time and VA/NVA status."},
-  {name:"VA (Value-Adding)",desc:"Steps the customer is willing to pay for — directly create value."},
+  {name:"VA (Value-Adding)",desc:"Steps the customer is willing to pay for â€” directly create value."},
   {name:"NVA (Non-Value-Adding)",desc:"Waste: steps that consume time/resources without adding value. Targets for elimination."},
   {name:"Wait triangle",desc:"Represents inventory, queue, or delay time between steps."},
   {name:"Push arrow",desc:"Material or work being pushed to the next step regardless of demand."},
-  {name:"Timeline",desc:"Shows total lead time vs. value-adding time — reveals the improvement opportunity."}
+  {name:"Timeline",desc:"Shows total lead time vs. value-adding time â€” reveals the improvement opportunity."}
 ]},
 {id:11,name:"Flowchart",category:"Process & Workflow",
 description:"A simple diagram using standard shapes to map the steps and decision points in a process.",
@@ -727,7 +1168,7 @@ elements:[
   {name:"Process / Rectangle",desc:"A step, action, or task performed in the process."},
   {name:"Decision / Diamond",desc:"A question with two or more possible paths (typically Yes/No)."},
   {name:"Arrow",desc:"Shows the direction of flow between steps."},
-  {name:"Parallelogram (optional)",desc:"Represents input or output — data entering or leaving the process."}
+  {name:"Parallelogram (optional)",desc:"Represents input or output â€” data entering or leaving the process."}
 ]},
 {id:12,name:"SWOT Analysis",category:"Strategy & Analysis",
 description:"Evaluates a business, project, or initiative across Strengths, Weaknesses, Opportunities, and Threats.",
@@ -744,35 +1185,35 @@ diagram:`<svg viewBox="0 0 340 300" xmlns="http://www.w3.org/2000/svg" font-fami
   <!-- labels -->
   <text x="85" y="52" fill="#065f46" font-size="13" font-weight="800" text-anchor="middle">S</text>
   <text x="85" y="65" fill="#065f46" font-size="8" font-weight="700" text-anchor="middle">STRENGTHS</text>
-  <text x="85" y="77" fill="#065f46" font-size="7" text-anchor="middle">Internal · Helpful</text>
+  <text x="85" y="77" fill="#065f46" font-size="7" text-anchor="middle">Internal Â· Helpful</text>
   <text x="255" y="52" fill="#991b1b" font-size="13" font-weight="800" text-anchor="middle">W</text>
   <text x="255" y="65" fill="#991b1b" font-size="8" font-weight="700" text-anchor="middle">WEAKNESSES</text>
-  <text x="255" y="77" fill="#991b1b" font-size="7" text-anchor="middle">Internal · Harmful</text>
+  <text x="255" y="77" fill="#991b1b" font-size="7" text-anchor="middle">Internal Â· Harmful</text>
   <text x="85" y="187" fill="#1e40af" font-size="13" font-weight="800" text-anchor="middle">O</text>
   <text x="85" y="200" fill="#1e40af" font-size="8" font-weight="700" text-anchor="middle">OPPORTUNITIES</text>
-  <text x="85" y="212" fill="#1e40af" font-size="7" text-anchor="middle">External · Helpful</text>
+  <text x="85" y="212" fill="#1e40af" font-size="7" text-anchor="middle">External Â· Helpful</text>
   <text x="255" y="187" fill="#92400e" font-size="13" font-weight="800" text-anchor="middle">T</text>
   <text x="255" y="200" fill="#92400e" font-size="8" font-weight="700" text-anchor="middle">THREATS</text>
-  <text x="255" y="212" fill="#92400e" font-size="7" text-anchor="middle">External · Harmful</text>
+  <text x="255" y="212" fill="#92400e" font-size="7" text-anchor="middle">External Â· Harmful</text>
   <!-- example bullets -->
-  <text x="18" y="93" fill="#065f46" font-size="7">• Strong brand reputation</text>
-  <text x="18" y="104" fill="#065f46" font-size="7">• Skilled team</text>
-  <text x="18" y="115" fill="#065f46" font-size="7">• Low cost base</text>
-  <text x="188" y="93" fill="#991b1b" font-size="7">• Limited market reach</text>
-  <text x="188" y="104" fill="#991b1b" font-size="7">• Outdated technology</text>
-  <text x="188" y="115" fill="#991b1b" font-size="7">• High staff turnover</text>
-  <text x="18" y="228" fill="#1e40af" font-size="7">• Growing market</text>
-  <text x="18" y="239" fill="#1e40af" font-size="7">• New regulations favour us</text>
-  <text x="18" y="250" fill="#1e40af" font-size="7">• Partnership potential</text>
-  <text x="188" y="228" fill="#92400e" font-size="7">• New competitors</text>
-  <text x="188" y="239" fill="#92400e" font-size="7">• Economic downturn</text>
-  <text x="188" y="250" fill="#92400e" font-size="7">• Supply chain risk</text>
+  <text x="18" y="93" fill="#065f46" font-size="7">â€¢ Strong brand reputation</text>
+  <text x="18" y="104" fill="#065f46" font-size="7">â€¢ Skilled team</text>
+  <text x="18" y="115" fill="#065f46" font-size="7">â€¢ Low cost base</text>
+  <text x="188" y="93" fill="#991b1b" font-size="7">â€¢ Limited market reach</text>
+  <text x="188" y="104" fill="#991b1b" font-size="7">â€¢ Outdated technology</text>
+  <text x="188" y="115" fill="#991b1b" font-size="7">â€¢ High staff turnover</text>
+  <text x="18" y="228" fill="#1e40af" font-size="7">â€¢ Growing market</text>
+  <text x="18" y="239" fill="#1e40af" font-size="7">â€¢ New regulations favour us</text>
+  <text x="18" y="250" fill="#1e40af" font-size="7">â€¢ Partnership potential</text>
+  <text x="188" y="228" fill="#92400e" font-size="7">â€¢ New competitors</text>
+  <text x="188" y="239" fill="#92400e" font-size="7">â€¢ Economic downturn</text>
+  <text x="188" y="250" fill="#92400e" font-size="7">â€¢ Supply chain risk</text>
   <!-- axis labels -->
-  <text x="170" y="22" fill="#6b7280" font-size="8" text-anchor="middle" font-weight="600">HELPFUL ←→ HARMFUL</text>
+  <text x="170" y="22" fill="#6b7280" font-size="8" text-anchor="middle" font-weight="600">HELPFUL â†â†’ HARMFUL</text>
   <text x="4" y="130" fill="#6b7280" font-size="7" text-anchor="middle" transform="rotate(-90,4,130)">INTERNAL</text>
   <text x="4" y="225" fill="#6b7280" font-size="7" text-anchor="middle" transform="rotate(-90,4,225)">EXTERNAL</text>
 </svg>`,
-steps:["Draw a 2×2 grid. Label rows: Internal / External. Label columns: Helpful / Harmful.","Top-left = Strengths, Top-right = Weaknesses, Bottom-left = Opportunities, Bottom-right = Threats.","Brainstorm with stakeholders and fill each quadrant with bullet points.","Strengths and Weaknesses come from inside the organisation.","Opportunities and Threats come from outside (market, competition, environment).","Use the outputs to build strategy: leverage strengths, address weaknesses, seize opportunities, mitigate threats."],
+steps:["Draw a 2Ã—2 grid. Label rows: Internal / External. Label columns: Helpful / Harmful.","Top-left = Strengths, Top-right = Weaknesses, Bottom-left = Opportunities, Bottom-right = Threats.","Brainstorm with stakeholders and fill each quadrant with bullet points.","Strengths and Weaknesses come from inside the organisation.","Opportunities and Threats come from outside (market, competition, environment).","Use the outputs to build strategy: leverage strengths, address weaknesses, seize opportunities, mitigate threats."],
 elements:[
   {name:"Strengths (S)",desc:"Internal positive attributes. What does the organisation do well?"},
   {name:"Weaknesses (W)",desc:"Internal negative attributes. Where does the organisation fall short?"},
@@ -870,7 +1311,7 @@ diagram:`<svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="110" y1="150" x2="120" y2="150" stroke="#6b7280" stroke-width="1.5" marker-end="url(#e)"/>
   <line x1="250" y1="150" x2="240" y2="150" stroke="#6b7280" stroke-width="1.5" marker-end="url(#e)"/>
 </svg>`,
-steps:["Place 'Competitive Rivalry' in the centre — assess how intense competition is in the industry.","Above: analyse 'Threat of New Entrants' — how easy is it for newcomers to enter?","Below: analyse 'Threat of Substitutes' — can customers switch to a different type of product?","Left: analyse 'Supplier Power' — how much leverage do suppliers have over pricing?","Right: analyse 'Buyer Power' — how much leverage do customers have over pricing?","Rate each force as High, Medium, or Low and determine overall industry attractiveness."],
+steps:["Place 'Competitive Rivalry' in the centre â€” assess how intense competition is in the industry.","Above: analyse 'Threat of New Entrants' â€” how easy is it for newcomers to enter?","Below: analyse 'Threat of Substitutes' â€” can customers switch to a different type of product?","Left: analyse 'Supplier Power' â€” how much leverage do suppliers have over pricing?","Right: analyse 'Buyer Power' â€” how much leverage do customers have over pricing?","Rate each force as High, Medium, or Low and determine overall industry attractiveness."],
 elements:[
   {name:"Competitive Rivalry",desc:"The intensity of competition between existing players in the industry."},
   {name:"Threat of New Entrants",desc:"How easy it is for new competitors to enter the market."},
@@ -935,9 +1376,9 @@ diagram:`<svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="375" y="172" fill="#5b21b6" font-size="7" font-weight="700" text-anchor="middle">REVENUE STREAMS</text>
   <text x="375" y="188" fill="#374151" font-size="6.5" text-anchor="middle">How does the business earn revenue?</text>
   <text x="375" y="200" fill="#374151" font-size="6.5" text-anchor="middle">Subscriptions, sales, licensing, fees?</text>
-  <text x="250" y="250" fill="#6b7280" font-size="8" text-anchor="middle">9 building blocks on one page — left side = costs, right side = value &amp; revenue</text>
+  <text x="250" y="250" fill="#6b7280" font-size="8" text-anchor="middle">9 building blocks on one page â€” left side = costs, right side = value &amp; revenue</text>
 </svg>`,
-steps:["Start with Customer Segments — who are you creating value for?","Define the Value Proposition — what problem do you solve for each segment?","Map Channels — how do you reach and deliver to customers?","Define Customer Relationships — how do you acquire, retain, and grow customers?","Identify Revenue Streams — how does each segment pay?","List Key Resources needed to deliver the value proposition.","List Key Activities the business must perform.","List Key Partners who help deliver the model.","Calculate Cost Structure — what are the major costs?"],
+steps:["Start with Customer Segments â€” who are you creating value for?","Define the Value Proposition â€” what problem do you solve for each segment?","Map Channels â€” how do you reach and deliver to customers?","Define Customer Relationships â€” how do you acquire, retain, and grow customers?","Identify Revenue Streams â€” how does each segment pay?","List Key Resources needed to deliver the value proposition.","List Key Activities the business must perform.","List Key Partners who help deliver the model.","Calculate Cost Structure â€” what are the major costs?"],
 elements:[
   {name:"Customer Segments",desc:"The different groups of people or organisations the business serves."},
   {name:"Value Proposition",desc:"The bundle of products/services that creates value for a specific customer segment."},
@@ -990,7 +1431,7 @@ diagram:`<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="200" y1="98" x2="200" y2="108" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#f)"/>
   <line x1="200" y1="202" x2="200" y2="192" stroke="#1e3a5f" stroke-width="1.5" marker-end="url(#f)"/>
 </svg>`,
-steps:["Define the organisation's Vision and Strategy at the centre.","For each of the four perspectives, identify 2–3 strategic objectives.","For each objective, define KPIs (measures), targets, and initiatives.","Connect the perspectives — Learning enables better Processes, which improves Customer outcomes, which drives Financial results.","Review KPI performance regularly (monthly or quarterly) and update targets as needed."],
+steps:["Define the organisation's Vision and Strategy at the centre.","For each of the four perspectives, identify 2â€“3 strategic objectives.","For each objective, define KPIs (measures), targets, and initiatives.","Connect the perspectives â€” Learning enables better Processes, which improves Customer outcomes, which drives Financial results.","Review KPI performance regularly (monthly or quarterly) and update targets as needed."],
 elements:[
   {name:"Financial Perspective",desc:"Are we delivering value to shareholders? Revenue, profit, ROI."},
   {name:"Customer Perspective",desc:"How do customers see us? NPS, satisfaction, retention, market share."},
@@ -1046,17 +1487,17 @@ diagram:`<svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="340" y1="180" x2="320" y2="200" stroke="#6b7280" stroke-width="1" opacity=".6"/>
   <text x="270" y="215" fill="#374151" font-size="7">No KPIs</text>
 </svg>`,
-steps:["Write the problem (effect) in a box on the right side.","Draw a horizontal arrow (the spine) pointing to it from the left.","Identify 4–6 major cause categories (e.g. People, Process, Technology, Materials) and draw diagonal bones branching from the spine.","For each category, brainstorm causes and draw smaller sub-bones.","Continue adding sub-causes until root causes are identified.","Prioritise the most likely root causes for investigation."],
+steps:["Write the problem (effect) in a box on the right side.","Draw a horizontal arrow (the spine) pointing to it from the left.","Identify 4â€“6 major cause categories (e.g. People, Process, Technology, Materials) and draw diagonal bones branching from the spine.","For each category, brainstorm causes and draw smaller sub-bones.","Continue adding sub-causes until root causes are identified.","Prioritise the most likely root causes for investigation."],
 elements:[
   {name:"Effect (head)",desc:"The problem or outcome being investigated, placed at the right."},
-  {name:"Spine",desc:"The main horizontal arrow — the backbone of the diagram."},
+  {name:"Spine",desc:"The main horizontal arrow â€” the backbone of the diagram."},
   {name:"Major bones (categories)",desc:"Diagonal arrows representing cause categories: People, Process, Technology, Materials, Environment, Measurement."},
-  {name:"Minor bones",desc:"Sub-causes branching from major bones — specific contributing factors."},
-  {name:"Root cause",desc:"The deepest sub-cause at the tip of a bone — the fundamental reason for the problem."}
+  {name:"Minor bones",desc:"Sub-causes branching from major bones â€” specific contributing factors."},
+  {name:"Root cause",desc:"The deepest sub-cause at the tip of a bone â€” the fundamental reason for the problem."}
 ]},
 {id:18,name:"5 Whys",category:"Problem Solving",
 description:"Iteratively asks 'Why?' five times to drill down from a surface symptom to the fundamental root cause.",
-when:"Use for straightforward problems where a single chain of causation is likely — quick and collaborative.",
+when:"Use for straightforward problems where a single chain of causation is likely â€” quick and collaborative.",
 tags:["root cause","problem","iterative","simple","why"],
 keywords:["5 whys","why why","root cause","drill down","problem","investigate","cause","simple analysis","quick analysis","iterative"],
 diagram:`<svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,sans-serif">
@@ -1090,15 +1531,15 @@ diagram:`<svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect x="60" y="278" width="240" height="18" rx="4" fill="#1e3a5f"/>
   <text x="180" y="290" fill="#f9a825" font-size="8" font-weight="700" text-anchor="middle">FIX: Add load testing to CI/CD pipeline</text>
 </svg>`,
-steps:["Write the problem statement at the top.","Ask 'Why does this happen?' and write the answer as Why 1.","Take the answer from Why 1 and ask 'Why does that happen?' — write as Why 2.","Repeat until you reach a root cause (typically 4–6 iterations).","Stop when the answer is a process or system you can actually fix.","Define a corrective action that targets the root cause."],
+steps:["Write the problem statement at the top.","Ask 'Why does this happen?' and write the answer as Why 1.","Take the answer from Why 1 and ask 'Why does that happen?' â€” write as Why 2.","Repeat until you reach a root cause (typically 4â€“6 iterations).","Stop when the answer is a process or system you can actually fix.","Define a corrective action that targets the root cause."],
 elements:[
   {name:"Problem statement",desc:"The observable symptom or failure you are investigating."},
-  {name:"Why 1–5",desc:"Each answer becomes the input for the next 'Why?' question."},
-  {name:"Root cause",desc:"The final answer — a controllable factor at the base of the chain."},
+  {name:"Why 1â€“5",desc:"Each answer becomes the input for the next 'Why?' question."},
+  {name:"Root cause",desc:"The final answer â€” a controllable factor at the base of the chain."},
   {name:"Corrective action",desc:"The fix applied at the root cause level to prevent recurrence."}
 ]},
 {id:19,name:"Pareto Analysis (80/20 Rule)",category:"Problem Solving",
-description:"Identifies the vital few causes that produce the majority of effects — 80% of problems come from 20% of causes.",
+description:"Identifies the vital few causes that produce the majority of effects â€” 80% of problems come from 20% of causes.",
 when:"Use when you have data on defects, complaints, or failures and want to focus improvement effort on the highest impact.",
 tags:["problem","data","80/20","prioritisation","defects"],
 keywords:["pareto","80 20","vital few","frequency","defects","complaints","most common","prioritise problems","impact","data driven","high impact"],
@@ -1146,13 +1587,13 @@ diagram:`<svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="195" y1="235" x2="215" y2="235" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2"/>
   <text x="220" y="239" fill="#374151" font-size="8">Cumulative %</text>
 </svg>`,
-steps:["Collect frequency data for each defect type, complaint category, or failure cause.","Sort the categories from highest frequency to lowest.","Draw a bar chart with categories on the X axis and frequency on the Y (left).","Calculate cumulative percentage for each bar and plot as a line on a second Y axis (right).","Draw a horizontal reference line at 80%.","The bars to the left of where the cumulative line crosses 80% are the 'vital few' — focus improvement effort here."],
+steps:["Collect frequency data for each defect type, complaint category, or failure cause.","Sort the categories from highest frequency to lowest.","Draw a bar chart with categories on the X axis and frequency on the Y (left).","Calculate cumulative percentage for each bar and plot as a line on a second Y axis (right).","Draw a horizontal reference line at 80%.","The bars to the left of where the cumulative line crosses 80% are the 'vital few' â€” focus improvement effort here."],
 elements:[
   {name:"Bars",desc:"Each bar represents one cause category, ordered from most to least frequent."},
   {name:"Cumulative line",desc:"A line showing the running total percentage as you add each bar from left to right."},
-  {name:"80% reference line",desc:"A horizontal line at 80% on the cumulative axis — everything to its left is the vital few."},
-  {name:"Vital Few",desc:"The small number of causes (typically 2–3) responsible for the majority of problems."},
-  {name:"Trivial Many",desc:"The long tail of less impactful causes — lower priority for improvement."}
+  {name:"80% reference line",desc:"A horizontal line at 80% on the cumulative axis â€” everything to its left is the vital few."},
+  {name:"Vital Few",desc:"The small number of causes (typically 2â€“3) responsible for the majority of problems."},
+  {name:"Trivial Many",desc:"The long tail of less impactful causes â€” lower priority for improvement."}
 ]},
 {id:20,name:"Decision Matrix (Weighted Scoring)",category:"Decision Making",
 description:"Scores options against weighted criteria to produce an objective ranking, removing bias from decisions.",
@@ -1184,37 +1625,37 @@ diagram:`<svg viewBox="0 0 480 230" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="175" y="125" fill="#1e3a5f" font-size="9" font-weight="700">30%</text>
   <text x="175" y="159" fill="#1e3a5f" font-size="9" font-weight="700">15%</text>
   <!-- scores (raw/10) -->
-  <text x="248" y="57" fill="#374151" font-size="9">8 → 2.4</text>
-  <text x="248" y="91" fill="#374151" font-size="9">6 → 1.5</text>
-  <text x="248" y="125" fill="#374151" font-size="9">7 → 2.1</text>
-  <text x="248" y="159" fill="#374151" font-size="9">9 → 1.35</text>
-  <text x="328" y="57" fill="#374151" font-size="9">6 → 1.8</text>
-  <text x="328" y="91" fill="#374151" font-size="9">9 → 2.25</text>
-  <text x="328" y="125" fill="#374151" font-size="9">8 → 2.4</text>
-  <text x="328" y="159" fill="#374151" font-size="9">7 → 1.05</text>
-  <text x="408" y="57" fill="#374151" font-size="9">5 → 1.5</text>
-  <text x="408" y="91" fill="#374151" font-size="9">7 → 1.75</text>
-  <text x="408" y="125" fill="#374151" font-size="9">9 → 2.7</text>
-  <text x="408" y="159" fill="#374151" font-size="9">6 → 0.9</text>
+  <text x="248" y="57" fill="#374151" font-size="9">8 â†’ 2.4</text>
+  <text x="248" y="91" fill="#374151" font-size="9">6 â†’ 1.5</text>
+  <text x="248" y="125" fill="#374151" font-size="9">7 â†’ 2.1</text>
+  <text x="248" y="159" fill="#374151" font-size="9">9 â†’ 1.35</text>
+  <text x="328" y="57" fill="#374151" font-size="9">6 â†’ 1.8</text>
+  <text x="328" y="91" fill="#374151" font-size="9">9 â†’ 2.25</text>
+  <text x="328" y="125" fill="#374151" font-size="9">8 â†’ 2.4</text>
+  <text x="328" y="159" fill="#374151" font-size="9">7 â†’ 1.05</text>
+  <text x="408" y="57" fill="#374151" font-size="9">5 â†’ 1.5</text>
+  <text x="408" y="91" fill="#374151" font-size="9">7 â†’ 1.75</text>
+  <text x="408" y="125" fill="#374151" font-size="9">9 â†’ 2.7</text>
+  <text x="408" y="159" fill="#374151" font-size="9">6 â†’ 0.9</text>
   <!-- totals -->
   <rect x="0" y="172" width="480" height="36" fill="#1e3a5f"/>
   <text x="10" y="194" fill="#f9a825" font-size="9" font-weight="700">TOTAL WEIGHTED SCORE</text>
   <text x="248" y="194" fill="#fff" font-size="10" font-weight="800">7.35</text>
-  <text x="328" y="194" fill="#f9a825" font-size="10" font-weight="800">7.50 ✓</text>
+  <text x="328" y="194" fill="#f9a825" font-size="10" font-weight="800">7.50 âœ“</text>
   <text x="408" y="194" fill="#fff" font-size="10" font-weight="800">6.85</text>
   <!-- dividers -->
   <line x1="160" y1="36" x2="160" y2="208" stroke="#e2e8f0" stroke-width="1"/>
   <line x1="225" y1="36" x2="225" y2="208" stroke="#e2e8f0" stroke-width="1"/>
   <line x1="305" y1="36" x2="305" y2="208" stroke="#e2e8f0" stroke-width="1"/>
   <line x1="385" y1="36" x2="385" y2="208" stroke="#e2e8f0" stroke-width="1"/>
-  <text x="240" y="222" fill="#6b7280" font-size="8" text-anchor="middle">Score = (Raw score × Weight). Highest total wins.</text>
+  <text x="240" y="222" fill="#6b7280" font-size="8" text-anchor="middle">Score = (Raw score Ã— Weight). Highest total wins.</text>
 </svg>`,
-steps:["List the decision criteria in rows (e.g. Cost, Integration, Scalability).","Assign a weight to each criterion (weights must sum to 100%).","List each option as a column.","Rate each option against each criterion (e.g. 1–10).","Multiply each raw score by its criterion weight to get a weighted score.","Sum the weighted scores per option — the highest total is the recommended choice."],
+steps:["List the decision criteria in rows (e.g. Cost, Integration, Scalability).","Assign a weight to each criterion (weights must sum to 100%).","List each option as a column.","Rate each option against each criterion (e.g. 1â€“10).","Multiply each raw score by its criterion weight to get a weighted score.","Sum the weighted scores per option â€” the highest total is the recommended choice."],
 elements:[
   {name:"Criteria",desc:"The factors that matter in making this decision (cost, risk, fit, etc.)."},
   {name:"Weight (%)",desc:"How important each criterion is relative to others. Must sum to 100%."},
-  {name:"Raw Score",desc:"How well each option performs on a criterion, rated on a consistent scale (e.g. 1–10)."},
-  {name:"Weighted Score",desc:"Raw score × weight — normalises the score by importance."},
+  {name:"Raw Score",desc:"How well each option performs on a criterion, rated on a consistent scale (e.g. 1â€“10)."},
+  {name:"Weighted Score",desc:"Raw score Ã— weight â€” normalises the score by importance."},
   {name:"Total",desc:"The sum of all weighted scores for an option. Highest = recommended choice."}
 ]},
 {id:21,name:"Decision Tree",category:"Decision Making",
@@ -1238,16 +1679,16 @@ diagram:`<svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <!-- outcomes -->
   <rect x="240" y="30" width="90" height="34" rx="5" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
   <text x="285" y="48" fill="#065f46" font-size="8" text-anchor="middle">High demand</text>
-  <text x="285" y="58" fill="#065f46" font-size="7" text-anchor="middle">+$500k · p=0.6</text>
+  <text x="285" y="58" fill="#065f46" font-size="7" text-anchor="middle">+$500k Â· p=0.6</text>
   <rect x="240" y="110" width="90" height="34" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
   <text x="285" y="128" fill="#991b1b" font-size="8" text-anchor="middle">Low demand</text>
-  <text x="285" y="138" fill="#991b1b" font-size="7" text-anchor="middle">-$100k · p=0.4</text>
+  <text x="285" y="138" fill="#991b1b" font-size="7" text-anchor="middle">-$100k Â· p=0.4</text>
   <rect x="240" y="148" width="90" height="34" rx="5" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
   <text x="285" y="166" fill="#1e40af" font-size="8" text-anchor="middle">High demand</text>
-  <text x="285" y="176" fill="#1e40af" font-size="7" text-anchor="middle">+$300k · p=0.5</text>
+  <text x="285" y="176" fill="#1e40af" font-size="7" text-anchor="middle">+$300k Â· p=0.5</text>
   <rect x="240" y="200" width="90" height="34" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
   <text x="285" y="218" fill="#92400e" font-size="8" text-anchor="middle">Low demand</text>
-  <text x="285" y="228" fill="#92400e" font-size="7" text-anchor="middle">+$50k · p=0.5</text>
+  <text x="285" y="228" fill="#92400e" font-size="7" text-anchor="middle">+$50k Â· p=0.5</text>
   <!-- EV labels -->
   <text x="358" y="48" fill="#059669" font-size="8" font-weight="700">$260k</text>
   <text x="358" y="128" fill="#dc2626" font-size="8" font-weight="700">-$40k</text>
@@ -1266,16 +1707,16 @@ diagram:`<svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="166" y1="176" x2="240" y2="165" stroke="#6b7280" stroke-width="1.5" marker-end="url(#i)"/>
   <line x1="166" y1="176" x2="240" y2="217" stroke="#6b7280" stroke-width="1.5" marker-end="url(#i)"/>
 </svg>`,
-steps:["Start with a Decision Node (square) on the left — the choice you face.","Draw branches for each possible decision option.","At each branch end, add a Chance Node (circle or diamond) for uncertain outcomes.","From each chance node, draw branches for possible outcomes with probabilities (must sum to 1.0).","Add the financial value (payoff) at the end of each outcome branch.","Calculate Expected Value (EV) at each chance node: sum of (probability × payoff).","Choose the decision branch with the highest EV."],
+steps:["Start with a Decision Node (square) on the left â€” the choice you face.","Draw branches for each possible decision option.","At each branch end, add a Chance Node (circle or diamond) for uncertain outcomes.","From each chance node, draw branches for possible outcomes with probabilities (must sum to 1.0).","Add the financial value (payoff) at the end of each outcome branch.","Calculate Expected Value (EV) at each chance node: sum of (probability Ã— payoff).","Choose the decision branch with the highest EV."],
 elements:[
   {name:"Decision Node (square)",desc:"A point where you make a deliberate choice between options."},
   {name:"Chance Node (circle/diamond)",desc:"A point where an uncertain event occurs with assigned probabilities."},
-  {name:"Branch",desc:"A line representing one path — either a decision or an uncertain outcome."},
+  {name:"Branch",desc:"A line representing one path â€” either a decision or an uncertain outcome."},
   {name:"Probability",desc:"The likelihood of each outcome at a chance node. Must sum to 1.0 per node."},
   {name:"Payoff",desc:"The financial value (or utility) at the end of each path."},
-  {name:"Expected Value (EV)",desc:"Probability × Payoff summed across all outcomes at a chance node."}
+  {name:"Expected Value (EV)",desc:"Probability Ã— Payoff summed across all outcomes at a chance node."}
 ]},
-{id:22,name:"Cost–Benefit Analysis (CBA)",category:"Decision Making",
+{id:22,name:"Costâ€“Benefit Analysis (CBA)",category:"Decision Making",
 description:"Quantifies and compares total expected costs against total expected benefits to determine financial viability.",
 when:"Use when seeking project approval, comparing investment options, or justifying a business case.",
 tags:["decision","financial","cost","benefit","business case"],
@@ -1322,14 +1763,14 @@ diagram:`<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect x="20" y="224" width="360" height="28" rx="6" fill="#1e3a5f"/>
   <text x="200" y="243" fill="#f9a825" font-size="10" font-weight="800" text-anchor="middle">NET BENEFIT: $75,000  |  ROI: 45%  |  Payback: ~8 months</text>
 </svg>`,
-steps:["Identify all costs: one-time (development, implementation) and ongoing (maintenance, support).","Identify all benefits: tangible (cost savings, revenue) and intangible (satisfaction, risk reduction).","Assign monetary values to each cost and benefit over the analysis period.","Calculate Total Costs and Total Benefits.","Calculate Net Benefit = Total Benefits − Total Costs.","Calculate ROI = (Net Benefit / Total Costs) × 100%.","Calculate Payback Period = Total Costs / Annual Net Benefit."],
+steps:["Identify all costs: one-time (development, implementation) and ongoing (maintenance, support).","Identify all benefits: tangible (cost savings, revenue) and intangible (satisfaction, risk reduction).","Assign monetary values to each cost and benefit over the analysis period.","Calculate Total Costs and Total Benefits.","Calculate Net Benefit = Total Benefits âˆ’ Total Costs.","Calculate ROI = (Net Benefit / Total Costs) Ã— 100%.","Calculate Payback Period = Total Costs / Annual Net Benefit."],
 elements:[
   {name:"Costs",desc:"All expenditure required: development, training, change management, maintenance."},
   {name:"Benefits",desc:"All gains: labour savings, error reduction, revenue increase, intangible value."},
   {name:"Net Benefit",desc:"Total Benefits minus Total Costs. Positive = financially viable."},
-  {name:"ROI (%)",desc:"Return on Investment — the percentage return relative to cost."},
+  {name:"ROI (%)",desc:"Return on Investment â€” the percentage return relative to cost."},
   {name:"Payback Period",desc:"How long until the benefits recover the investment."},
-  {name:"Analysis Period",desc:"The time horizon (typically 3–5 years) over which costs and benefits are measured."}
+  {name:"Analysis Period",desc:"The time horizon (typically 3â€“5 years) over which costs and benefits are measured."}
 ]},
 {id:23,name:"Gap Analysis",category:"Change Management",
 description:"Compares the current state ('as-is') with the desired future state ('to-be') to identify what needs to change.",
@@ -1342,29 +1783,29 @@ diagram:`<svg viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect x="10" y="30" width="130" height="140" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
   <text x="75" y="55" fill="#991b1b" font-size="10" font-weight="800" text-anchor="middle">AS-IS</text>
   <text x="75" y="68" fill="#991b1b" font-size="8" text-anchor="middle">Current State</text>
-  <text x="20" y="90" fill="#374151" font-size="8">• Manual reporting</text>
-  <text x="20" y="104" fill="#374151" font-size="8">• 3-day cycle time</text>
-  <text x="20" y="118" fill="#374151" font-size="8">• 15% error rate</text>
-  <text x="20" y="132" fill="#374151" font-size="8">• Siloed data</text>
-  <text x="20" y="146" fill="#374151" font-size="8">• Paper-based approvals</text>
+  <text x="20" y="90" fill="#374151" font-size="8">â€¢ Manual reporting</text>
+  <text x="20" y="104" fill="#374151" font-size="8">â€¢ 3-day cycle time</text>
+  <text x="20" y="118" fill="#374151" font-size="8">â€¢ 15% error rate</text>
+  <text x="20" y="132" fill="#374151" font-size="8">â€¢ Siloed data</text>
+  <text x="20" y="146" fill="#374151" font-size="8">â€¢ Paper-based approvals</text>
   <!-- gap box -->
   <rect x="155" y="30" width="110" height="140" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2" stroke-dasharray="5,3"/>
   <text x="210" y="55" fill="#92400e" font-size="10" font-weight="800" text-anchor="middle">GAP</text>
   <text x="210" y="68" fill="#92400e" font-size="8" text-anchor="middle">What needs to change</text>
-  <text x="165" y="90" fill="#374151" font-size="8">• Automate reports</text>
-  <text x="165" y="104" fill="#374151" font-size="8">• Streamline process</text>
-  <text x="165" y="118" fill="#374151" font-size="8">• Implement QA</text>
-  <text x="165" y="132" fill="#374151" font-size="8">• Integrate systems</text>
-  <text x="165" y="146" fill="#374151" font-size="8">• Digital approvals</text>
+  <text x="165" y="90" fill="#374151" font-size="8">â€¢ Automate reports</text>
+  <text x="165" y="104" fill="#374151" font-size="8">â€¢ Streamline process</text>
+  <text x="165" y="118" fill="#374151" font-size="8">â€¢ Implement QA</text>
+  <text x="165" y="132" fill="#374151" font-size="8">â€¢ Integrate systems</text>
+  <text x="165" y="146" fill="#374151" font-size="8">â€¢ Digital approvals</text>
   <!-- to-be box -->
   <rect x="280" y="30" width="130" height="140" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
   <text x="345" y="55" fill="#065f46" font-size="10" font-weight="800" text-anchor="middle">TO-BE</text>
   <text x="345" y="68" fill="#065f46" font-size="8" text-anchor="middle">Future State</text>
-  <text x="290" y="90" fill="#374151" font-size="8">• Automated reporting</text>
-  <text x="290" y="104" fill="#374151" font-size="8">• Same-day cycle time</text>
+  <text x="290" y="90" fill="#374151" font-size="8">â€¢ Automated reporting</text>
+  <text x="290" y="104" fill="#374151" font-size="8">â€¢ Same-day cycle time</text>
   <text x="290" y="118" fill="#374151" font-size="8">&lt;2% error rate</text>
-  <text x="290" y="132" fill="#374151" font-size="8">• Integrated platform</text>
-  <text x="290" y="146" fill="#374151" font-size="8">• Digital workflows</text>
+  <text x="290" y="132" fill="#374151" font-size="8">â€¢ Integrated platform</text>
+  <text x="290" y="146" fill="#374151" font-size="8">â€¢ Digital workflows</text>
   <!-- arrows -->
   <defs><marker id="j" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#1e3a5f"/></marker></defs>
   <line x1="140" y1="100" x2="155" y2="100" stroke="#1e3a5f" stroke-width="2" marker-end="url(#j)"/>
@@ -1373,8 +1814,8 @@ diagram:`<svg viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg" font-fami
 </svg>`,
 steps:["Document the current state (as-is): map processes, capabilities, and performance as they are today.","Define the desired future state (to-be): what does success look like?","Identify gaps by comparing as-is vs. to-be across key dimensions (process, people, technology, data).","Prioritise gaps by impact and urgency.","Define initiatives or projects to close each gap.","Use the gap list to scope the change programme and build a roadmap."],
 elements:[
-  {name:"As-Is (Current State)",desc:"The documented baseline — how things work today, including pain points."},
-  {name:"To-Be (Future State)",desc:"The target state — the desired capability, performance, or process."},
+  {name:"As-Is (Current State)",desc:"The documented baseline â€” how things work today, including pain points."},
+  {name:"To-Be (Future State)",desc:"The target state â€” the desired capability, performance, or process."},
   {name:"Gap",desc:"The difference between as-is and to-be. This drives the scope of change."},
   {name:"Dimensions",desc:"Areas of comparison: process, technology, skills, data, organisation."},
   {name:"Initiative",desc:"A project or action designed to close a specific gap."}
@@ -1391,7 +1832,7 @@ diagram:`<svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect x="150" y="8" width="120" height="24" rx="6" fill="#1e3a5f"/>
   <text x="210" y="24" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">PROPOSED CHANGE</text>
   <!-- driving forces (left) -->
-  <text x="90" y="52" fill="#059669" font-size="9" font-weight="700" text-anchor="middle">DRIVING FORCES →</text>
+  <text x="90" y="52" fill="#059669" font-size="9" font-weight="700" text-anchor="middle">DRIVING FORCES â†’</text>
   <rect x="10" y="62" width="130" height="22" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
   <text x="75" y="77" fill="#065f46" font-size="8" text-anchor="middle">Cost savings potential</text>
   <line x1="140" y1="73" x2="210" y2="73" stroke="#059669" stroke-width="8" opacity=".7" marker-end="url(#k)"/>
@@ -1409,7 +1850,7 @@ diagram:`<svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="85" y1="169" x2="210" y2="169" stroke="#059669" stroke-width="2" opacity=".7"/>
   <text x="93" y="165" fill="#065f46" font-size="7">1</text>
   <!-- restraining forces (right) -->
-  <text x="325" y="52" fill="#dc2626" font-size="9" font-weight="700" text-anchor="middle">← RESTRAINING FORCES</text>
+  <text x="325" y="52" fill="#dc2626" font-size="9" font-weight="700" text-anchor="middle">â† RESTRAINING FORCES</text>
   <rect x="280" y="62" width="130" height="22" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
   <text x="345" y="77" fill="#991b1b" font-size="8" text-anchor="middle">High implementation cost</text>
   <line x1="210" y1="73" x2="280" y2="73" stroke="#dc2626" stroke-width="8" opacity=".7"/>
@@ -1425,15 +1866,15 @@ diagram:`<svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <defs><marker id="k" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#059669"/></marker></defs>
   <text x="90" y="240" fill="#059669" font-size="8" font-weight="700">Driving total: 10</text>
   <text x="270" y="240" fill="#dc2626" font-size="8" font-weight="700">Restraining total: 9</text>
-  <text x="210" y="250" fill="#6b7280" font-size="8" text-anchor="middle">Arrow thickness = strength score (1–5)</text>
+  <text x="210" y="250" fill="#6b7280" font-size="8" text-anchor="middle">Arrow thickness = strength score (1â€“5)</text>
 </svg>`,
-steps:["Write the proposed change in the centre.","Draw a vertical line down the middle.","On the left, list all forces driving the change (reasons to proceed).","On the right, list all forces resisting the change (barriers).","Score each force 1–5 based on its strength and draw arrows — thicker = stronger.","Sum driving scores and restraining scores.","Plan actions to either strengthen drivers or weaken restrainers."],
+steps:["Write the proposed change in the centre.","Draw a vertical line down the middle.","On the left, list all forces driving the change (reasons to proceed).","On the right, list all forces resisting the change (barriers).","Score each force 1â€“5 based on its strength and draw arrows â€” thicker = stronger.","Sum driving scores and restraining scores.","Plan actions to either strengthen drivers or weaken restrainers."],
 elements:[
   {name:"Proposed Change",desc:"The change initiative being analysed, placed at the centre."},
   {name:"Driving Forces",desc:"Positive forces pushing toward the change (benefits, pressures, opportunities)."},
   {name:"Restraining Forces",desc:"Negative forces pushing against the change (barriers, risks, resistance)."},
-  {name:"Strength Score",desc:"A rating (1–5) showing how strong each force is. Shown by arrow thickness."},
-  {name:"Net Force",desc:"Driving total minus Restraining total — positive means change is viable."}
+  {name:"Strength Score",desc:"A rating (1â€“5) showing how strong each force is. Shown by arrow thickness."},
+  {name:"Net Force",desc:"Driving total minus Restraining total â€” positive means change is viable."}
 ]},
 {id:25,name:"Kotter's 8-Step Change Model",category:"Change Management",
 description:"A structured eight-step framework for leading organisational change from urgency through to embedding.",
@@ -1444,7 +1885,7 @@ diagram:`<svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect width="420" height="280" fill="#f8fafc" rx="8"/>
   <defs><marker id="l" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6b7280"/></marker></defs>
   <!-- phase labels -->
-  <text x="210" y="14" fill="#6b7280" font-size="8" font-weight="700" text-anchor="middle">CREATE CLIMATE → ENGAGE &amp; ENABLE → IMPLEMENT &amp; SUSTAIN</text>
+  <text x="210" y="14" fill="#6b7280" font-size="8" font-weight="700" text-anchor="middle">CREATE CLIMATE â†’ ENGAGE &amp; ENABLE â†’ IMPLEMENT &amp; SUSTAIN</text>
   <!-- 8 steps in 2 rows -->
   <rect x="5" y="22" width="88" height="50" rx="6" fill="#1e3a5f"/>
   <text x="49" y="40" fill="#f9a825" font-size="11" font-weight="800" text-anchor="middle">1</text>
@@ -1493,18 +1934,18 @@ diagram:`<svg viewBox="0 0 420 280" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect x="5" y="196" width="410" height="76" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
   <text x="215" y="214" fill="#1e3a5f" font-size="9" font-weight="700" text-anchor="middle">Key Insight per Step</text>
   <text x="15" y="230" fill="#374151" font-size="7">1. Show data that burning platform exists</text>
-  <text x="15" y="242" fill="#374151" font-size="7">2. Include key influencers — not just senior leaders</text>
+  <text x="15" y="242" fill="#374151" font-size="7">2. Include key influencers â€” not just senior leaders</text>
   <text x="15" y="254" fill="#374151" font-size="7">3. Vision must be simple enough to explain in 5 min</text>
   <text x="215" y="230" fill="#374151" font-size="7">5. Identify and remove structural barriers early</text>
   <text x="215" y="242" fill="#374151" font-size="7">6. Celebrate small wins to build momentum</text>
   <text x="215" y="254" fill="#374151" font-size="7">8. Change must be woven into hiring and culture</text>
 </svg>`,
-steps:["Step 1 – Create Urgency: build the case for change with data and compelling stories.","Step 2 – Build a Guiding Coalition: form a team of influential leaders across the organisation.","Step 3 – Form a Vision: develop a clear, inspiring vision and strategy for the change.","Step 4 – Communicate the Vision: communicate relentlessly through multiple channels.","Step 5 – Remove Obstacles: empower broad-based action by eliminating barriers.","Step 6 – Create Short-term Wins: plan and achieve visible improvements within 6–12 months.","Step 7 – Sustain Acceleration: use wins to build momentum and tackle bigger changes.","Step 8 – Anchor in Culture: embed the change in norms, values, hiring, and promotion."],
+steps:["Step 1 â€“ Create Urgency: build the case for change with data and compelling stories.","Step 2 â€“ Build a Guiding Coalition: form a team of influential leaders across the organisation.","Step 3 â€“ Form a Vision: develop a clear, inspiring vision and strategy for the change.","Step 4 â€“ Communicate the Vision: communicate relentlessly through multiple channels.","Step 5 â€“ Remove Obstacles: empower broad-based action by eliminating barriers.","Step 6 â€“ Create Short-term Wins: plan and achieve visible improvements within 6â€“12 months.","Step 7 â€“ Sustain Acceleration: use wins to build momentum and tackle bigger changes.","Step 8 â€“ Anchor in Culture: embed the change in norms, values, hiring, and promotion."],
 elements:[
-  {name:"Steps 1–3 (Create Climate)",desc:"Building the conditions for change: urgency, coalition, and vision."},
+  {name:"Steps 1â€“3 (Create Climate)",desc:"Building the conditions for change: urgency, coalition, and vision."},
   {name:"Step 4 (Communicate)",desc:"Making sure everyone understands and believes in the vision."},
-  {name:"Steps 5–6 (Engage & Enable)",desc:"Removing barriers and creating visible early wins."},
-  {name:"Steps 7–8 (Implement & Sustain)",desc:"Accelerating change and embedding it permanently in the culture."},
+  {name:"Steps 5â€“6 (Engage & Enable)",desc:"Removing barriers and creating visible early wins."},
+  {name:"Steps 7â€“8 (Implement & Sustain)",desc:"Accelerating change and embedding it permanently in the culture."},
   {name:"Guiding Coalition",desc:"The cross-functional leadership team driving the change initiative."},
   {name:"Short-term Wins",desc:"Early, visible successes that build credibility and momentum."}
 ]},
@@ -1537,13 +1978,13 @@ diagram:`<svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect x="0" y="60" width="120" height="30" fill="#e8f0fe"/>
   <text x="10" y="79" fill="#1e3a5f" font-size="8" font-weight="700">Touchpoints</text>
   <rect x="120" y="60" width="95" height="30" fill="#fff" stroke="#e2e8f0" stroke-width=".5"/>
-  <text x="168" y="79" fill="#374151" font-size="7" text-anchor="middle">Instagram · Google</text>
+  <text x="168" y="79" fill="#374151" font-size="7" text-anchor="middle">Instagram Â· Google</text>
   <rect x="215" y="60" width="95" height="30" fill="#fff" stroke="#e2e8f0" stroke-width=".5"/>
-  <text x="263" y="79" fill="#374151" font-size="7" text-anchor="middle">Website · Trustpilot</text>
+  <text x="263" y="79" fill="#374151" font-size="7" text-anchor="middle">Website Â· Trustpilot</text>
   <rect x="310" y="60" width="95" height="30" fill="#fff" stroke="#e2e8f0" stroke-width=".5"/>
   <text x="358" y="79" fill="#374151" font-size="7" text-anchor="middle">Checkout page</text>
   <rect x="405" y="60" width="95" height="30" fill="#fff" stroke="#e2e8f0" stroke-width=".5"/>
-  <text x="453" y="79" fill="#374151" font-size="7" text-anchor="middle">Email · App</text>
+  <text x="453" y="79" fill="#374151" font-size="7" text-anchor="middle">Email Â· App</text>
   <rect x="0" y="90" width="120" height="30" fill="#e8f0fe"/>
   <text x="10" y="109" fill="#1e3a5f" font-size="8" font-weight="700">Pain Points</text>
   <rect x="120" y="90" width="95" height="30" fill="#fee2e2" stroke="#e2e8f0" stroke-width=".5"/>
@@ -1562,22 +2003,22 @@ diagram:`<svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <circle cx="263" cy="145" r="4" fill="#2e86de"/>
   <circle cx="358" cy="168" r="4" fill="#dc2626"/>
   <circle cx="453" cy="138" r="4" fill="#059669"/>
-  <text x="168" y="175" fill="#374151" font-size="7" text-anchor="middle">😐 Neutral</text>
-  <text x="263" y="162" fill="#374151" font-size="7" text-anchor="middle">🙂 Interested</text>
-  <text x="358" y="185" fill="#dc2626" font-size="7" text-anchor="middle">😤 Frustrated</text>
-  <text x="453" y="155" fill="#059669" font-size="7" text-anchor="middle">😊 Happy</text>
+  <text x="168" y="175" fill="#374151" font-size="7" text-anchor="middle">ðŸ˜ Neutral</text>
+  <text x="263" y="162" fill="#374151" font-size="7" text-anchor="middle">ðŸ™‚ Interested</text>
+  <text x="358" y="185" fill="#dc2626" font-size="7" text-anchor="middle">ðŸ˜¤ Frustrated</text>
+  <text x="453" y="155" fill="#059669" font-size="7" text-anchor="middle">ðŸ˜Š Happy</text>
   <!-- opportunities -->
   <rect x="0" y="192" width="500" height="36" fill="#fef3c7"/>
   <text x="10" y="208" fill="#92400e" font-size="8" font-weight="700">Opportunities:</text>
-  <text x="10" y="222" fill="#374151" font-size="7">• Personalise ads  • Curate reviews  • Simplify checkout (biggest gap!)  • Add loyalty programme</text>
+  <text x="10" y="222" fill="#374151" font-size="7">â€¢ Personalise ads  â€¢ Curate reviews  â€¢ Simplify checkout (biggest gap!)  â€¢ Add loyalty programme</text>
 </svg>`,
-steps:["Define the persona whose journey you are mapping.","Identify the key stages of the journey (Awareness → Consideration → Purchase → Post-sale).","For each stage, list: what the customer does (actions), how they interact (touchpoints), and what frustrates them (pain points).","Plot the customer's emotional state across the journey as a curve.","Identify opportunities — especially where emotion dips — to improve the experience."],
+steps:["Define the persona whose journey you are mapping.","Identify the key stages of the journey (Awareness â†’ Consideration â†’ Purchase â†’ Post-sale).","For each stage, list: what the customer does (actions), how they interact (touchpoints), and what frustrates them (pain points).","Plot the customer's emotional state across the journey as a curve.","Identify opportunities â€” especially where emotion dips â€” to improve the experience."],
 elements:[
   {name:"Stages",desc:"The high-level phases of the customer's experience from first contact to after purchase."},
   {name:"Actions",desc:"What the customer does at each stage."},
   {name:"Touchpoints",desc:"The channels or interfaces where the customer interacts with the organisation."},
   {name:"Pain Points",desc:"Frustrations, barriers, or unmet needs at each stage."},
-  {name:"Emotion Curve",desc:"A line showing how the customer feels throughout the journey — dips reveal improvement opportunities."},
+  {name:"Emotion Curve",desc:"A line showing how the customer feels throughout the journey â€” dips reveal improvement opportunities."},
   {name:"Opportunities",desc:"Specific improvements identified from the pain points and emotion curve."}
 ]},
 {id:27,name:"Empathy Map",category:"User Experience",
@@ -1603,34 +2044,34 @@ diagram:`<svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="90" y="165" fill="#065f46" font-size="10" font-weight="700" text-anchor="middle">SAYS</text>
   <text x="270" y="165" fill="#991b1b" font-size="10" font-weight="700" text-anchor="middle">DOES</text>
   <!-- content -->
-  <text x="20" y="50" fill="#374151" font-size="7">• "Is this tool trustworthy?"</text>
-  <text x="20" y="63" fill="#374151" font-size="7">• "Will it save me time?"</text>
-  <text x="20" y="76" fill="#374151" font-size="7">• "My manager expects results"</text>
-  <text x="20" y="89" fill="#374151" font-size="7">• "I hope this isn't complex"</text>
-  <text x="200" y="50" fill="#374151" font-size="7">• Anxious about errors</text>
-  <text x="200" y="63" fill="#374151" font-size="7">• Frustrated with old tools</text>
-  <text x="200" y="76" fill="#374151" font-size="7">• Hopeful for efficiency</text>
-  <text x="200" y="89" fill="#374151" font-size="7">• Proud when she delivers</text>
-  <text x="20" y="183" fill="#374151" font-size="7">• "The current system is slow"</text>
-  <text x="20" y="196" fill="#374151" font-size="7">• "I just need it to work"</text>
-  <text x="20" y="209" fill="#374151" font-size="7">• "Can we test it first?"</text>
-  <text x="200" y="183" fill="#374151" font-size="7">• Builds manual workarounds</text>
-  <text x="200" y="196" fill="#374151" font-size="7">• Checks data multiple times</text>
-  <text x="200" y="209" fill="#374151" font-size="7">• Attends every demo</text>
+  <text x="20" y="50" fill="#374151" font-size="7">â€¢ "Is this tool trustworthy?"</text>
+  <text x="20" y="63" fill="#374151" font-size="7">â€¢ "Will it save me time?"</text>
+  <text x="20" y="76" fill="#374151" font-size="7">â€¢ "My manager expects results"</text>
+  <text x="20" y="89" fill="#374151" font-size="7">â€¢ "I hope this isn't complex"</text>
+  <text x="200" y="50" fill="#374151" font-size="7">â€¢ Anxious about errors</text>
+  <text x="200" y="63" fill="#374151" font-size="7">â€¢ Frustrated with old tools</text>
+  <text x="200" y="76" fill="#374151" font-size="7">â€¢ Hopeful for efficiency</text>
+  <text x="200" y="89" fill="#374151" font-size="7">â€¢ Proud when she delivers</text>
+  <text x="20" y="183" fill="#374151" font-size="7">â€¢ "The current system is slow"</text>
+  <text x="20" y="196" fill="#374151" font-size="7">â€¢ "I just need it to work"</text>
+  <text x="20" y="209" fill="#374151" font-size="7">â€¢ "Can we test it first?"</text>
+  <text x="200" y="183" fill="#374151" font-size="7">â€¢ Builds manual workarounds</text>
+  <text x="200" y="196" fill="#374151" font-size="7">â€¢ Checks data multiple times</text>
+  <text x="200" y="209" fill="#374151" font-size="7">â€¢ Attends every demo</text>
   <!-- bottom: pains & gains -->
   <rect x="10" y="278" width="160" height="36" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
   <text x="90" y="294" fill="#991b1b" font-size="8" font-weight="700" text-anchor="middle">PAINS</text>
-  <text x="90" y="307" fill="#374151" font-size="7" text-anchor="middle">Slow tools · Data errors · Rework</text>
+  <text x="90" y="307" fill="#374151" font-size="7" text-anchor="middle">Slow tools Â· Data errors Â· Rework</text>
   <rect x="190" y="278" width="160" height="36" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
   <text x="270" y="294" fill="#065f46" font-size="8" font-weight="700" text-anchor="middle">GAINS</text>
-  <text x="270" y="307" fill="#374151" font-size="7" text-anchor="middle">Speed · Accuracy · Recognition</text>
+  <text x="270" y="307" fill="#374151" font-size="7" text-anchor="middle">Speed Â· Accuracy Â· Recognition</text>
 </svg>`,
-steps:["Identify the specific user you are mapping (give them a name and role).","Fill in the four quadrants based on research or workshops: Thinks, Feels, Says, Does.","Thinks: internal thoughts and beliefs — what's on their mind?","Feels: emotional state — what are they worried about, excited by, or frustrated with?","Says: direct quotes or paraphrases from interviews or observations.","Does: observable behaviours and actions.","Add Pains (frustrations/barriers) and Gains (goals/desires) at the bottom."],
+steps:["Identify the specific user you are mapping (give them a name and role).","Fill in the four quadrants based on research or workshops: Thinks, Feels, Says, Does.","Thinks: internal thoughts and beliefs â€” what's on their mind?","Feels: emotional state â€” what are they worried about, excited by, or frustrated with?","Says: direct quotes or paraphrases from interviews or observations.","Does: observable behaviours and actions.","Add Pains (frustrations/barriers) and Gains (goals/desires) at the bottom."],
 elements:[
-  {name:"Thinks",desc:"Internal thoughts, beliefs, and concerns — often not openly shared."},
+  {name:"Thinks",desc:"Internal thoughts, beliefs, and concerns â€” often not openly shared."},
   {name:"Feels",desc:"Emotional state: anxious, excited, frustrated, hopeful."},
   {name:"Says",desc:"What the user actually voices in interviews or meetings."},
-  {name:"Does",desc:"Observable behaviours — what they physically do."},
+  {name:"Does",desc:"Observable behaviours â€” what they physically do."},
   {name:"Pains",desc:"Frustrations, barriers, risks, and fears."},
   {name:"Gains",desc:"Goals, desires, and measures of success."}
 ]},
@@ -1645,45 +2086,45 @@ diagram:`<svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect x="0" y="0" width="360" height="70" rx="8" fill="#1e3a5f"/>
   <rect x="0" y="58" width="360" height="12" fill="#1e3a5f"/>
   <circle cx="50" cy="35" r="28" fill="#2e86de"/>
-  <text x="50" y="40" fill="#fff" font-size="18" text-anchor="middle">👩</text>
+  <text x="50" y="40" fill="#fff" font-size="18" text-anchor="middle">ðŸ‘©</text>
   <text x="100" y="26" fill="#fff" font-size="13" font-weight="800">Sarah Mitchell</text>
-  <text x="100" y="40" fill="#b0c4e8" font-size="9">Finance Manager · Age 34 · London</text>
-  <text x="100" y="53" fill="#f9a825" font-size="8">Tech-savvy · Detail-oriented · Time-poor</text>
+  <text x="100" y="40" fill="#b0c4e8" font-size="9">Finance Manager Â· Age 34 Â· London</text>
+  <text x="100" y="53" fill="#f9a825" font-size="8">Tech-savvy Â· Detail-oriented Â· Time-poor</text>
   <!-- sections -->
   <rect x="10" y="78" width="160" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
   <text x="20" y="94" fill="#1e3a5f" font-size="9" font-weight="700">Goals</text>
-  <text x="20" y="108" fill="#374151" font-size="7">• Deliver accurate reports fast</text>
-  <text x="20" y="120" fill="#374151" font-size="7">• Reduce manual data work</text>
-  <text x="20" y="132" fill="#374151" font-size="7">• Earn trust from leadership</text>
-  <text x="20" y="144" fill="#374151" font-size="7">• Have time for strategic work</text>
-  <text x="20" y="156" fill="#374151" font-size="7">• Stay ahead of compliance</text>
+  <text x="20" y="108" fill="#374151" font-size="7">â€¢ Deliver accurate reports fast</text>
+  <text x="20" y="120" fill="#374151" font-size="7">â€¢ Reduce manual data work</text>
+  <text x="20" y="132" fill="#374151" font-size="7">â€¢ Earn trust from leadership</text>
+  <text x="20" y="144" fill="#374151" font-size="7">â€¢ Have time for strategic work</text>
+  <text x="20" y="156" fill="#374151" font-size="7">â€¢ Stay ahead of compliance</text>
   <rect x="185" y="78" width="165" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
   <text x="195" y="94" fill="#dc2626" font-size="9" font-weight="700">Frustrations</text>
-  <text x="195" y="108" fill="#374151" font-size="7">• Slow legacy systems</text>
-  <text x="195" y="120" fill="#374151" font-size="7">• Manual reconciliation errors</text>
-  <text x="195" y="132" fill="#374151" font-size="7">• Unclear data ownership</text>
-  <text x="195" y="144" fill="#374151" font-size="7">• Too many approval steps</text>
-  <text x="195" y="156" fill="#374151" font-size="7">• Siloed departments</text>
+  <text x="195" y="108" fill="#374151" font-size="7">â€¢ Slow legacy systems</text>
+  <text x="195" y="120" fill="#374151" font-size="7">â€¢ Manual reconciliation errors</text>
+  <text x="195" y="132" fill="#374151" font-size="7">â€¢ Unclear data ownership</text>
+  <text x="195" y="144" fill="#374151" font-size="7">â€¢ Too many approval steps</text>
+  <text x="195" y="156" fill="#374151" font-size="7">â€¢ Siloed departments</text>
   <rect x="10" y="188" width="160" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
   <text x="20" y="204" fill="#2e86de" font-size="9" font-weight="700">Behaviours</text>
-  <text x="20" y="218" fill="#374151" font-size="7">• Uses spreadsheets as backup</text>
-  <text x="20" y="230" fill="#374151" font-size="7">• Attends all product demos</text>
-  <text x="20" y="242" fill="#374151" font-size="7">• Double-checks every figure</text>
-  <text x="20" y="254" fill="#374151" font-size="7">• Relies on peer recommendations</text>
+  <text x="20" y="218" fill="#374151" font-size="7">â€¢ Uses spreadsheets as backup</text>
+  <text x="20" y="230" fill="#374151" font-size="7">â€¢ Attends all product demos</text>
+  <text x="20" y="242" fill="#374151" font-size="7">â€¢ Double-checks every figure</text>
+  <text x="20" y="254" fill="#374151" font-size="7">â€¢ Relies on peer recommendations</text>
   <rect x="185" y="188" width="165" height="100" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1"/>
   <text x="195" y="204" fill="#059669" font-size="9" font-weight="700">Quote</text>
   <text x="195" y="222" fill="#374151" font-size="7" font-style="italic">"I just need the numbers</text>
   <text x="195" y="234" fill="#374151" font-size="7" font-style="italic"> to be right, first time,</text>
   <text x="195" y="246" fill="#374151" font-size="7" font-style="italic"> every time."</text>
-  <text x="195" y="265" fill="#6b7280" font-size="7">Tech comfort: ████████░░ 8/10</text>
-  <text x="195" y="278" fill="#6b7280" font-size="7">Influence: ██████░░░░ 6/10</text>
+  <text x="195" y="265" fill="#6b7280" font-size="7">Tech comfort: â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–‘â–‘ 8/10</text>
+  <text x="195" y="278" fill="#6b7280" font-size="7">Influence: â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–‘â–‘â–‘â–‘ 6/10</text>
 </svg>`,
-steps:["Conduct user research: interviews, surveys, observations, analytics.","Identify distinct user segments from the research data.","For each key segment, create one persona — give them a realistic name, photo/avatar, age, and role.","Fill in: Goals (what they want to achieve), Frustrations (barriers and pain points), Behaviours (how they act), and a representative Quote.","Add contextual details: tech comfort level, influence, tools used.","Share and validate the persona with the wider team — update as you learn more."],
+steps:["Conduct user research: interviews, surveys, observations, analytics.","Identify distinct user segments from the research data.","For each key segment, create one persona â€” give them a realistic name, photo/avatar, age, and role.","Fill in: Goals (what they want to achieve), Frustrations (barriers and pain points), Behaviours (how they act), and a representative Quote.","Add contextual details: tech comfort level, influence, tools used.","Share and validate the persona with the wider team â€” update as you learn more."],
 elements:[
   {name:"Name & Demographics",desc:"A realistic profile that makes the persona feel human and relatable."},
-  {name:"Goals",desc:"What the user is trying to achieve — their motivations and desired outcomes."},
+  {name:"Goals",desc:"What the user is trying to achieve â€” their motivations and desired outcomes."},
   {name:"Frustrations",desc:"Pain points, barriers, and things that cause them friction."},
-  {name:"Behaviours",desc:"How they actually act — tools they use, workarounds they've built, habits."},
+  {name:"Behaviours",desc:"How they actually act â€” tools they use, workarounds they've built, habits."},
   {name:"Quote",desc:"A representative statement in their own words that captures their mindset."},
   {name:"Sliders / Attributes",desc:"Ratings like tech comfort or influence that help tailor the design."}
 ]},
@@ -1698,7 +2139,7 @@ diagram:`<svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" font-fami
   <rect x="130" y="100" width="120" height="80" rx="8" fill="#1e3a5f"/>
   <text x="190" y="136" fill="#fff" font-size="10" font-weight="800" text-anchor="middle">ORDER</text>
   <text x="190" y="150" fill="#fff" font-size="10" font-weight="800" text-anchor="middle">SYSTEM</text>
-  <text x="190" y="164" fill="#b0c4e8" font-size="7" text-anchor="middle">«system in scope»</text>
+  <text x="190" y="164" fill="#b0c4e8" font-size="7" text-anchor="middle">Â«system in scopeÂ»</text>
   <defs><marker id="m" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2e86de"/></marker><marker id="m2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#059669"/></marker></defs>
   <!-- external entities -->
   <rect x="10" y="110" width="80" height="40" rx="6" fill="#e8f0fe" stroke="#2e86de" stroke-width="1.5"/>
@@ -1725,16 +2166,16 @@ diagram:`<svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" font-fami
   <line x1="190" y1="180" x2="190" y2="220" stroke="#d97706" stroke-width="1.5" marker-end="url(#m)"/>
   <text x="194" y="206" fill="#374151" font-size="7">Order data</text>
 </svg>`,
-steps:["Draw the system as a single rectangle in the centre and label it clearly.","Identify all external entities (users, systems, organisations) that interact with the system and draw them as rectangles or ovals outside.","Draw arrows between each external entity and the system to show data flows.","Label each arrow with the name of the data or information being exchanged.","Decide what stays inside vs. outside — everything inside the system box is in scope."],
+steps:["Draw the system as a single rectangle in the centre and label it clearly.","Identify all external entities (users, systems, organisations) that interact with the system and draw them as rectangles or ovals outside.","Draw arrows between each external entity and the system to show data flows.","Label each arrow with the name of the data or information being exchanged.","Decide what stays inside vs. outside â€” everything inside the system box is in scope."],
 elements:[
-  {name:"System (centre box)",desc:"The system under analysis — everything inside this box is in scope."},
+  {name:"System (centre box)",desc:"The system under analysis â€” everything inside this box is in scope."},
   {name:"External Entity",desc:"Any person, system, or organisation that sends data to or receives data from the system."},
   {name:"Data Flow (arrow)",desc:"Shows what information passes between the system and an external entity."},
   {name:"Data Flow Label",desc:"Names the specific data being exchanged (e.g. 'Order Request', 'Payment Auth')."},
-  {name:"System Boundary",desc:"The edge of the centre box — defines what is in scope and what is not."}
+  {name:"System Boundary",desc:"The edge of the centre box â€” defines what is in scope and what is not."}
 ]},
 {id:30,name:"Entity Relationship Diagram (ERD)",category:"Data & Information",
-description:"Models data entities, their attributes, and relationships between them — foundational for database design.",
+description:"Models data entities, their attributes, and relationships between them â€” foundational for database design.",
 when:"Use when defining data structures, designing a database, or understanding data relationships in an existing system.",
 tags:["data","database","ERD","relationships","entities"],
 keywords:["erd","entity relationship","data model","database","data structure","entities","attributes","relationships","data design","information model","data mapping"],
@@ -1792,17 +2233,17 @@ diagram:`<svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="300" y="227" fill="#1e3a5f" font-size="8" font-weight="700">1:N / M:N = Cardinality</text>
   <text x="300" y="242" fill="#374151" font-size="8">Ratio of related records</text>
 </svg>`,
-steps:["Identify the entities — the main 'things' in the system that store data (Customer, Order, Product).","For each entity, list its attributes (fields) and identify the Primary Key (PK) — the unique identifier.","Identify relationships between entities: which entities link to which.","Determine the cardinality (1:1, 1:N, M:N) of each relationship.","Add Foreign Keys (FK) to show how entities reference each other.","Draw the diagram with entities as rectangles, attributes listed inside, and relationship lines connecting them."],
+steps:["Identify the entities â€” the main 'things' in the system that store data (Customer, Order, Product).","For each entity, list its attributes (fields) and identify the Primary Key (PK) â€” the unique identifier.","Identify relationships between entities: which entities link to which.","Determine the cardinality (1:1, 1:N, M:N) of each relationship.","Add Foreign Keys (FK) to show how entities reference each other.","Draw the diagram with entities as rectangles, attributes listed inside, and relationship lines connecting them."],
 elements:[
-  {name:"Entity",desc:"A 'thing' about which data is stored — typically becomes a database table."},
+  {name:"Entity",desc:"A 'thing' about which data is stored â€” typically becomes a database table."},
   {name:"Attribute",desc:"A field or property of an entity (e.g. Customer.Name, Order.Date)."},
   {name:"Primary Key (PK)",desc:"A unique identifier for each record in an entity."},
-  {name:"Foreign Key (FK)",desc:"An attribute that references the PK of another entity — creates the relationship."},
+  {name:"Foreign Key (FK)",desc:"An attribute that references the PK of another entity â€” creates the relationship."},
   {name:"Relationship line",desc:"Connects two entities. Label shows the nature of the relationship (e.g. 'places')."},
   {name:"Cardinality (1:1, 1:N, M:N)",desc:"The numeric relationship between records: one-to-one, one-to-many, many-to-many."}
 ]},
 {id:31,name:"Data Flow Diagram (DFD)",category:"Data & Information",
-description:"Illustrates how data moves through a system — inputs, processing steps, stores, and outputs.",
+description:"Illustrates how data moves through a system â€” inputs, processing steps, stores, and outputs.",
 when:"Use when mapping data flows between processes and systems, especially for integration or data migration projects.",
 tags:["data","flow","processes","stores","integration"],
 keywords:["data flow","dfd","data movement","integration","data migration","input output","process data","information flow","systems integration","data diagram"],
@@ -1856,7 +2297,7 @@ steps:["Start with a Context Diagram (Level 0) showing the system as one circle 
 elements:[
   {name:"Process (circle/bubble)",desc:"A function that transforms, stores, or distributes data."},
   {name:"External Entity (square)",desc:"A person, system, or organisation outside the system that sends or receives data."},
-  {name:"Data Store (open rectangle)",desc:"A repository where data is held — a file, database, or register."},
+  {name:"Data Store (open rectangle)",desc:"A repository where data is held â€” a file, database, or register."},
   {name:"Data Flow (arrow)",desc:"The movement of data between elements. Always labelled with what the data is."},
   {name:"Level 0 (Context)",desc:"Single process bubble showing the whole system and its external connections."},
   {name:"Level 1",desc:"Expands the Level 0 system into its major sub-processes."}
@@ -1917,21 +2358,59 @@ diagram:`<svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg" font-fami
   <text x="417" y="78" fill="#374151" font-size="8">Retail stores</text>
   <text x="417" y="93" fill="#374151" font-size="8">Finance team</text>
 </svg>`,
-steps:["Start from the right — identify Customers: who receives the output of this process?","Define Outputs: what does the process produce or deliver to the customer?","Map the high-level Process steps (5–7 steps only — stay high-level).","Define Inputs: what materials, data, or information are needed to run the process?","Identify Suppliers: who or what provides those inputs?","Review the SIPOC with stakeholders to validate scope before process modelling begins."],
+steps:["Start from the right â€” identify Customers: who receives the output of this process?","Define Outputs: what does the process produce or deliver to the customer?","Map the high-level Process steps (5â€“7 steps only â€” stay high-level).","Define Inputs: what materials, data, or information are needed to run the process?","Identify Suppliers: who or what provides those inputs?","Review the SIPOC with stakeholders to validate scope before process modelling begins."],
 elements:[
   {name:"Suppliers (S)",desc:"Who provides the inputs? Could be internal departments, vendors, or systems."},
   {name:"Inputs (I)",desc:"The materials, data, or information needed to run the process."},
-  {name:"Process (P)",desc:"The high-level steps of the process — kept to 5–7 steps at this stage."},
+  {name:"Process (P)",desc:"The high-level steps of the process â€” kept to 5â€“7 steps at this stage."},
   {name:"Outputs (O)",desc:"What the process produces: deliverables, products, reports, decisions."},
   {name:"Customers (C)",desc:"Who receives the output? Internal teams, end customers, regulators."}
 ]}
 ];
 
-// ── QUICK CHIPS ──
-const QUICK_CHIPS = ["manage stakeholders","prioritise requirements","map a process","root cause analysis","make a decision","manage change","improve customer experience","analyse strategy","design a database"];
-const ALL_CATEGORIES = [...new Set(BA_MODELS.map(m => m.category))].sort();
+];
+
+// ── CATEGORY CONFIG ──
+const CAT_CONFIG = {
+  "Stakeholder Management": { color: "var(--cat-stakeholder)", icon: "👥", key: "stakeholder" },
+  "Requirements":           { color: "var(--cat-requirements)", icon: "📋", key: "requirements" },
+  "Process & Workflow":     { color: "var(--cat-process)",      icon: "⚙️",  key: "process" },
+  "Strategy & Analysis":    { color: "var(--cat-strategy)",     icon: "🎯", key: "strategy" },
+  "Problem Solving":        { color: "var(--cat-problem)",      icon: "🔍", key: "problem" },
+  "Decision Making":        { color: "var(--cat-decision)",     icon: "⚖️",  key: "decision" },
+  "Change Management":      { color: "var(--cat-change)",       icon: "🔄", key: "change" },
+  "User Experience":        { color: "var(--cat-ux)",           icon: "🎨", key: "ux" },
+  "Data & Information":     { color: "var(--cat-data)",         icon: "🗄️",  key: "data" }
+};
+
+const QUICK_CHIPS = [
+  "manage stakeholders", "prioritise requirements", "map a process",
+  "root cause analysis", "make a decision", "manage change",
+  "customer experience", "analyse strategy", "data model"
+];
+
+const ALL_CATEGORIES = [...new Set(BA_MODELS.map(m => m.category))];
+
 let currentQuery = "";
 let activeCategory = "All";
+
+// ── THEME ──
+(function() {
+  const saved = localStorage.getItem("ba-theme");
+  if (saved) document.documentElement.setAttribute("data-theme", saved);
+})();
+document.getElementById("themeToggle").addEventListener("click", () => {
+  const current = document.documentElement.getAttribute("data-theme");
+  const next = current === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("ba-theme", next);
+  document.getElementById("themeToggle").textContent = next === "dark" ? "☀️" : "🌙";
+});
+// sync icon on load
+(function() {
+  const t = localStorage.getItem("ba-theme") || "light";
+  document.getElementById("themeToggle").textContent = t === "dark" ? "☀️" : "🌙";
+})();
 
 // ── SCORING ──
 function score(model, query) {
@@ -1950,51 +2429,138 @@ function score(model, query) {
   return pts;
 }
 
+// ── RENDER CHIPS ──
+function renderChips() {
+  const wrap = document.getElementById("quickPicks");
+  wrap.innerHTML = `<span class="chips-label">Try:</span>` +
+    QUICK_CHIPS.map(c => `<button class="chip" onclick="runSearch('${c}')" aria-label="Search for ${c}">${c}</button>`).join("") +
+    `<button class="chip surprise" onclick="openRandom()" title="Open a random framework" aria-label="Surprise me">🎲 Surprise me</button>`;
+}
+
+// ── RENDER FILTER BAR ──
+function renderFilters() {
+  const bar = document.getElementById("filterBar");
+  const cats = ["All", ...ALL_CATEGORIES];
+  bar.innerHTML = cats.map(c => {
+    const cfg = CAT_CONFIG[c];
+    const count = c === "All" ? BA_MODELS.length : BA_MODELS.filter(m => m.category === c).length;
+    const dot = cfg ? `<span class="cat-dot" style="background:${cfg.color}"></span>` : "";
+    return `<button class="filter-pill${activeCategory === c ? " active" : ""}" onclick="selectCategory('${c}')" aria-pressed="${activeCategory === c}" aria-label="Filter by ${c}">
+      ${dot}${c === "All" ? "All" : c}<span class="pill-count">${count}</span>
+    </button>`;
+  }).join("");
+}
+
 // ── RENDER CARDS ──
 function badgeLabel(rank, total) {
   if (!currentQuery) return null;
-  if (rank === 0) return { cls:"top", text:"Suggested Match" };
-  if (rank <= Math.min(2, total - 1)) return { cls:"good", text:"Strong Match" };
+  if (rank === 0) return { cls: "top", text: "Suggested match" };
+  if (rank <= Math.min(2, total - 1)) return { cls: "good", text: "Strong match" };
   return null;
 }
 function highlightTags(tags, query) {
-  if (!query) return tags.map(t => `<span class="tag">${t}</span>`).join("");
+  if (!query) return tags.slice(0, 4).map(t => `<span class="tag">${t}</span>`).join("");
   const tokens = query.toLowerCase().split(/\s+/);
-  return tags.map(t => `<span class="tag${tokens.some(tok => t.toLowerCase().includes(tok)) ? " highlight" : ""}">${t}</span>`).join("");
+  return tags.slice(0, 4).map(t => {
+    const hi = tokens.some(tok => t.toLowerCase().includes(tok));
+    return `<span class="tag${hi ? " highlight" : ""}">${t}</span>`;
+  }).join("");
 }
 function renderCards(models, ranked) {
   const container = document.getElementById("cardsContainer");
   if (!models.length) {
-    container.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="icon">🔍</div><h3>No models matched your search</h3><p>Try different words — e.g. "stakeholders", "process", "decision"</p></div>`;
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">🔍</div>
+        <h3>No frameworks matched</h3>
+        <p>Try describing the outcome you need — what are you trying to achieve?</p>
+        <div class="empty-chips">
+          ${QUICK_CHIPS.slice(0,5).map(c => `<button class="empty-chip" onclick="runSearch('${c}')">${c}</button>`).join("")}
+        </div>
+      </div>`;
     return;
   }
   container.innerHTML = models.map((m, idx) => {
     const b = ranked ? badgeLabel(idx, models.length) : null;
-    return `<div class="card" onclick="openModal(${m.id})" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openModal(${m.id})">
+    const cfg = CAT_CONFIG[m.category] || {};
+    const catColor = cfg.color || "var(--primary)";
+    const catIcon = cfg.icon || "📌";
+    return `<article class="card" style="--cat-color:${catColor}" onclick="openModal(${m.id})" role="listitem" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openModal(${m.id})" aria-label="Open guide for ${m.name}">
       ${b ? `<div class="badge-wrap"><span class="badge ${b.cls}">${b.text}</span></div>` : ""}
-      <div class="card-category">${m.category}</div>
-      <div class="card-title">${m.name}</div>
-      <div class="card-desc">${m.description}</div>
+      <div class="card-top">
+        <span class="card-cat-icon" aria-hidden="true">${catIcon}</span>
+        <span class="card-category">${m.category}</span>
+      </div>
+      <h2 class="card-title">${m.name}</h2>
+      <p class="card-desc">${m.description}</p>
       <div class="when"><strong>When to use:</strong> ${m.when}</div>
       <div class="card-tags">${highlightTags(m.tags, currentQuery)}</div>
-      <div class="card-hint"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="3" stroke="currentColor" stroke-width="1.5"/><line x1="5" y1="8" x2="11" y2="8" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="5" x2="8" y2="11" stroke="currentColor" stroke-width="1.5"/></svg>View diagram &amp; guide</div>
-    </div>`;
+      <div class="card-cta">
+        <svg viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 7h6M7 4v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Open guide
+      </div>
+    </article>`;
   }).join("");
+}
+
+// ── SEARCH / FILTER ──
+function runSearch(queryOverride) {
+  currentQuery = (queryOverride !== undefined ? queryOverride : document.getElementById("searchInput").value).trim();
+  if (queryOverride !== undefined) document.getElementById("searchInput").value = currentQuery;
+  document.getElementById("clearBtn").classList.toggle("visible", !!currentQuery);
+  activeCategory = "All";
+  renderFilters();
+  applyFilters();
+}
+function applyFilters() {
+  let models = [...BA_MODELS];
+  if (activeCategory !== "All") models = models.filter(m => m.category === activeCategory);
+  if (currentQuery) {
+    models = models.map(m => ({ ...m, _score: score(m, currentQuery) }))
+      .filter(m => m._score > 0)
+      .sort((a, b) => b._score - a._score);
+  }
+  const count = models.length;
+  document.getElementById("countBadge").textContent = count;
+  const titleEl = document.getElementById("sectionTitle");
+  const hintEl = document.getElementById("resultsHint");
+  if (currentQuery && activeCategory === "All") {
+    titleEl.innerHTML = `Results for "<em>${currentQuery}</em>"`;
+    hintEl.textContent = count > 0 ? "· best match first" : "";
+  } else if (activeCategory !== "All") {
+    titleEl.textContent = activeCategory;
+    hintEl.textContent = "";
+  } else {
+    titleEl.textContent = "All Frameworks";
+    hintEl.textContent = "";
+  }
+  renderCards(models, !!currentQuery);
+}
+function selectCategory(cat) {
+  activeCategory = cat;
+  renderFilters();
+  applyFilters();
 }
 
 // ── MODAL ──
 function openModal(id) {
   const m = BA_MODELS.find(x => x.id === id);
   if (!m) return;
+  const cfg = CAT_CONFIG[m.category] || {};
+  const accent = cfg.color || "var(--accent)";
+  document.getElementById("modalBox").style.setProperty("--modal-accent", accent);
   document.getElementById("modalCat").textContent = m.category;
   document.getElementById("modalTitle").textContent = m.name;
   document.getElementById("modalDiagram").innerHTML = m.diagram;
-  document.getElementById("modalSteps").innerHTML = m.steps.map(s => `<li><span class="step-num">${m.steps.indexOf(s)+1}</span>${s}</li>`).join("");
-  document.getElementById("modalElements").innerHTML = m.elements.map(e => `<div class="element-card"><div class="el-name">${e.name}</div><div class="el-desc">${e.desc}</div></div>`).join("");
+  document.getElementById("modalSteps").innerHTML = m.steps.map((s, i) =>
+    `<li><span class="step-num">${i + 1}</span><span>${s}</span></li>`).join("");
+  document.getElementById("modalElements").innerHTML = m.elements.map(e =>
+    `<div class="element-card"><div class="el-name">${e.name}</div><div class="el-desc">${e.desc}</div></div>`).join("");
   const overlay = document.getElementById("modalOverlay");
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
   document.getElementById("modalBox").scrollTop = 0;
+  document.getElementById("modalTitle").focus();
 }
 function closeModal() {
   document.getElementById("modalOverlay").classList.remove("open");
@@ -2005,40 +2571,32 @@ document.getElementById("modalOverlay").addEventListener("click", function(e) {
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
-// ── SEARCH & FILTERS ──
-function runSearch(queryOverride) {
-  currentQuery = (queryOverride !== undefined ? queryOverride : document.getElementById("searchInput").value).trim();
-  if (queryOverride !== undefined) document.getElementById("searchInput").value = currentQuery;
+// ── RANDOM ──
+function openRandom() {
+  const m = BA_MODELS[Math.floor(Math.random() * BA_MODELS.length)];
+  openModal(m.id);
+}
+
+// ── CLEAR SEARCH ──
+document.getElementById("clearBtn").addEventListener("click", () => {
+  document.getElementById("searchInput").value = "";
+  document.getElementById("clearBtn").classList.remove("visible");
+  currentQuery = "";
   activeCategory = "All";
   renderFilters();
   applyFilters();
-}
-function applyFilters() {
-  let models = [...BA_MODELS];
-  if (activeCategory !== "All") models = models.filter(m => m.category === activeCategory);
-  if (currentQuery) {
-    models = models.map(m => ({ ...m, _score: score(m, currentQuery) })).filter(m => m._score > 0).sort((a, b) => b._score - a._score);
-  }
-  const badge = `<span class="result-count" id="countBadge">${models.length}</span>`;
-  const title = document.getElementById("sectionTitle");
-  if (currentQuery && activeCategory === "All") title.innerHTML = `Results for "<em>${currentQuery}</em>" ${badge}`;
-  else if (activeCategory !== "All") title.innerHTML = `${activeCategory} ${badge}`;
-  else title.innerHTML = `All Models ${badge}`;
-  renderCards(models, !!currentQuery);
-}
-function renderFilters() {
-  document.getElementById("filters").innerHTML = ["All", ...ALL_CATEGORIES].map(c =>
-    `<button class="filter-pill${activeCategory===c?" active":""}" onclick="selectCategory('${c}')">${c}</button>`).join("");
-}
-function selectCategory(cat) { activeCategory = cat; renderFilters(); applyFilters(); }
-function renderChips() {
-  document.getElementById("quickPicks").innerHTML = `<span>Try:</span>` + QUICK_CHIPS.map(c =>
-    `<span class="chip" onclick="runSearch('${c}')">${c}</span>`).join("");
-}
-document.getElementById("searchInput").addEventListener("keydown", e => { if (e.key === "Enter") runSearch(); });
+});
+document.getElementById("searchInput").addEventListener("input", function() {
+  document.getElementById("clearBtn").classList.toggle("visible", !!this.value);
+});
+document.getElementById("searchInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") runSearch();
+});
 
 // ── INIT ──
-renderChips(); renderFilters(); applyFilters();
+renderChips();
+renderFilters();
+applyFilters();
 </script>
 </body>
 </html>
